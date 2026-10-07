@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#0a0a0a">
+<title>HW Коллекция</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  * { -webkit-tap-highlight-color: transparent; box-sizing:border-box; }
+  body { background:#0a0a0a; color:#e5e5e5; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; padding-bottom:90px; margin:0; }
+  .page { display:none; }
+  .page.active { display:block; }
+  input, select { background:#151515; border:1px solid #2a2a2a; color:#fff; border-radius:12px; padding:12px 14px; width:100%; font-size:16px; }
+  input:focus, select:focus { outline:none; border-color:#f97316; }
+  .chip { border:1px solid #2a2a2a; background:#151515; border-radius:999px; padding:8px 14px; font-size:14px; color:#aaa; transition:.15s; user-select:none; cursor:pointer; }
+  .chip.on { background:#f97316; color:#000; border-color:#f97316; font-weight:600; }
+  .chip.on.con { background:#ef4444; color:#fff; border-color:#ef4444; }
+  .boxcard { border:1px solid #2a2a2a; background:#151515; border-radius:14px; padding:12px; cursor:pointer; transition:.15s; }
+  .boxcard.on { border-color:#f97316; background:#1f1410; }
+  .boxcard .box-title { font-weight:600; font-size:15px; }
+  .boxcard .box-desc { font-size:12px; color:#888; margin-top:2px; line-height:1.35; }
+  .boxcard .box-mult { font-size:12px; color:#f97316; font-weight:600; margin-top:4px; }
+  .nav-btn { flex:1; text-align:center; padding:12px 0; color:#666; font-size:12px; transition:.15s; cursor:pointer; }
+  .nav-btn.active { color:#f97316; }
+  .nav-btn .ico { display:block; font-size:22px; margin-bottom:2px; }
+  .card { background:#121212; border:1px solid #1f1f1f; border-radius:16px; }
+  .photo-slot { background:#151515; border:2px dashed #2a2a2a; border-radius:16px; display:flex; align-items:center; justify-content:center; flex-direction:column; color:#555; cursor:pointer; overflow:hidden; }
+  .photo-slot img { width:100%; height:100%; object-fit:cover; }
+  .btn { background:#f97316; color:#000; font-weight:700; border-radius:14px; padding:16px; width:100%; font-size:16px; border:none; cursor:pointer; }
+  .btn:active { transform:scale(.98); }
+  .btn-ghost { background:#1a1a1a; color:#e5e5e5; border:1px solid #2a2a2a; }
+  .modal { position:fixed; inset:0; background:rgba(0,0,0,.85); z-index:50; display:none; align-items:flex-end; }
+  .modal.open { display:flex; }
+  .modal-body { background:#0f0f0f; width:100%; max-height:92vh; overflow-y:auto; border-radius:24px 24px 0 0; padding:20px; }
+  .hidden { display:none !important; }
+</style>
+</head>
+<body>
+
+<header class="sticky top-0 z-40 bg-[#0a0a0a]/90 border-b border-[#1a1a1a]">
+  <div class="max-w-lg mx-auto px-4 py-3 flex justify-between items-center">
+    <h1 class="text-lg font-bold">🏎️ HW Коллекция</h1>
+    <div class="text-right">
+      <div class="text-[10px] text-neutral-500 uppercase tracking-wide">Всего</div>
+      <div id="headerTotal" class="text-sm font-bold text-orange-500">0 ₽</div>
+    </div>
+  </div>
+</header>
+
+<main class="max-w-lg mx-auto px-4 pt-4">
+
+  <!-- ADD PAGE -->
+  <section id="page-add" class="page active">
+    <h2 class="text-xl font-bold mb-4">Новая машинка</h2>
+
+    <div id="addPhotoSlot" class="photo-slot h-56 mb-4">
+      <div class="text-4xl mb-2">📷</div>
+      <div class="text-sm">Тапни чтобы сфоткать</div>
+    </div>
+    <input type="file" id="addPhotoInput" accept="image/*" class="hidden">
+
+    <label class="block text-xs text-neutral-500 uppercase tracking-wide mb-2 mt-4">Название</label>
+    <input id="addName" placeholder="Например: Twin Mill" maxlength="60">
+
+    <label class="block text-xs text-neutral-500 uppercase tracking-wide mb-2 mt-5">Состояние коробки</label>
+    <div id="boxList" class="space-y-2"></div>
+
+    <label class="block text-xs text-neutral-500 uppercase tracking-wide mb-2 mt-5">Открыта?</label>
+    <div class="flex gap-2">
+      <div class="chip flex-1 text-center" data-open="no">🔒 Запечатана</div>
+      <div class="chip flex-1 text-center" data-open="yes">📦 Открыта</div>
+    </div>
+
+    <label class="block text-xs text-neutral-500 uppercase tracking-wide mb-2 mt-5">Плюсы (за что дороже)</label>
+    <div id="proChips" class="flex flex-wrap gap-2"></div>
+
+    <label class="block text-xs text-neutral-500 uppercase tracking-wide mb-2 mt-5">Минусы (за что дешевле)</label>
+    <div id="conChips" class="flex flex-wrap gap-2"></div>
+
+    <div class="card mt-6 p-5 text-center">
+      <div class="text-xs text-neutral-500 uppercase tracking-wide mb-1">Примерная цена</div>
+      <div id="addPrice" class="text-4xl font-bold text-orange-500">0 ₽</div>
+      <div id="addBreakdown" class="text-xs text-neutral-500 mt-2"></div>
+    </div>
+
+    <button class="btn mt-4 mb-4" onclick="saveCar()">💾 Сохранить в коллекцию</button>
+  </section>
+
+  <!-- COLLECTION PAGE -->
+  <section id="page-collection" class="page">
+    <h2 class="text-xl font-bold mb-4">Моя коллекция</h2>
+    <div id="collectionEmpty" class="text-center text-neutral-600 py-20">
+      <div class="text-5xl mb-3">📭</div>
+      <div>Пока пусто. Добавь первую машинку!</div>
+    </div>
+    <div id="collectionGrid" class="grid grid-cols-2 gap-3"></div>
+  </section>
+
+  <!-- SETTINGS PAGE -->
+  <section id="page-settings" class="page">
+    <h2 class="text-xl font-bold mb-4">Настройки</h2>
+    <label class="block text-xs text-neutral-500 uppercase tracking-wide mb-2">Базовая цена Mainline (₽)</label>
+    <input id="setBase" type="number" min="0" step="10">
+    <p class="text-xs text-neutral-500 mt-2">От этой цены считаются все машинки. По умолчанию 300 ₽.</p>
+
+    <div class="card mt-6 p-4">
+      <div class="text-sm text-neutral-400 mb-3">Множители коробки</div>
+      <div class="text-xs text-neutral-500 space-y-1">
+        <div class="flex justify-between"><span>Идеальная</span><span class="text-orange-500">×1.3</span></div>
+        <div class="flex justify-between"><span>Хорошая</span><span class="text-orange-500">×1.1</span></div>
+        <div class="flex justify-between"><span>Средняя</span><span class="text-orange-500">×0.7</span></div>
+        <div class="flex justify-between"><span>Убитая</span><span class="text-orange-500">×0.4</span></div>
+        <div class="flex justify-between pt-2 border-t border-[#222] mt-2"><span>Открыта</span><span class="text-orange-500">×0.5</span></div>
+      </div>
+    </div>
+
+    <button class="btn btn-ghost mt-6" onclick="clearAll()">🗑️ Очистить всю коллекцию</button>
+    <p class="text-center text-xs text-neutral-600 mt-4 mb-4">v1.1 · всё хранится локально</p>
+  </section>
+</main>
+
+<nav class="fixed bottom-0 left-0 right-0 bg-[#0f0f0f]/95 border-t border-[#1a1a1a] z-40">
+  <div class="max-w-lg mx-auto flex">
+    <div class="nav-btn active" data-page="add" onclick="goTo('add')"><span class="ico">➕</span>Добавить</div>
+    <div class="nav-btn" data-page="collection" onclick="goTo('collection')"><span class="ico">📚</span>Коллекция</div>
+    <div class="nav-btn" data-page="settings" onclick="goTo('settings')"><span class="ico">⚙️</span>Настройки</div>
+  </div>
+</nav>
+
+<div class="modal" id="detailModal" onclick="if(event.target===this)closeDetail()">
+  <div class="modal-body" id="detailBody"></div>
+</div>
+
+<script>
+/* ===== КОРОБКА (человеческие названия) ===== */
+const BOX = {
+  mint: {
+    label: 'Идеальная',
+    desc: 'Углы острые, плёнка чистая, ни вмятин, ни заломов',
+    m: 1.3
+  },
+  excellent: {
+    label: 'Хорошая',
+    desc: 'Пара мелких вмятин от хранения, углы чуть затёрты',
+    m: 1.1
+  },
+  good: {
+    label: 'Средняя',
+    desc: 'Заметные складки, потёртые углы, есть заломы',
+    m: 0.7
+  },
+  poor: {
+    label: 'Убитая',
+    desc: 'Смята, порвана, трещины, оторван блистер',
+    m: 0.4
+  },
+};
+
+const PROS = {
+  th:        { label: '🏆 Treasure Hunt',       v: 2.00 },
+  sth:       { label: '💎 Super Treasure Hunt', v: 8.00 },
+  rare:      { label: '🎨 Редкий цвет',         v: 0.50 },
+  error:     { label: '⚠️ Заводская ошибка',   v: 3.00 },
+  unpunched: { label: '📌 Острые углы карточки',v: 0.10 },
+  licensed:  { label: '🚗 Реальная марка',      v: 0.30 },
+};
+
+const CONS = {
+  scratches: { label: 'Царапины на машинке',   v: 0.20 },
+  wheels:    { label: 'Потёртые колёса',       v: 0.15 },
+  yellow:    { label: 'Пожелтевшая плёнка',    v: 0.15 },
+  crooked:   { label: 'Погнутая ось / кривая', v: 0.20 },
+};
+
+/* ===== STATE ===== */
+let addState = { photo:null, box:'mint', opened:false, pros:[], cons:[] };
+let collection = [];
+let settings = { base: 300 };
+
+try {
+  collection = JSON.parse(localStorage.getItem('hw_collection') || '[]');
+  settings = JSON.parse(localStorage.getItem('hw_settings') || '{"base":300}');
+} catch(e) { console.warn('storage error', e); }
+
+/* ===== UTILS ===== */
+const fmt = n => Math.round(n).toLocaleString('ru-RU') + ' ₽';
+
+function calcPrice(base, box, opened, pros, cons) {
+  let p = base * (BOX[box]?.m ?? 1);
+  if (opened) p *= 0.5;
+  const proSum = pros.reduce((s,k)=>s+(PROS[k]?.v||0), 0);
+  const conSum = cons.reduce((s,k)=>s+(CONS[k]?.v||0), 0);
+  p = p * (1 + proSum) * Math.max(0.1, 1 - conSum);
+  return Math.round(p);
+}
+
+function compressImage(file, maxSize=900) {
+  return new Promise(resolve => {
+    const r = new FileReader();
+    r.onload = e => {
+      const img = new Image();
+      img.onload = () => {
+        let { width:w, height:h } = img;
+        if (w > h && w > maxSize) { h *= maxSize/w; w = maxSize; }
+        else if (h > maxSize) { w *= maxSize/h; h = maxSize; }
+        const c = document.createElement('canvas');
+        c.width = w; c.height = h;
+        c.getContext('2d').drawImage(img, 0, 0, w, h);
+        resolve(c.toDataURL('image/jpeg', 0.82));
+      };
+      img.src = e.target.result;
+    };
+    r.readAsDataURL(file);
+  });
+}
+
+/* ===== RENDER CHIPS ===== */
+function renderChips() {
+  // Коробка — карточками с описанием
+  const bl = document.getElementById('boxList');
+  bl.innerHTML = '';
+  for (const k in BOX) {
+    const el = document.createElement('div');
+    el.className = 'boxcard' + (addState.box === k ? ' on' : '');
+    el.innerHTML = `
+      <div class="box-title">${BOX[k].label}</div>
+      <div class="box-desc">${BOX[k].desc}</div>
+      <div class="box-mult">×${BOX[k].m} к цене</div>
+    `;
+    el.onclick = () => { addState.box = k; renderChips(); updatePrice(); };
+    bl.appendChild(el);
+  }
+
+  // Плюсы
+  const pc = document.getElementById('proChips');
+  pc.innerHTML = '';
+  for (const k in PROS) {
+    const el = document.createElement('div');
+    el.className = 'chip' + (addState.pros.includes(k) ? ' on' : '');
+    el.textContent = PROS[k].label;
+    el.onclick = () => {
+      addState.pros = addState.pros.includes(k)
+        ? addState.pros.filter(x=>x!==k) : [...addState.pros, k];
+      renderChips(); updatePrice();
+    };
+    pc.appendChild(el);
+  }
+
+  // Минусы
+  const cc = document.getElementById('conChips');
+  cc.innerHTML = '';
+  for (const k in CONS) {
+    const el = document.createElement('div');
+    el.className = 'chip' + (addState.cons.includes(k) ? ' on con' : '');
+    el.textContent = CONS[k].label;
+    el.onclick = () => {
+      addState.cons = addState.cons.includes(k)
+        ? addState.cons.filter(x=>x!==k) : [...addState.cons, k];
+      renderChips(); updatePrice();
+    };
+    cc.appendChild(el);
+  }
+
+  // Открытость
+  document.querySelectorAll('[data-open]').forEach(el => {
+    const isYes = el.dataset.open === 'yes';
+    el.classList.toggle('on', addState.opened === isYes);
+    el.onclick = () => { addState.opened = isYes; renderChips(); updatePrice(); };
+  });
+}
+
+/* ===== PRICE ===== */
+function updatePrice() {
+  const price = calcPrice(settings.base, addState.box, addState.opened, addState.pros, addState.cons);
+  document.getElementById('addPrice').textContent = fmt(price);
+
+  const parts = [];
+  parts.push(`база ${settings.base}`);
+  parts.push(`коробка ×${BOX[addState.box].m}`);
+  if (addState.opened) parts.push('открыта ×0.5');
+  const proSum = addState.pros.reduce((s,k)=>s+PROS[k].v, 0);
+  if (proSum > 0) parts.push(`плюсы +${Math.round(proSum*100)}%`);
+  const conSum = addState.cons.reduce((s,k)=>s+CONS[k].v, 0);
+  if (conSum > 0) parts.push(`минусы −${Math.round(conSum*100)}%`);
+  document.getElementById('addBreakdown').textContent = parts.join(' · ');
+}
+
+/* ===== PHOTO ===== */
+document.getElementById('addPhotoInput').onchange = async e => {
+  const f = e.target.files[0];
+  if (!f) return;
+  addState.photo = await compressImage(f);
+  const slot = document.getElementById('addPhotoSlot');
+  slot.innerHTML = `<img src="${addState.photo}">`;
+  slot.style.border = 'none';
+};
+
+// Тап по слоту = клик по инпуту
+document.getElementById('addPhotoSlot').onclick = () => document.getElementById('addPhotoInput').click();
+
+/* ===== SAVE CAR ===== */
+function saveCar() {
+  const name = document.getElementById('addName').value.trim();
+  if (!name) { alert('Напиши название'); return; }
+  if (!addState.photo) { alert('Добавь фото'); return; }
+
+  const car = {
+    id: Date.now(),
+    name,
+    photo: addState.photo,
+    myPhoto: null,
+    box: addState.box,
+    opened: addState.opened,
+    pros: [...addState.pros],
+    cons: [...addState.cons],
+    baseAtSave: settings.base,
+    price: calcPrice(settings.base, addState.box, addState.opened, addState.pros, addState.cons),
+    createdAt: new Date().toISOString(),
+  };
+  collection.unshift(car);
+  persist();
+
+  addState = { photo:null, box:'mint', opened:false, pros:[], cons:[] };
+  document.getElementById('addName').value = '';
+  const slot = document.getElementById('addPhotoSlot');
+  slot.innerHTML = `<div class="text-4xl mb-2">📷</div><div class="text-sm">Тапни чтобы сфоткать</div>`;
+  slot.style.border = '2px dashed #2a2a2a';
+  document.getElementById('addPhotoInput').value = '';
+  renderChips();
+  updatePrice();
+  renderCollection();
+  goTo('collection');
+}
+
+function persist() {
+  try {
+    localStorage.setItem('hw_collection', JSON.stringify(collection));
+    localStorage.setItem('hw_settings', JSON.stringify(settings));
+  } catch(e) {
+    alert('Не хватило места в хранилище. Удали старые машинки.');
+  }
+}
+
+/* ===== COLLECTION ===== */
+function renderCollection() {
+  const grid = document.getElementById('collectionGrid');
+  const empty = document.getElementById('collectionEmpty');
+  const total = collection.reduce((s,c)=>s+c.price, 0);
+  document.getElementById('headerTotal').textContent = fmt(total);
+
+  if (collection.length === 0) {
+    grid.innerHTML = '';
+    empty.classList.remove('hidden');
+    return;
+  }
+  empty.classList.add('hidden');
+  grid.innerHTML = '';
+  collection.forEach(car => {
+    const el = document.createElement('div');
+    el.className = 'card overflow-hidden cursor-pointer';
+    el.style.transition = 'transform .1s';
+    el.onclick = () => openDetail(car.id);
+    el.innerHTML = `
+      <div class="aspect-square bg-[#151515]">
+        <img src="${car.photo}" class="w-full h-full object-cover">
+      </div>
+      <div class="p-3">
+        <div class="text-sm font-semibold truncate">${escapeHtml(car.name)}</div>
+        <div class="text-orange-500 font-bold text-sm mt-1">${fmt(car.price)}</div>
+      </div>
+    `;
+    grid.appendChild(el);
+  });
+}
+
+function escapeHtml(s) { return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+/* ===== DETAIL ===== */
+function openDetail(id) {
+  const car = collection.find(c => c.id === id);
+  if (!car) return;
+
+  const breakdown = [];
+  breakdown.push(`База: ${car.baseAtSave} ₽`);
+  breakdown.push(`Коробка «${BOX[car.box].label}»: ×${BOX[car.box].m}`);
+  if (car.opened) breakdown.push(`Открыта: ×0.5`);
+  car.pros.forEach(k => breakdown.push(`+ ${PROS[k].label}: +${Math.round(PROS[k].v*100)}%`));
+  car.cons.forEach(k => breakdown.push(`− ${CONS[k].label}: −${Math.round(CONS[k].v*100)}%`));
+
+  const body = document.getElementById('detailBody');
+  body.innerHTML = `
+    <div class="flex justify-between items-start mb-3">
+      <h3 class="text-xl font-bold pr-4">${escapeHtml(car.name)}</h3>
+      <button onclick="closeDetail()" class="text-neutral-500 text-2xl leading-none bg-transparent border-0">×</button>
+    </div>
+
+    <div class="grid grid-cols-2 gap-3 mb-4">
+      <div>
+        <div class="text-xs text-neutral-500 mb-1">Фото машинки</div>
+        <div class="aspect-square rounded-xl overflow-hidden bg-[#151515]">
+          <img src="${car.photo}" class="w-full h-full object-cover">
+        </div>
+      </div>
+      <div>
+        <div class="text-xs text-neutral-500 mb-1">Моё фото с ней</div>
+        <div id="myPhotoSlot" class="aspect-square rounded-xl overflow-hidden bg-[#151515] border-2 border-dashed border-[#2a2a2a] flex items-center justify-center text-neutral-600 text-3xl cursor-pointer">
+          ${car.myPhoto ? `<img src="${car.myPhoto}" class="w-full h-full object-cover">` : '📷'}
+        </div>
+        <input type="file" id="myPhotoInput" accept="image/*" class="hidden">
+      </div>
+    </div>
+
+    <div class="card p-4 mb-3">
+      <div class="text-xs text-neutral-500 uppercase tracking-wide mb-3">Расчёт цены</div>
+      <div class="space-y-1 text-sm">
+        ${breakdown.map(b => `<div class="text-neutral-400">${b}</div>`).join('')}
+      </div>
+      <div class="flex justify-between items-center mt-4 pt-4 border-t border-[#222]">
+        <span class="text-neutral-400">Итого</span>
+        <span class="text-2xl font-bold text-orange-500">${fmt(car.price)}</span>
+      </div>
+    </div>
+
+    <button class="btn btn-ghost" onclick="deleteCar(${car.id})">🗑️ Удалить из коллекции</button>
+  `;
+
+  document.getElementById('myPhotoSlot').onclick = () => document.getElementById('myPhotoInput').click();
+  document.getElementById('myPhotoInput').onchange = async e => {
+    const f = e.target.files[0];
+    if (!f) return;
+    car.myPhoto = await compressImage(f);
+    persist();
+    document.getElementById('myPhotoSlot').innerHTML = `<img src="${car.myPhoto}" class="w-full h-full object-cover">`;
+  };
+
+  document.getElementById('detailModal').classList.add('open');
+}
+
+function closeDetail() {
+  document.getElementById('detailModal').classList.remove('open');
+}
+
+function deleteCar(id) {
+  if (!confirm('Удалить машинку?')) return;
+  collection = collection.filter(c => c.id !== id);
+  persist();
+  closeDetail();
+  renderCollection();
+}
+
+/* ===== NAVIGATION ===== */
+function goTo(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  const target = document.getElementById('page-' + page);
+  if (target) target.classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.page === page);
+  });
+  window.scrollTo(0, 0);
+}
+
+/* ===== SETTINGS ===== */
+function initSettings() {
+  const inp = document.getElementById('setBase');
+  inp.value = settings.base;
+  inp.oninput = () => {
+    settings.base = Math.max(0, parseInt(inp.value) || 0);
+    persist();
+    updatePrice();
+    collection.forEach(c => {
+      c.baseAtSave = settings.base;
+      c.price = calcPrice(settings.base, c.box, c.opened, c.pros, c.cons);
+    });
+    persist();
+    renderCollection();
+  };
+}
+
+function clearAll() {
+  if (!confirm('Удалить ВСЮ коллекцию?')) return;
+  collection = [];
+  persist();
+  renderCollection();
+}
+
+/* ===== INIT ===== */
+document.addEventListener('DOMContentLoaded', () => {
+  renderChips();
+  updatePrice();
+  renderCollection();
+  initSettings();
+});
+</script>
+</body>
+</html>
