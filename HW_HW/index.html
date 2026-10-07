@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="theme-color" content="#0a0a0a">
-<title>HW Коллекция</title>
+<title>HW Коллекция v1.2</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
   * { -webkit-tap-highlight-color: transparent; box-sizing:border-box; }
@@ -16,6 +16,7 @@
   .chip { border:1px solid #2a2a2a; background:#151515; border-radius:999px; padding:8px 14px; font-size:14px; color:#aaa; transition:.15s; user-select:none; cursor:pointer; }
   .chip.on { background:#f97316; color:#000; border-color:#f97316; font-weight:600; }
   .chip.on.con { background:#ef4444; color:#fff; border-color:#ef4444; }
+  .chip.on.series { background:#3b82f6; color:#fff; border-color:#3b82f6; }
   .boxcard { border:1px solid #2a2a2a; background:#151515; border-radius:14px; padding:12px; cursor:pointer; transition:.15s; }
   .boxcard.on { border-color:#f97316; background:#1f1410; }
   .boxcard .box-title { font-weight:600; font-size:15px; }
@@ -30,10 +31,17 @@
   .btn { background:#f97316; color:#000; font-weight:700; border-radius:14px; padding:16px; width:100%; font-size:16px; border:none; cursor:pointer; }
   .btn:active { transform:scale(.98); }
   .btn-ghost { background:#1a1a1a; color:#e5e5e5; border:1px solid #2a2a2a; }
+  .btn-blue { background:#3b82f6; color:#fff; }
+  .btn-sm { padding:10px 14px; font-size:14px; border-radius:10px; width:auto; }
   .modal { position:fixed; inset:0; background:rgba(0,0,0,.85); z-index:50; display:none; align-items:flex-end; }
   .modal.open { display:flex; }
   .modal-body { background:#0f0f0f; width:100%; max-height:92vh; overflow-y:auto; border-radius:24px 24px 0 0; padding:20px; }
   .hidden { display:none !important; }
+  .series-row { display:flex; align-items:center; gap:10px; margin-bottom:10px; }
+  .series-row .dot { width:14px; height:14px; border-radius:50%; flex-shrink:0; }
+  .series-row .name { flex:1; font-size:14px; }
+  .series-row input { width:110px; padding:8px 10px; font-size:14px; }
+  .market-hint { font-size:11px; color:#f97316; margin-top:6px; }
 </style>
 </head>
 <body>
@@ -62,6 +70,17 @@
 
     <label class="block text-xs text-neutral-500 uppercase tracking-wide mb-2 mt-4">Название</label>
     <input id="addName" placeholder="Например: Twin Mill" maxlength="60">
+    <div class="flex gap-2 mt-2">
+      <button type="button" class="btn btn-blue btn-sm flex-1" onclick="searchYandex()">🔍 Найти цену в Яндексе</button>
+      <button type="button" class="btn btn-ghost btn-sm flex-1" onclick="copyForAlice()">📋 Скопировать для Алисы</button>
+    </div>
+
+    <label class="block text-xs text-neutral-500 uppercase tracking-wide mb-2 mt-5">Серия</label>
+    <div id="seriesChips" class="flex flex-wrap gap-2"></div>
+
+    <label class="block text-xs text-neutral-500 uppercase tracking-wide mb-2 mt-5">Цена с рынка (₽) — необязательно</label>
+    <input id="addMarket" type="number" min="0" step="10" placeholder="Оставь пустым — посчитаем от серии">
+    <div class="market-hint">Если введёшь — эта цена станет основой, плюсы/минусы применятся поверх</div>
 
     <label class="block text-xs text-neutral-500 uppercase tracking-wide mb-2 mt-5">Состояние коробки</label>
     <div id="boxList" class="space-y-2"></div>
@@ -100,11 +119,13 @@
   <!-- SETTINGS PAGE -->
   <section id="page-settings" class="page">
     <h2 class="text-xl font-bold mb-4">Настройки</h2>
-    <label class="block text-xs text-neutral-500 uppercase tracking-wide mb-2">Базовая цена Mainline (₽)</label>
-    <input id="setBase" type="number" min="0" step="10">
-    <p class="text-xs text-neutral-500 mt-2">От этой цены считаются все машинки. По умолчанию 300 ₽.</p>
 
-    <div class="card mt-6 p-4">
+    <div class="card p-4 mb-4">
+      <div class="text-sm text-neutral-300 font-semibold mb-3">Базы серий (₽)</div>
+      <div id="seriesEditor"></div>
+    </div>
+
+    <div class="card p-4 mb-4">
       <div class="text-sm text-neutral-400 mb-3">Множители коробки</div>
       <div class="text-xs text-neutral-500 space-y-1">
         <div class="flex justify-between"><span>Идеальная</span><span class="text-orange-500">×1.3</span></div>
@@ -116,7 +137,7 @@
     </div>
 
     <button class="btn btn-ghost mt-6" onclick="clearAll()">🗑️ Очистить всю коллекцию</button>
-    <p class="text-center text-xs text-neutral-600 mt-4 mb-4">v1.1 · всё хранится локально</p>
+    <p class="text-center text-xs text-neutral-600 mt-4 mb-4">v1.2 · всё хранится локально</p>
   </section>
 </main>
 
@@ -133,39 +154,38 @@
 </div>
 
 <script>
-/* ===== КОРОБКА (человеческие названия) ===== */
+/* ===== СЕРИИ ===== */
+const SERIES = {
+  mainline:   { label: '🔵 Mainline',          base: 300,  color: '#3b82f6' },
+  premium:    { label: '🟣 Premium',            base: 900,  color: '#a855f7' },
+  boulevard:  { label: '🟠 Boulevard',          base: 700,  color: '#f97316' },
+  carculture: { label: '🔴 Car Culture',        base: 1500, color: '#ef4444' },
+  transport:  { label: '🟡 Team Transport',     base: 2500, color: '#eab308' },
+  rlc:        { label: '⚫ RLC / Red Line Club',base: 3000, color: '#9ca3af' },
+  collector:  { label: '🟢 Collector Edition',  base: 500,  color: '#22c55e' },
+  custom:     { label: '⚪ Другое / Custom',    base: 300,  color: '#9ca3af' },
+};
+
+/* ===== КОРОБКА ===== */
 const BOX = {
-  mint: {
-    label: 'Идеальная',
-    desc: 'Углы острые, плёнка чистая, ни вмятин, ни заломов',
-    m: 1.3
-  },
-  excellent: {
-    label: 'Хорошая',
-    desc: 'Пара мелких вмятин от хранения, углы чуть затёрты',
-    m: 1.1
-  },
-  good: {
-    label: 'Средняя',
-    desc: 'Заметные складки, потёртые углы, есть заломы',
-    m: 0.7
-  },
-  poor: {
-    label: 'Убитая',
-    desc: 'Смята, порвана, трещины, оторван блистер',
-    m: 0.4
-  },
+  mint:      { label: 'Идеальная', desc: 'Углы острые, плёнка чистая, ни вмятин, ни заломов', m: 1.3 },
+  excellent: { label: 'Хорошая',   desc: 'Пара мелких вмятин от хранения, углы чуть затёрты',   m: 1.1 },
+  good:      { label: 'Средняя',   desc: 'Заметные складки, потёртые углы, есть заломы',       m: 0.7 },
+  poor:      { label: 'Убитая',    desc: 'Смята, порвана, трещины, оторван блистер',           m: 0.4 },
 };
 
+/* ===== ПЛЮСЫ ===== */
 const PROS = {
-  th:        { label: '🏆 Treasure Hunt',       v: 2.00 },
-  sth:       { label: '💎 Super Treasure Hunt', v: 8.00 },
-  rare:      { label: '🎨 Редкий цвет',         v: 0.50 },
-  error:     { label: '⚠️ Заводская ошибка',   v: 3.00 },
-  unpunched: { label: '📌 Острые углы карточки',v: 0.10 },
-  licensed:  { label: '🚗 Реальная марка',      v: 0.30 },
+  th:        { label: '🏆 Treasure Hunt',              v: 2.00 },
+  sth:       { label: '💎 Super Treasure Hunt',        v: 8.00 },
+  rare:      { label: '🎨 Редкий цвет',                v: 0.50 },
+  detail:    { label: '🖌️ Хорошая детализация/раскраска', v: 0.25 },
+  error:     { label: '⚠️ Заводская ошибка',           v: 3.00 },
+  unpunched: { label: '📌 Острые углы карточки',       v: 0.10 },
+  licensed:  { label: '🚗 Реальная марка',             v: 0.30 },
 };
 
+/* ===== МИНУСЫ ===== */
 const CONS = {
   scratches: { label: 'Царапины на машинке',   v: 0.20 },
   wheels:    { label: 'Потёртые колёса',       v: 0.15 },
@@ -174,14 +194,27 @@ const CONS = {
 };
 
 /* ===== STATE ===== */
-let addState = { photo:null, box:'mint', opened:false, pros:[], cons:[] };
+let addState = { photo:null, series:'mainline', box:'mint', opened:false, pros:[], cons:[] };
 let collection = [];
-let settings = { base: 300 };
+let settings = { series: Object.fromEntries(Object.keys(SERIES).map(k => [k, SERIES[k].base])) };
 
+/* ===== STORAGE ===== */
 try {
   collection = JSON.parse(localStorage.getItem('hw_collection') || '[]');
-  settings = JSON.parse(localStorage.getItem('hw_settings') || '{"base":300}');
+  const savedSettings = JSON.parse(localStorage.getItem('hw_settings_v12') || 'null');
+  if (savedSettings && savedSettings.series) settings = savedSettings;
 } catch(e) { console.warn('storage error', e); }
+
+/* Миграция старых машинок */
+collection = collection.map(car => {
+  if (!car.series) {
+    car.series = 'mainline';
+    car.baseAtSave = settings.series.mainline;
+    car.price = calcPrice(settings.series.mainline, car.box, car.opened, car.pros, car.cons);
+  }
+  if (car.marketPrice === undefined) car.marketPrice = 0;
+  return car;
+});
 
 /* ===== UTILS ===== */
 const fmt = n => Math.round(n).toLocaleString('ru-RU') + ' ₽';
@@ -215,9 +248,44 @@ function compressImage(file, maxSize=900) {
   });
 }
 
+function escapeHtml(s) { return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+/* ===== SEARCH HELPERS ===== */
+function getQuery() {
+  const name = document.getElementById('addName').value.trim();
+  if (!name) { alert('Сначала напиши название'); return null; }
+  return `hot wheels ${name} цена стоимость`;
+}
+
+function searchYandex() {
+  const q = getQuery();
+  if (!q) return;
+  window.open('https://yandex.ru/search/?text=' + encodeURIComponent(q), '_blank');
+}
+
+function copyForAlice() {
+  const q = getQuery();
+  if (!q) return;
+  navigator.clipboard.writeText(q).then(
+    () => alert('✅ Скопировано! Вставь в Алису AI'),
+    () => prompt('Скопируй вручную:', q)
+  );
+}
+
 /* ===== RENDER CHIPS ===== */
 function renderChips() {
-  // Коробка — карточками с описанием
+  // Серии
+  const sc = document.getElementById('seriesChips');
+  sc.innerHTML = '';
+  for (const k in SERIES) {
+    const el = document.createElement('div');
+    el.className = 'chip' + (addState.series === k ? ' on series' : '');
+    el.textContent = SERIES[k].label;
+    el.onclick = () => { addState.series = k; renderChips(); updatePrice(); };
+    sc.appendChild(el);
+  }
+
+  // Коробка
   const bl = document.getElementById('boxList');
   bl.innerHTML = '';
   for (const k in BOX) {
@@ -240,8 +308,7 @@ function renderChips() {
     el.className = 'chip' + (addState.pros.includes(k) ? ' on' : '');
     el.textContent = PROS[k].label;
     el.onclick = () => {
-      addState.pros = addState.pros.includes(k)
-        ? addState.pros.filter(x=>x!==k) : [...addState.pros, k];
+      addState.pros = addState.pros.includes(k) ? addState.pros.filter(x=>x!==k) : [...addState.pros, k];
       renderChips(); updatePrice();
     };
     pc.appendChild(el);
@@ -255,8 +322,7 @@ function renderChips() {
     el.className = 'chip' + (addState.cons.includes(k) ? ' on con' : '');
     el.textContent = CONS[k].label;
     el.onclick = () => {
-      addState.cons = addState.cons.includes(k)
-        ? addState.cons.filter(x=>x!==k) : [...addState.cons, k];
+      addState.cons = addState.cons.includes(k) ? addState.cons.filter(x=>x!==k) : [...addState.cons, k];
       renderChips(); updatePrice();
     };
     cc.appendChild(el);
@@ -272,11 +338,18 @@ function renderChips() {
 
 /* ===== PRICE ===== */
 function updatePrice() {
-  const price = calcPrice(settings.base, addState.box, addState.opened, addState.pros, addState.cons);
+  const marketVal = parseFloat(document.getElementById('addMarket').value) || 0;
+  const seriesBase = settings.series[addState.series] ?? SERIES[addState.series].base;
+  const base = marketVal > 0 ? marketVal : seriesBase;
+  const price = calcPrice(base, addState.box, addState.opened, addState.pros, addState.cons);
   document.getElementById('addPrice').textContent = fmt(price);
 
   const parts = [];
-  parts.push(`база ${settings.base}`);
+  if (marketVal > 0) {
+    parts.push(`рынок ${Math.round(marketVal)} ₽`);
+  } else {
+    parts.push(`база ${seriesBase} ₽ (${SERIES[addState.series].label})`);
+  }
   parts.push(`коробка ×${BOX[addState.box].m}`);
   if (addState.opened) parts.push('открыта ×0.5');
   const proSum = addState.pros.reduce((s,k)=>s+PROS[k].v, 0);
@@ -296,33 +369,41 @@ document.getElementById('addPhotoInput').onchange = async e => {
   slot.style.border = 'none';
 };
 
-// Тап по слоту = клик по инпуту
 document.getElementById('addPhotoSlot').onclick = () => document.getElementById('addPhotoInput').click();
 
-/* ===== SAVE CAR ===== */
+/* ===== SAVE ===== */
 function saveCar() {
   const name = document.getElementById('addName').value.trim();
   if (!name) { alert('Напиши название'); return; }
   if (!addState.photo) { alert('Добавь фото'); return; }
+
+  const marketVal = parseFloat(document.getElementById('addMarket').value) || 0;
+  const seriesBase = settings.series[addState.series] ?? SERIES[addState.series].base;
+  const base = marketVal > 0 ? marketVal : seriesBase;
 
   const car = {
     id: Date.now(),
     name,
     photo: addState.photo,
     myPhoto: null,
+    series: addState.series,
+    marketPrice: marketVal,
     box: addState.box,
     opened: addState.opened,
     pros: [...addState.pros],
     cons: [...addState.cons],
-    baseAtSave: settings.base,
-    price: calcPrice(settings.base, addState.box, addState.opened, addState.pros, addState.cons),
+    baseAtSave: base,
+    seriesBaseAtSave: seriesBase,
+    price: calcPrice(base, addState.box, addState.opened, addState.pros, addState.cons),
     createdAt: new Date().toISOString(),
   };
   collection.unshift(car);
   persist();
 
-  addState = { photo:null, box:'mint', opened:false, pros:[], cons:[] };
+  // reset
+  addState = { photo:null, series:'mainline', box:'mint', opened:false, pros:[], cons:[] };
   document.getElementById('addName').value = '';
+  document.getElementById('addMarket').value = '';
   const slot = document.getElementById('addPhotoSlot');
   slot.innerHTML = `<div class="text-4xl mb-2">📷</div><div class="text-sm">Тапни чтобы сфоткать</div>`;
   slot.style.border = '2px dashed #2a2a2a';
@@ -336,7 +417,7 @@ function saveCar() {
 function persist() {
   try {
     localStorage.setItem('hw_collection', JSON.stringify(collection));
-    localStorage.setItem('hw_settings', JSON.stringify(settings));
+    localStorage.setItem('hw_settings_v12', JSON.stringify(settings));
   } catch(e) {
     alert('Не хватило места в хранилище. Удали старые машинки.');
   }
@@ -362,8 +443,11 @@ function renderCollection() {
     el.style.transition = 'transform .1s';
     el.onclick = () => openDetail(car.id);
     el.innerHTML = `
-      <div class="aspect-square bg-[#151515]">
+      <div class="aspect-square bg-[#151515] relative">
         <img src="${car.photo}" class="w-full h-full object-cover">
+        <div class="absolute top-2 left-2 text-[10px] px-2 py-0.5 rounded-full" style="background:${SERIES[car.series]?.color || '#666'};color:#000;font-weight:600">
+          ${(SERIES[car.series]?.label || '').split(' ')[0]}
+        </div>
       </div>
       <div class="p-3">
         <div class="text-sm font-semibold truncate">${escapeHtml(car.name)}</div>
@@ -374,15 +458,18 @@ function renderCollection() {
   });
 }
 
-function escapeHtml(s) { return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
-
 /* ===== DETAIL ===== */
 function openDetail(id) {
   const car = collection.find(c => c.id === id);
   if (!car) return;
 
+  const seriesInfo = SERIES[car.series] || SERIES.custom;
   const breakdown = [];
-  breakdown.push(`База: ${car.baseAtSave} ₽`);
+  if (car.marketPrice > 0) {
+    breakdown.push(`🌐 Рынок: ${Math.round(car.marketPrice)} ₽`);
+  } else {
+    breakdown.push(`База «${seriesInfo.label}»: ${car.seriesBaseAtSave ?? seriesInfo.base} ₽`);
+  }
   breakdown.push(`Коробка «${BOX[car.box].label}»: ×${BOX[car.box].m}`);
   if (car.opened) breakdown.push(`Открыта: ×0.5`);
   car.pros.forEach(k => breakdown.push(`+ ${PROS[k].label}: +${Math.round(PROS[k].v*100)}%`));
@@ -391,7 +478,10 @@ function openDetail(id) {
   const body = document.getElementById('detailBody');
   body.innerHTML = `
     <div class="flex justify-between items-start mb-3">
-      <h3 class="text-xl font-bold pr-4">${escapeHtml(car.name)}</h3>
+      <div>
+        <h3 class="text-xl font-bold pr-4">${escapeHtml(car.name)}</h3>
+        <div class="text-xs mt-1" style="color:${seriesInfo.color}">${seriesInfo.label}</div>
+      </div>
       <button onclick="closeDetail()" class="text-neutral-500 text-2xl leading-none bg-transparent border-0">×</button>
     </div>
 
@@ -422,7 +512,10 @@ function openDetail(id) {
       </div>
     </div>
 
-    <button class="btn btn-ghost" onclick="deleteCar(${car.id})">🗑️ Удалить из коллекции</button>
+    <div class="flex gap-2">
+      <button class="btn btn-blue btn-sm flex-1" onclick="recalcCar(${car.id})">🔄 Пересчитать</button>
+      <button class="btn btn-ghost btn-sm flex-1" onclick="deleteCar(${car.id})">🗑️ Удалить</button>
+    </div>
   `;
 
   document.getElementById('myPhotoSlot').onclick = () => document.getElementById('myPhotoInput').click();
@@ -439,6 +532,19 @@ function openDetail(id) {
 
 function closeDetail() {
   document.getElementById('detailModal').classList.remove('open');
+}
+
+function recalcCar(id) {
+  const car = collection.find(c => c.id === id);
+  if (!car) return;
+  const seriesBase = settings.series[car.series] ?? SERIES[car.series].base;
+  car.seriesBaseAtSave = seriesBase;
+  const base = car.marketPrice > 0 ? car.marketPrice : seriesBase;
+  car.baseAtSave = base;
+  car.price = calcPrice(base, car.box, car.opened, car.pros, car.cons);
+  persist();
+  renderCollection();
+  openDetail(id);
 }
 
 function deleteCar(id) {
@@ -461,20 +567,28 @@ function goTo(page) {
 }
 
 /* ===== SETTINGS ===== */
-function initSettings() {
-  const inp = document.getElementById('setBase');
-  inp.value = settings.base;
-  inp.oninput = () => {
-    settings.base = Math.max(0, parseInt(inp.value) || 0);
-    persist();
-    updatePrice();
-    collection.forEach(c => {
-      c.baseAtSave = settings.base;
-      c.price = calcPrice(settings.base, c.box, c.opened, c.pros, c.cons);
-    });
-    persist();
-    renderCollection();
-  };
+function renderSeriesEditor() {
+  const el = document.getElementById('seriesEditor');
+  el.innerHTML = '';
+  for (const k in SERIES) {
+    const row = document.createElement('div');
+    row.className = 'series-row';
+    row.innerHTML = `
+      <div class="dot" style="background:${SERIES[k].color}"></div>
+      <div class="name">${SERIES[k].label}</div>
+      <input type="number" min="0" step="50" data-series="${k}" value="${settings.series[k] ?? SERIES[k].base}">
+    `;
+    el.appendChild(row);
+  }
+  el.querySelectorAll('input[data-series]').forEach(inp => {
+    inp.oninput = () => {
+      const k = inp.dataset.series;
+      settings.series[k] = Math.max(0, parseInt(inp.value) || 0);
+      persist();
+      updatePrice();
+      renderCollection();
+    };
+  });
 }
 
 function clearAll() {
@@ -484,12 +598,15 @@ function clearAll() {
   renderCollection();
 }
 
+/* ===== MARKET INPUT LISTENER ===== */
+document.getElementById('addMarket').addEventListener('input', updatePrice);
+
 /* ===== INIT ===== */
 document.addEventListener('DOMContentLoaded', () => {
   renderChips();
   updatePrice();
   renderCollection();
-  initSettings();
+  renderSeriesEditor();
 });
 </script>
 </body>
