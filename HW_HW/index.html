@@ -5,170 +5,185 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="theme-color" content="#02020a">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta name="apple-mobile-web-app-title" content="ONYX HW">
 <title>ONYX HW v1.8</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%2302020a'/%3E%3Ccircle cx='50' cy='50' r='30' fill='none' stroke='%23a855f7' stroke-width='4'/%3E%3Ccircle cx='50' cy='50' r='14' fill='%2338bdf8'/%3E%3C/svg%3E">
 <style>
-  :root {
-    --bg: #02020a; --bg2: #0a0a1f;
-    --accent: #a855f7; --accent2: #38bdf8;
-    --accent-text: #ffffff;
-    --card-bg: rgba(20, 15, 40, 0.6);
-    --text: #e5e5e5; --text-muted: #737373;
-    --border: rgba(168, 85, 247, 0.25);
-    --wallpaper: none; --card-blur: 12px;
-    --glow: 0 0 20px rgba(168, 85, 247, 0.4);
-  }
-  * { -webkit-tap-highlight-color: transparent; box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    background: var(--bg); color: var(--text);
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    padding-bottom: 90px; min-height: 100vh;
-    background-image: var(--wallpaper);
-    background-size: cover; background-attachment: fixed; background-position: center;
-    position: relative;
-  }
-  body::before {
-    content: ''; position: fixed; inset: 0;
-    background: linear-gradient(180deg, transparent 0%, rgba(2,2,10,0.6) 100%);
-    pointer-events: none; z-index: 0;
-  }
-  .wrap { max-width: 512px; margin: 0 auto; padding: 0 16px; position: relative; z-index: 1; }
-  header { position: sticky; top: 0; z-index: 40; background: rgba(2,2,10,.85); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); }
-  header .wrap { padding-top: 12px; padding-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
-  h1 { font-size: 20px; font-weight: 800; letter-spacing: .15em; background: linear-gradient(90deg, var(--accent), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-transform: uppercase; }
-  h2 { font-size: 20px; font-weight: 700; margin-bottom: 16px; }
-  .page { display: none; padding-top: 16px; }
-  .page.active { display: block; }
-  input, select, textarea {
-    background: rgba(15, 15, 30, 0.7); border: 1px solid var(--border); color: #fff;
-    border-radius: 12px; padding: 12px 14px; width: 100%; font-size: 16px; font-family: inherit;
-    backdrop-filter: blur(8px);
-  }
-  input:focus, select:focus, textarea:focus { outline: none; border-color: var(--accent); box-shadow: var(--glow); }
-  textarea { min-height: 80px; resize: vertical; }
-  label.lbl { display: block; font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: .08em; margin: 20px 0 8px; }
-  .chip { display: inline-block; border: 1px solid var(--border); background: rgba(15,15,30,.5); border-radius: 999px; padding: 8px 14px; font-size: 14px; color: #aaa; transition: .2s; user-select: none; cursor: pointer; backdrop-filter: blur(8px); }
-  .chip.on { background: var(--accent); color: var(--accent-text); border-color: var(--accent); font-weight: 600; box-shadow: var(--glow); }
-  .chip.on.con { background: #ef4444; color: #fff; border-color: #ef4444; }
-  .chip.on.series { background: var(--accent2); color: #000; border-color: var(--accent2); }
-  .boxcard { border: 1px solid var(--border); background: var(--card-bg); border-radius: 14px; padding: 12px; cursor: pointer; transition: .2s; backdrop-filter: blur(var(--card-blur)); }
-  .boxcard.on { border-color: var(--accent); background: rgba(168,85,247,.12); box-shadow: var(--glow); }
-  .boxcard .bt { font-weight: 600; font-size: 15px; }
-  .boxcard .bd { font-size: 12px; color: #888; margin-top: 2px; line-height: 1.35; }
-  .boxcard .bm { font-size: 12px; color: var(--accent); font-weight: 600; margin-top: 4px; }
-  .nav { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(2,2,10,.92); backdrop-filter: blur(16px); border-top: 1px solid var(--border); z-index: 40; }
-  .nav .wrap { display: flex; }
-  .nav-btn { flex: 1; text-align: center; padding: 12px 0; color: #666; font-size: 11px; transition: .15s; cursor: pointer; }
-  .nav-btn.active { color: var(--accent); }
-  .nav-btn .ico { display: block; font-size: 22px; margin-bottom: 2px; }
-  .card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; backdrop-filter: blur(var(--card-blur)); }
-  .photo-slot { background: rgba(15,15,30,.6); border: 2px dashed var(--border); border-radius: 16px; display: flex; align-items: center; justify-content: center; flex-direction: column; color: #555; cursor: pointer; overflow: hidden; height: 224px; backdrop-filter: blur(8px); }
-  .photo-slot img { width: 100%; height: 100%; object-fit: cover; }
-  .btn { background: linear-gradient(135deg, var(--accent), var(--accent2)); color: var(--accent-text); font-weight: 700; border-radius: 14px; padding: 16px; width: 100%; font-size: 16px; border: none; cursor: pointer; font-family: inherit; display: block; box-shadow: var(--glow); }
-  .btn:active { transform: scale(.98); }
-  .btn-ghost { background: rgba(15,15,30,.7); color: var(--text); border: 1px solid var(--border); box-shadow: none; }
-  .btn-blue { background: linear-gradient(135deg, #38bdf8, #6366f1); color: #fff; }
-  .btn-red { background: linear-gradient(135deg, #ef4444, #dc2626); color: #fff; box-shadow: 0 0 20px rgba(239,68,68,.4); }
-  .btn-sm { padding: 10px 14px; font-size: 14px; border-radius: 10px; }
-  .modal { position: fixed; inset: 0; background: rgba(0,0,0,.85); z-index: 50; display: none; align-items: flex-end; backdrop-filter: blur(4px); }
-  .modal.open { display: flex; }
-  .modal-body { background: linear-gradient(180deg, rgba(15,15,30,.98), rgba(2,2,10,.98)); width: 100%; max-height: 92vh; overflow-y: auto; border-radius: 24px 24px 0 0; padding: 20px; border-top: 1px solid var(--border); backdrop-filter: blur(20px); }
-  .hidden { display: none !important; }
-  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-  .flex-gap { display: flex; gap: 8px; }
-  .flex-gap > * { flex: 1; }
-  .series-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
-  .series-row .dot { width: 14px; height: 14px; border-radius: 50%; flex-shrink: 0; }
-  .series-row .name { flex: 1; font-size: 14px; }
-  .series-row input { width: 90px; padding: 8px 10px; font-size: 14px; }
-  .market-hint { font-size: 11px; color: var(--accent); margin-top: 6px; }
-  .space-y-2 > * + * { margin-top: 8px; }
-  .space-y-1 > * + * { margin-top: 4px; }
-  .text-center { text-align: center; }
-  .text-right { text-align: right; }
-  .text-xs { font-size: 12px; } .text-sm { font-size: 14px; }
-  .font-bold { font-weight: 700; } .font-semibold { font-weight: 600; }
-  .truncate { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .uppercase { text-transform: uppercase; } .tracking-wide { letter-spacing: .05em; }
-  .text-neutral-400 { color: #a3a3a3; } .text-neutral-500 { color: #737373; } .text-neutral-600 { color: #525252; }
-  .text-accent { color: var(--accent); }
-  .mt-1 { margin-top: 4px; } .mt-2 { margin-top: 8px; } .mt-3 { margin-top: 12px; }
-  .mt-4 { margin-top: 16px; } .mt-5 { margin-top: 20px; } .mt-6 { margin-top: 24px; }
-  .mb-1 { margin-bottom: 4px; } .mb-2 { margin-bottom: 8px; } .mb-3 { margin-bottom: 12px; }
-  .mb-4 { margin-bottom: 16px; } .mb-5 { margin-bottom: 20px; }
-  .p-3 { padding: 12px; } .p-4 { padding: 16px; } .p-5 { padding: 20px; }
-  .pt-2 { padding-top: 8px; } .pt-4 { padding-top: 16px; }
-  .border-t { border-top: 1px solid var(--border); }
-  .rounded-xl { border-radius: 12px; } .rounded-full { border-radius: 999px; }
-  .overflow-hidden { overflow: hidden; } .cursor-pointer { cursor: pointer; }
-  .aspect-square { aspect-ratio: 1 / 1; }
-  .relative { position: relative; } .absolute { position: absolute; }
-  .top-2 { top: 8px; } .left-2 { left: 8px; } .right-2 { right: 8px; }
-  .badge { font-size: 10px; padding: 2px 8px; border-radius: 999px; color: #000; font-weight: 600; }
-  .price-big { font-size: 36px; font-weight: 800; background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-  .price-total { font-size: 24px; font-weight: 800; color: var(--accent); }
-  .modal-close { font-size: 24px; line-height: 1; background: transparent; border: none; color: var(--text-muted); cursor: pointer; }
-  .emoji-big { font-size: 40px; }
-  .empty-state { text-align: center; color: var(--text-muted); padding: 80px 0; }
-  .empty-state .e { font-size: 48px; margin-bottom: 12px; }
-  .card-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-  .toast { position: fixed; top: 70px; left: 50%; transform: translateX(-50%) translateY(-20px); background: linear-gradient(135deg, var(--accent), var(--accent2)); color: #fff; padding: 12px 20px; border-radius: 12px; font-weight: 600; font-size: 14px; z-index: 100; opacity: 0; transition: opacity .3s, transform .3s; max-width: 90%; text-align: center; box-shadow: var(--glow); }
-  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-  .toast small { display: block; font-weight: 400; font-size: 12px; margin-top: 4px; opacity: .85; }
-  .sugg { position: relative; }
-  .sugg-list { position: absolute; top: 100%; left: 0; right: 0; background: rgba(10,10,25,.98); border: 1px solid var(--border); border-top: none; border-radius: 0 0 12px 12px; max-height: 260px; overflow-y: auto; z-index: 30; box-shadow: 0 8px 24px rgba(0,0,0,.7); }
-  .sugg-item { padding: 10px 14px; cursor: pointer; border-bottom: 1px solid rgba(168,85,247,.1); font-size: 14px; }
-  .sugg-item:hover { background: rgba(168,85,247,.15); }
-  .sugg-item .m { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
-  .badge-mini { display: inline-block; font-size: 9px; padding: 1px 6px; border-radius: 6px; background: var(--accent2); color: #000; margin-left: 6px; font-weight: 700; }
-  .badge-mini.sth { background: linear-gradient(135deg, #a855f7, #ec4899); color: #fff; }
-  .badge-mini.th { background: linear-gradient(135deg, #f97316, #ef4444); color: #fff; }
-  .model-item { padding: 10px 12px; border-bottom: 1px solid rgba(168,85,247,.1); display: flex; align-items: center; justify-content: space-between; gap: 8px; }
-  .model-item:last-child { border-bottom: none; }
-  .model-item .mi-name { font-size: 14px; font-weight: 600; }
-  .model-item .mi-meta { font-size: 11px; color: var(--text-muted); }
-  .model-item .mi-del { background: #ef4444; color: #fff; border: none; border-radius: 8px; padding: 6px 10px; font-size: 12px; cursor: pointer; font-weight: 600; }
-  .search-box { position: sticky; top: 0; background: rgba(10,10,25,.95); padding-bottom: 12px; z-index: 5; }
-  .theme-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
-  .theme-item { border: 2px solid var(--border); border-radius: 14px; padding: 12px 8px; cursor: pointer; text-align: center; background: rgba(15,15,30,.5); }
-  .theme-item.on { border-color: var(--accent); box-shadow: var(--glow); }
-  .theme-item .swatch { width: 100%; height: 32px; border-radius: 8px; margin-bottom: 6px; }
-  .theme-item .tname { font-size: 11px; color: #aaa; }
-  .color-row { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
-  .color-row .cname { flex: 1; font-size: 14px; }
-  .color-row input[type="color"] { width: 56px; height: 40px; padding: 2px; border-radius: 10px; border: 1px solid var(--border); background: transparent; cursor: pointer; }
-  .range-row { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
-  .range-row .cname { flex: 1; font-size: 14px; }
-  .range-row input[type="range"] { flex: 1.5; accent-color: var(--accent); }
-  .wall-preview { width: 100%; height: 100px; border-radius: 12px; background: var(--wallpaper); background-size: cover; background-position: center; border: 1px solid var(--border); margin-top: 8px; }
-  /* Profile styles */
-  .profile-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; backdrop-filter: blur(var(--card-blur)); cursor: pointer; transition: .2s; }
-  .profile-card:hover { border-color: var(--accent); }
-  .profile-card.active { border-color: var(--accent); box-shadow: var(--glow); }
-  .profile-banner { width: 100%; height: 90px; background: linear-gradient(135deg, var(--accent), var(--accent2)); position: relative; }
-  .profile-banner img { width: 100%; height: 100%; object-fit: cover; }
-  .profile-avatar { width: 64px; height: 64px; border-radius: 50%; border: 3px solid var(--bg); position: absolute; bottom: -32px; left: 16px; background: var(--bg2); display: flex; align-items: center; justify-content: center; font-size: 28px; overflow: hidden; }
-  .profile-avatar img { width: 100%; height: 100%; object-fit: cover; }
-  .profile-body { padding: 40px 16px 16px; }
-  .profile-name { font-size: 18px; font-weight: 700; }
-  .profile-bio { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
-  .profile-stats { display: flex; gap: 16px; margin-top: 12px; font-size: 12px; color: var(--text-muted); }
-  .profile-stats .stat { display: flex; flex-direction: column; }
-  .profile-stats .stat b { font-size: 14px; color: var(--text); }
-  .avatar-edit { width: 100px; height: 100px; border-radius: 50%; margin: 0 auto; background: rgba(15,15,30,.6); border: 2px dashed var(--border); display: flex; align-items: center; justify-content: center; font-size: 36px; cursor: pointer; overflow: hidden; }
-  .avatar-edit img { width: 100%; height: 100%; object-fit: cover; }
-  .banner-edit { width: 100%; height: 140px; border-radius: 12px; background: rgba(15,15,30,.6); border: 2px dashed var(--border); display: flex; align-items: center; justify-content: center; font-size: 32px; cursor: pointer; overflow: hidden; margin-top: 12px; }
-  .banner-edit img { width: 100%; height: 100%; object-fit: cover; }
-  .profile-color-picker { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
-  .color-dot { width: 36px; height: 36px; border-radius: 50%; border: 3px solid transparent; cursor: pointer; }
-  .color-dot.on { border-color: #fff; }
+  :root{--bg:#02020a;--accent:#a855f7;--accent2:#38bdf8;--accent-text:#fff;--card-bg:rgba(20,15,40,.6);--text:#e5e5e5;--text-muted:#737373;--border:rgba(168,85,247,.25);--wallpaper:none;--card-blur:12px;--glow:0 0 20px rgba(168,85,247,.4)}
+  *{-webkit-tap-highlight-color:transparent;box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;padding-bottom:90px;min-height:100vh;background-image:var(--wallpaper);background-size:cover;background-attachment:fixed;background-position:center}
+  body::before{content:'';position:fixed;inset:0;background:linear-gradient(180deg,transparent,rgba(2,2,10,.6));pointer-events:none;z-index:0}
+  .wrap{max-width:512px;margin:0 auto;padding:0 16px;position:relative;z-index:1}
+  header{position:sticky;top:0;z-index:40;background:rgba(2,2,10,.85);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+  header .wrap{padding:12px 16px;display:flex;justify-content:space-between;align-items:center}
+  h1{font-size:20px;font-weight:800;letter-spacing:.15em;background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-transform:uppercase}
+  h2{font-size:20px;font-weight:700;margin-bottom:16px}
+  .page{display:none;padding-top:16px}.page.active{display:block}
+  input,select,textarea{background:rgba(15,15,30,.7);border:1px solid var(--border);color:#fff;border-radius:12px;padding:12px 14px;width:100%;font-size:16px;font-family:inherit}
+  input:focus,select:focus,textarea:focus{outline:none;border-color:var(--accent);box-shadow:var(--glow)}
+  label.lbl{display:block;font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.08em;margin:20px 0 8px}
+  .chip{display:inline-block;border:1px solid var(--border);background:rgba(15,15,30,.5);border-radius:999px;padding:8px 14px;font-size:14px;color:#aaa;transition:.2s;user-select:none;cursor:pointer}
+  .chip.on{background:var(--accent);color:var(--accent-text);border-color:var(--accent);font-weight:600;box-shadow:var(--glow)}
+  .chip.on.con{background:#ef4444;color:#fff;border-color:#ef4444}
+  .chip.on.series{background:var(--accent2);color:#000;border-color:var(--accent2)}
+  .boxcard{border:1px solid var(--border);background:var(--card-bg);border-radius:14px;padding:12px;cursor:pointer;transition:.2s;backdrop-filter:blur(var(--card-blur))}
+  .boxcard.on{border-color:var(--accent);background:rgba(168,85,247,.12);box-shadow:var(--glow)}
+  .boxcard .bt{font-weight:600;font-size:15px}.boxcard .bd{font-size:12px;color:#888;margin-top:2px}.boxcard .bm{font-size:12px;color:var(--accent);font-weight:600;margin-top:4px}
+  .nav{position:fixed;bottom:0;left:0;right:0;background:rgba(2,2,10,.92);backdrop-filter:blur(16px);border-top:1px solid var(--border);z-index:40}
+  .nav .wrap{display:flex;padding:0}
+  .nav-btn{flex:1;text-align:center;padding:12px 0;color:#666;font-size:11px;transition:.15s;cursor:pointer}
+  .nav-btn.active{color:var(--accent)}
+  .nav-btn .ico{display:block;font-size:22px;margin-bottom:2px}
+  .card{background:var(--card-bg);border:1px solid var(--border);border-radius:16px;backdrop-filter:blur(var(--card-blur))}
+  .photo-slot{background:rgba(15,15,30,.6);border:2px dashed var(--border);border-radius:16px;display:flex;align-items:center;justify-content:center;flex-direction:column;color:#555;cursor:pointer;overflow:hidden;height:224px}
+  .photo-slot img{width:100%;height:100%;object-fit:cover}
+  .btn{background:linear-gradient(135deg,var(--accent),var(--accent2));color:var(--accent-text);font-weight:700;border-radius:14px;padding:16px;width:100%;font-size:16px;border:none;cursor:pointer;font-family:inherit;display:block;box-shadow:var(--glow)}
+  .btn:active{transform:scale(.98)}
+  .btn-ghost{background:rgba(15,15,30,.7);color:var(--text);border:1px solid var(--border);box-shadow:none}
+  .btn-blue{background:linear-gradient(135deg,#38bdf8,#6366f1);color:#fff}
+  .btn-sm{padding:10px 14px;font-size:14px;border-radius:10px}
+  .btn-danger{background:linear-gradient(135deg,#ef4444,#b91c1c);color:#fff}
+  .modal{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:50;display:none;align-items:flex-end;backdrop-filter:blur(4px)}
+  .modal.open{display:flex}
+  .modal-body{background:linear-gradient(180deg,rgba(15,15,30,.98),rgba(2,2,10,.98));width:100%;max-height:92vh;overflow-y:auto;border-radius:24px 24px 0 0;padding:20px;border-top:1px solid var(--border)}
+  .hidden{display:none!important}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+  .flex-gap{display:flex;gap:8px}.flex-gap>*{flex:1}
+  .series-row{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+  .series-row .dot{width:14px;height:14px;border-radius:50%;flex-shrink:0}
+  .series-row .name{flex:1;font-size:14px}
+  .series-row input{width:90px;padding:8px 10px;font-size:14px}
+  .market-hint{font-size:11px;color:var(--accent);margin-top:6px}
+  .space-y-2>*+*{margin-top:8px}.space-y-1>*+*{margin-top:4px}
+  .text-center{text-align:center}.text-right{text-align:right}
+  .text-xs{font-size:12px}.text-sm{font-size:14px}
+  .font-bold{font-weight:700}.font-semibold{font-weight:600}
+  .truncate{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .uppercase{text-transform:uppercase}.tracking-wide{letter-spacing:.05em}
+  .text-neutral-400{color:#a3a3a3}.text-neutral-500{color:#737373}.text-neutral-600{color:#525252}
+  .text-accent{color:var(--accent)}
+  .mt-1{margin-top:4px}.mt-2{margin-top:8px}.mt-3{margin-top:12px}.mt-4{margin-top:16px}.mt-5{margin-top:20px}.mt-6{margin-top:24px}
+  .mb-1{margin-bottom:4px}.mb-2{margin-bottom:8px}.mb-3{margin-bottom:12px}.mb-4{margin-bottom:16px}.mb-5{margin-bottom:20px}
+  .p-3{padding:12px}.p-4{padding:16px}.p-5{padding:20px}.pt-4{padding-top:16px}
+  .border-t{border-top:1px solid var(--border)}
+  .rounded-xl{border-radius:12px}.rounded-full{border-radius:9999px}
+  .overflow-hidden{overflow:hidden}.cursor-pointer{cursor:pointer}
+  .aspect-square{aspect-ratio:1/1}
+  .relative{position:relative}.absolute{position:absolute}
+  .top-2{top:8px}.left-2{left:8px}.right-2{right:8px}
+  .badge{font-size:10px;padding:2px 8px;border-radius:999px;color:#000;font-weight:600}
+  .price-big{font-size:36px;font-weight:800;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+  .price-total{font-size:24px;font-weight:800;color:var(--accent)}
+  .modal-close{font-size:24px;line-height:1;background:transparent;border:none;color:var(--text-muted);cursor:pointer}
+  .emoji-big{font-size:40px}
+  .empty-state{text-align:center;color:var(--text-muted);padding:60px 0}
+  .empty-state .e{font-size:48px;margin-bottom:12px}
+  .card-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .toast{position:fixed;top:70px;left:50%;transform:translateX(-50%) translateY(-20px);background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;padding:12px 20px;border-radius:12px;font-weight:600;font-size:14px;z-index:100;opacity:0;transition:opacity .3s,transform .3s;max-width:90%;text-align:center;box-shadow:var(--glow)}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  .toast small{display:block;font-weight:400;font-size:12px;margin-top:4px;opacity:.85}
+  .sugg{position:relative}
+  .sugg-list{position:absolute;top:100%;left:0;right:0;background:rgba(10,10,25,.98);border:1px solid var(--border);border-top:none;border-radius:0 0 12px 12px;max-height:260px;overflow-y:auto;z-index:30;box-shadow:0 8px 24px rgba(0,0,0,.7)}
+  .sugg-item{padding:10px 14px;cursor:pointer;border-bottom:1px solid rgba(168,85,247,.1);font-size:14px}
+  .sugg-item:hover,.sugg-item.active{background:rgba(168,85,247,.15)}
+  .sugg-item .m{font-size:11px;color:var(--text-muted);margin-top:2px}
+  .badge-mini{display:inline-block;font-size:9px;padding:1px 6px;border-radius:6px;background:var(--accent2);color:#000;margin-left:6px;font-weight:700}
+  .badge-mini.sth{background:linear-gradient(135deg,#a855f7,#ec4899);color:#fff}
+  .badge-mini.th{background:linear-gradient(135deg,#f97316,#ef4444);color:#fff}
+  .model-item{padding:10px 12px;border-bottom:1px solid rgba(168,85,247,.1);display:flex;align-items:center;justify-content:space-between;gap:8px}
+  .model-item:last-child{border-bottom:none}
+  .model-item .mi-name{font-size:14px;font-weight:600}
+  .model-item .mi-meta{font-size:11px;color:var(--text-muted)}
+  .model-item .mi-del{background:#ef4444;color:#fff;border:none;border-radius:8px;padding:6px 10px;font-size:12px;cursor:pointer;font-weight:600}
+  .search-box{position:sticky;top:0;background:rgba(10,10,25,.95);padding-bottom:12px;z-index:5}
+  .theme-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+  .theme-item{border:2px solid var(--border);border-radius:14px;padding:12px 8px;cursor:pointer;text-align:center;background:rgba(15,15,30,.5)}
+  .theme-item.on{border-color:var(--accent);box-shadow:var(--glow)}
+  .theme-item .swatch{width:100%;height:32px;border-radius:8px;margin-bottom:6px}
+  .theme-item .tname{font-size:11px;color:#aaa}
+  .color-row{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+  .color-row .cname{flex:1;font-size:14px}
+  .color-row input[type="color"]{width:56px;height:40px;padding:2px;border-radius:10px;border:1px solid var(--border);background:transparent;cursor:pointer}
+  .range-row{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+  .range-row .cname{flex:1;font-size:14px}
+  .range-row input[type="range"]{flex:1.5;accent-color:var(--accent)}
+  .wall-preview{width:100%;height:100px;border-radius:12px;background:var(--wallpaper);background-size:cover;background-position:center;border:1px solid var(--border);margin-top:8px;display:flex;align-items:center;justify-content:center;color:var(--text-muted);font-size:12px}
+  /* Auth */
+  #authScreen{position:fixed;inset:0;background:var(--bg);z-index:200;display:flex;align-items:center;justify-content:center;padding:20px;overflow-y:auto}
+  #authScreen::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 20% 30%,rgba(168,85,247,.3),transparent 50%),radial-gradient(circle at 80% 70%,rgba(56,189,248,.3),transparent 50%);pointer-events:none}
+  .auth-box{width:100%;max-width:400px;background:var(--card-bg);border:1px solid var(--border);border-radius:20px;padding:28px 24px;backdrop-filter:blur(20px);position:relative;z-index:1;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+  .auth-title{font-size:32px;font-weight:900;text-align:center;letter-spacing:.2em;background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:4px}
+  .auth-sub{text-align:center;font-size:12px;color:var(--text-muted);margin-bottom:24px;letter-spacing:.1em;text-transform:uppercase}
+  .auth-avatar{width:96px;height:96px;border-radius:50%;margin:0 auto 16px;background:rgba(15,15,30,.7);border:2px dashed var(--border);display:flex;align-items:center;justify-content:center;color:#555;font-size:32px;cursor:pointer;overflow:hidden}
+  .auth-avatar img{width:100%;height:100%;object-fit:cover}
+  .auth-toggle{text-align:center;font-size:13px;color:var(--text-muted);margin-top:16px}
+  .auth-toggle a{color:var(--accent);cursor:pointer;text-decoration:underline}
+  /* Profile */
+  .profile-header{position:relative;height:180px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:0 0 24px 24px;overflow:hidden;margin:-16px -16px 0 -16px;cursor:pointer}
+  .profile-header img{width:100%;height:100%;object-fit:cover}
+  .profile-header .overlay{position:absolute;bottom:0;left:0;right:0;padding:8px 12px;background:linear-gradient(0deg,rgba(0,0,0,.8),transparent);font-size:11px;color:#fff;text-align:right}
+  .profile-avatar{width:100px;height:100px;border-radius:50%;border:4px solid var(--bg);background:rgba(15,15,30,.9);margin:-50px auto 0;position:relative;z-index:2;display:flex;align-items:center;justify-content:center;color:#555;font-size:36px;cursor:pointer;overflow:hidden}
+  .profile-avatar img{width:100%;height:100%;object-fit:cover}
+  .profile-name{text-align:center;font-size:22px;font-weight:700;margin-top:12px}
+  .profile-status{text-align:center;font-size:14px;color:var(--text-muted);margin-top:4px;font-style:italic}
+  .profile-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:16px}
+  .stat-box{background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:12px 8px;text-align:center}
+  .stat-box .v{font-size:18px;font-weight:800;color:var(--accent)}
+  .stat-box .l{font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em;margin-top:2px}
+  /* Stories */
+  .stories-strip{display:flex;gap:10px;overflow-x:auto;padding:4px 0;scrollbar-width:none}
+  .stories-strip::-webkit-scrollbar{display:none}
+  .story-ring{flex-shrink:0;width:76px;text-align:center;cursor:pointer}
+  .story-ring .ring{width:68px;height:68px;border-radius:50%;padding:3px;background:linear-gradient(135deg,var(--accent),var(--accent2));margin:0 auto}
+  .story-ring .ring.seen{background:rgba(115,115,115,.5)}
+  .story-ring .inner{width:100%;height:100%;border-radius:50%;overflow:hidden;background:#0f0f1f;border:2px solid var(--bg);display:flex;align-items:center;justify-content:center;color:#555;font-size:24px}
+  .story-ring .inner img{width:100%;height:100%;object-fit:cover}
+  .story-ring .label{font-size:10px;color:var(--text-muted);margin-top:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .story-add .ring{background:rgba(15,15,30,.7);border:2px dashed var(--border);padding:0;display:flex;align-items:center;justify-content:center;font-size:28px;color:var(--accent)}
+  .story-add .inner{background:transparent;border:none}
+  .story-card{background:var(--card-bg);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-bottom:12px}
+  .story-card .sc-head{display:flex;align-items:center;gap:10px;padding:10px 12px}
+  .story-card .sc-av{width:36px;height:36px;border-radius:50%;overflow:hidden;background:rgba(15,15,30,.7);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+  .story-card .sc-av img{width:100%;height:100%;object-fit:cover}
+  .story-card .sc-info{flex:1;min-width:0}
+  .story-card .sc-name{font-size:14px;font-weight:600}
+  .story-card .sc-date{font-size:11px;color:var(--text-muted)}
+  .story-card .sc-photo{width:100%;aspect-ratio:1;object-fit:cover;background:rgba(0,0,0,.3)}
+  .story-card .sc-text{padding:12px;font-size:14px;color:var(--text)}
+  .story-card .sc-del{padding:6px 10px;background:transparent;border:none;color:#ef4444;font-size:12px;cursor:pointer;font-weight:600}
 </style>
 </head>
 <body>
 
 <div id="toast" class="toast"></div>
+
+<!-- AUTH SCREEN -->
+<div id="authScreen">
+  <div class="auth-box">
+    <div class="auth-title">ONYX HW</div>
+    <div class="auth-sub" id="authSub">твой космический гараж</div>
+
+    <div class="auth-avatar" id="authAvatar" onclick="document.getElementById('authAvatarInput').click()">
+      <span id="authAvatarIcon">📷</span>
+    </div>
+    <input type="file" id="authAvatarInput" accept="image/*" class="hidden">
+
+    <label class="lbl" style="margin-top:8px">Имя</label>
+    <input id="authUser" placeholder="Как тебя зовут?" maxlength="30" autocomplete="username">
+
+    <label class="lbl">Пароль</label>
+    <input id="authPass" type="password" placeholder="••••••••" autocomplete="current-password">
+
+    <label class="lbl" id="authStatusLbl">Статус <span style="text-transform:none;color:var(--accent)">(для регистрации)</span></label>
+    <input id="authStatus" placeholder="коллекционирую JDM..." maxlength="80" class="hidden-input">
+
+    <button class="btn mt-5" id="authBtn" onclick="authSubmit()">Войти</button>
+    <div class="auth-toggle" id="authToggle">
+      Нет профиля? <a onclick="toggleAuthMode()">Создать</a>
+    </div>
+  </div>
+</div>
 
 <header>
   <div class="wrap">
@@ -182,10 +197,9 @@
 
 <main class="wrap">
 
-  <!-- ADD PAGE -->
+  <!-- ADD -->
   <section id="page-add" class="page active">
     <h2>Новая машинка</h2>
-
     <div id="addPhotoSlot" class="photo-slot mb-4">
       <div class="emoji-big mb-2">📷</div>
       <div class="text-sm">Тапни чтобы сфоткать</div>
@@ -207,7 +221,6 @@
 
     <label class="lbl">Цена с рынка (₽) — необязательно</label>
     <input id="addMarket" type="number" min="0" step="10" placeholder="Пусто — от серии">
-    <div class="market-hint">Если введёшь — станет основой</div>
 
     <label class="lbl">Состояние коробки</label>
     <div id="boxList" class="space-y-2"></div>
@@ -229,48 +242,66 @@
       <div id="addPrice" class="price-big">0 ₽</div>
       <div id="addBreakdown" class="text-xs text-neutral-500 mt-2"></div>
     </div>
-
     <button class="btn mt-4 mb-4" onclick="saveCar()">💾 Сохранить</button>
   </section>
 
-  <!-- COLLECTION PAGE -->
+  <!-- COLLECTION -->
   <section id="page-collection" class="page">
     <h2>Коллекция</h2>
     <div id="collectionEmpty" class="empty-state">
       <div class="e">🌌</div>
-      <div>Пока пусто. Добавь первую машинку!</div>
+      <div>Пока пусто</div>
     </div>
     <div id="collectionGrid" class="card-grid"></div>
   </section>
 
-  <!-- PROFILES PAGE -->
-  <section id="page-profiles" class="page">
-    <h2>👥 Профили</h2>
-    <div id="profilesList" class="space-y-2"></div>
-    <button class="btn btn-ghost mt-4" onclick="openProfileEditor(null)">➕ Добавить профиль</button>
-    <div class="flex-gap mt-3">
-      <button class="btn btn-ghost btn-sm" onclick="exportCurrentProfile()">📤 Экспорт профиля</button>
-      <button class="btn btn-ghost btn-sm" onclick="importProfile()">📥 Импорт профиля</button>
+  <!-- PROFILE -->
+  <section id="page-profile" class="page">
+    <div class="profile-header" id="profileHeader" onclick="document.getElementById('profileBannerInput').click()">
+      <div class="overlay">📷 изменить баннер</div>
     </div>
+    <input type="file" id="profileBannerInput" accept="image/*" class="hidden">
+
+    <div class="profile-avatar" id="profileAvatar" onclick="document.getElementById('profileAvatarInput').click()">
+      <span id="profileAvatarIcon">👤</span>
+    </div>
+    <input type="file" id="profileAvatarInput" accept="image/*" class="hidden">
+
+    <div class="profile-name" id="profileName">—</div>
+    <div class="profile-status" id="profileStatusEl">—</div>
+
+    <div class="flex-gap mt-4">
+      <button class="btn btn-ghost btn-sm" onclick="editProfile()">✏️ Редактировать</button>
+      <button class="btn btn-ghost btn-sm" onclick="goTo('settings')">⚙️ Настройки</button>
+    </div>
+
+    <div class="profile-stats">
+      <div class="stat-box"><div class="v" id="statCars">0</div><div class="l">машинок</div></div>
+      <div class="stat-box"><div class="v" id="statValue">0</div><div class="l">стоимость</div></div>
+      <div class="stat-box"><div class="v" id="statStories">0</div><div class="l">историй</div></div>
+    </div>
+
+    <h2 class="mt-6">📸 Истории</h2>
+    <div class="stories-strip" id="storiesStrip"></div>
+    <div id="storiesFeed" class="mt-4"></div>
   </section>
 
-  <!-- APPEARANCE PAGE -->
+  <!-- APPEARANCE -->
   <section id="page-appearance" class="page">
     <h2>🎨 Внешний вид</h2>
-
     <label class="lbl">Тема</label>
     <div id="themeGrid" class="theme-grid"></div>
 
     <label class="lbl">Свои цвета</label>
     <div class="card p-4 mb-4">
-      <div class="color-row"><span class="cname">Акцент 1</span><input type="color" id="colAccent" value="#a855f7"></div>
-      <div class="color-row"><span class="cname">Акцент 2</span><input type="color" id="colAccent2" value="#38bdf8"></div>
+      <div class="color-row"><span class="cname">Основной</span><input type="color" id="colAccent" value="#a855f7"></div>
+      <div class="color-row"><span class="cname">Вторичный</span><input type="color" id="colAccent2" value="#38bdf8"></div>
       <div class="color-row"><span class="cname">Фон</span><input type="color" id="colBg" value="#02020a"></div>
     </div>
 
     <label class="lbl">Обои</label>
     <div class="card p-4 mb-4">
-      <div class="flex-gap mb-2" style="flex-wrap:wrap">
+      <div class="flex-gap" style="flex-wrap:wrap">
         <div class="chip" data-wall="none" onclick="setWallpaper('none')">Сплошной</div>
         <div class="chip" data-wall="stars" onclick="setWallpaper('stars')">✨ Звёзды</div>
         <div class="chip" data-wall="nebula" onclick="setWallpaper('nebula')">🌌 Туманность</div>
@@ -280,19 +311,15 @@
       <div class="wall-preview" id="wallPreview"></div>
     </div>
 
-    <label class="lbl">Прозрачность карточек</label>
+    <label class="lbl">Прозрачность</label>
     <div class="card p-4 mb-4">
-      <div class="range-row">
-        <span class="cname">Blur</span>
-        <input type="range" id="blurRange" min="0" max="30" value="12">
-      </div>
+      <div class="range-row"><span class="cname">Blur</span><input type="range" id="blurRange" min="0" max="30" value="12"></div>
     </div>
   </section>
 
-  <!-- SETTINGS PAGE -->
+  <!-- SETTINGS -->
   <section id="page-settings" class="page">
     <h2>Настройки</h2>
-
     <div class="card p-4 mb-4">
       <div class="text-sm font-semibold mb-3" style="color:#d4d4d4">База Mainline (₽)</div>
       <input id="setMainlineBase" type="number" min="0" step="10">
@@ -309,28 +336,17 @@
     </div>
 
     <div class="card p-4 mb-4">
-      <div class="text-sm text-neutral-400 mb-3">Актуальные проценты</div>
-      <div class="text-xs text-neutral-500 space-y-1">
-        <div style="display:flex;justify-content:space-between"><span>🏆 Treasure Hunt</span><span class="text-accent">+40%</span></div>
-        <div style="display:flex;justify-content:space-between"><span>💎 Super Treasure Hunt</span><span class="text-accent">+200%</span></div>
-        <div style="display:flex;justify-content:space-between"><span>🎨 Редкий цвет</span><span class="text-accent">+50%</span></div>
-        <div style="display:flex;justify-content:space-between"><span>🖌️ Детализация</span><span class="text-accent">+25%</span></div>
-        <div style="display:flex;justify-content:space-between"><span>⚠️ Заводская ошибка</span><span class="text-accent">+100%</span></div>
-        <div style="display:flex;justify-content:space-between"><span>📌 Острые углы</span><span class="text-accent">+50%</span></div>
-        <div style="display:flex;justify-content:space-between"><span>🚗 Реальная марка</span><span class="text-accent">+30%</span></div>
-        <div style="display:flex;justify-content:space-between;padding-top:6px;border-top:1px solid var(--border);margin-top:6px"><span>💥 Царапины</span><span class="text-accent">−30%</span></div>
-        <div style="display:flex;justify-content:space-between"><span>🟡 Плёнка</span><span class="text-accent">−25%</span></div>
-        <div style="display:flex;justify-content:space-between"><span>🛞 Колёса</span><span class="text-accent">−15%</span></div>
-        <div style="display:flex;justify-content:space-between"><span>📏 Ось</span><span class="text-accent">−20%</span></div>
+      <div class="text-sm font-semibold mb-3" style="color:#d4d4d4">Данные</div>
+      <div class="flex-gap">
+        <button class="btn btn-ghost btn-sm" onclick="exportData()">📤 Экспорт</button>
+        <button class="btn btn-ghost btn-sm" onclick="importData()">📥 Импорт</button>
       </div>
     </div>
 
-    <button class="btn btn-red mt-6" onclick="clearAll()">🗑️ Очистить коллекцию</button>
-    <div class="flex-gap mt-3">
-      <button class="btn btn-ghost btn-sm" onclick="exportAll()">📤 Экспорт всего</button>
-      <button class="btn btn-ghost btn-sm" onclick="importAll()">📥 Импорт всего</button>
-    </div>
-    <p class="text-center text-xs text-neutral-600 mt-4 mb-4">ONYX HW v1.8 · профили</p>
+    <button class="btn btn-ghost mb-3" onclick="logout()">🚪 Выйти из профиля</button>
+    <button class="btn btn-ghost mb-3" onclick="clearAll()">🗑️ Очистить коллекцию</button>
+    <button class="btn btn-danger mb-4" onclick="deleteAccount()">⚠️ Удалить профиль</button>
+    <p class="text-center text-xs text-neutral-600 mb-4">ONYX HW v1.8</p>
   </section>
 </main>
 
@@ -338,7 +354,7 @@
   <div class="wrap">
     <div class="nav-btn active" data-page="add" onclick="goTo('add')"><span class="ico">➕</span>Добавить</div>
     <div class="nav-btn" data-page="collection" onclick="goTo('collection')"><span class="ico">🌌</span>Коллекция</div>
-    <div class="nav-btn" data-page="profiles" onclick="goTo('profiles')"><span class="ico">👥</span>Профили</div>
+    <div class="nav-btn" data-page="profile" onclick="goTo('profile')"><span class="ico">👤</span>Профиль</div>
     <div class="nav-btn" data-page="appearance" onclick="goTo('appearance')"><span class="ico">🎨</span>Вид</div>
     <div class="nav-btn" data-page="settings" onclick="goTo('settings')"><span class="ico">⚙️</span>Ещё</div>
   </div>
@@ -346,520 +362,569 @@
 
 <div class="modal" id="detailModal" onclick="if(event.target===this)closeDetail()"><div class="modal-body" id="detailBody"></div></div>
 <div class="modal" id="modelModal" onclick="if(event.target===this)closeModelEditor()"><div class="modal-body" id="modelBody"></div></div>
-<div class="modal" id="profileModal" onclick="if(event.target===this)closeProfileEditor()"><div class="modal-body" id="profileBody"></div></div>
+<div class="modal" id="storyModal" onclick="if(event.target===this)closeStory()"><div class="modal-body" id="storyBody"></div></div>
 
 <script>
-/* ===== ВЕРСИЯ ===== */
-const PRICING_VERSION = '1.8';
-
-/* ===== СЕРИИ ===== */
-const SERIES_DEFAULTS = {
-  mainline:   { label: '🔵 Mainline',           mult: 1.0,  color: '#3b82f6', openLoss: 0.8 },
-  silver:     { label: '⚪ Silver Series',      mult: 1.5,  color: '#c0c0c0', openLoss: 0.75 },
-  boulevard:  { label: '🟠 Boulevard',           mult: 2.5,  color: '#f97316', openLoss: 0.65 },
-  collector:  { label: '🟢 Collector Edition',   mult: 1.75, color: '#22c55e', openLoss: 0.75 },
-  fast:       { label: '🚗 Fast & Furious',      mult: 2.75, color: '#ef4444', openLoss: 0.65 },
-  retro:      { label: '🎬 Retro Entertainment', mult: 3.0,  color: '#a855f7', openLoss: 0.55 },
-  premium:    { label: '🟣 Premium',             mult: 3.5,  color: '#a855f7', openLoss: 0.65 },
-  hwid:       { label: '📱 HW id',               mult: 4.0,  color: '#06b6d4', openLoss: 0.75 },
-  carculture: { label: '🔴 Car Culture',         mult: 6.0,  color: '#ef4444', openLoss: 0.55 },
-  transport:  { label: '🟡 Team Transport',      mult: 8.0,  color: '#eab308', openLoss: 0.55 },
-  rlc:        { label: '⚫ RLC / Red Line Club', mult: 12.0, color: '#9ca3af', openLoss: 0.4 },
-  custom:     { label: '⚪ Другое / Custom',     mult: 1.0,  color: '#9ca3af', openLoss: 0.8 },
+/* ===== CONSTANTS ===== */
+const PRICING_VERSION='1.8';
+const SERIES_DEFAULTS={
+  mainline:{label:'🔵 Mainline',mult:1.0,color:'#3b82f6',openLoss:0.8},
+  silver:{label:'⚪ Silver Series',mult:1.5,color:'#c0c0c0',openLoss:0.75},
+  boulevard:{label:'🟠 Boulevard',mult:2.5,color:'#f97316',openLoss:0.65},
+  collector:{label:'🟢 Collector Edition',mult:1.75,color:'#22c55e',openLoss:0.75},
+  fast:{label:'🚗 Fast & Furious',mult:2.75,color:'#ef4444',openLoss:0.65},
+  retro:{label:'🎬 Retro Entertainment',mult:3.0,color:'#a855f7',openLoss:0.55},
+  premium:{label:'🟣 Premium',mult:3.5,color:'#a855f7',openLoss:0.65},
+  hwid:{label:'📱 HW id',mult:4.0,color:'#06b6d4',openLoss:0.75},
+  carculture:{label:'🔴 Car Culture',mult:6.0,color:'#ef4444',openLoss:0.55},
+  transport:{label:'🟡 Team Transport',mult:8.0,color:'#eab308',openLoss:0.55},
+  rlc:{label:'⚫ RLC',mult:12.0,color:'#9ca3af',openLoss:0.4},
+  custom:{label:'⚪ Custom',mult:1.0,color:'#9ca3af',openLoss:0.8},
 };
+const BOX={mint:{label:'Идеальная',desc:'Углы острые, плёнка чистая',m:1.3},excellent:{label:'Хорошая',desc:'Пара мелких вмятин',m:1.1},good:{label:'Средняя',desc:'Складки, затёртые углы',m:0.7},poor:{label:'Убитая',desc:'Смята, порвана',m:0.4}};
+const PROS={th:{label:'🏆 Treasure Hunt',v:0.40},sth:{label:'💎 Super Treasure Hunt',v:2.00},rare:{label:'🎨 Редкий цвет',v:0.50},detail:{label:'🖌️ Детализация',v:0.25},error:{label:'⚠️ Заводская ошибка',v:1.00},unpunched:{label:'📌 Острые углы',v:0.50},licensed:{label:'🚗 Реальная марка',v:0.30}};
+const CONS={scratches:{label:'Царапины',v:0.30},wheels:{label:'Потёртые колёса',v:0.15},yellow:{label:'Пожелтевшая плёнка',v:0.25},crooked:{label:'Погнутая ось',v:0.20}};
+const THEMES={onyx:{accent:'#a855f7',accent2:'#38bdf8',bg:'#02020a',name:'Onyx'},inferno:{accent:'#f97316',accent2:'#ef4444',bg:'#0a0505',name:'Inferno'},nebula:{accent:'#ec4899',accent2:'#a855f7',bg:'#0a0212',name:'Nebula'},ocean:{accent:'#0ea5e9',accent2:'#06b6d4',bg:'#020a12',name:'Ocean'},aurora:{accent:'#22c55e',accent2:'#06b6d4',bg:'#020f0a',name:'Aurora'},solar:{accent:'#eab308',accent2:'#f97316',bg:'#0a0802',name:'Solar'},sakura:{accent:'#f472b6',accent2:'#fb7185',bg:'#0f020a',name:'Sakura'},void:{accent:'#e5e5e5',accent2:'#737373',bg:'#000000',name:'Void'},custom:{accent:null,accent2:null,bg:null,name:'Своя'}};
 
-const BOX = {
-  mint:      { label: 'Идеальная', desc: 'Углы острые, плёнка чистая', m: 1.3 },
-  excellent: { label: 'Хорошая',   desc: 'Пара мелких вмятин', m: 1.1 },
-  good:      { label: 'Средняя',   desc: 'Складки, затёртые углы', m: 0.7 },
-  poor:      { label: 'Убитая',    desc: 'Смята, порвана, трещины', m: 0.4 },
-};
-
-const PROS = {
-  th:        { label: '🏆 Treasure Hunt',                 v: 0.40 },
-  sth:       { label: '💎 Super Treasure Hunt',           v: 2.00 },
-  rare:      { label: '🎨 Редкий цвет',                   v: 0.50 },
-  detail:    { label: '🖌️ Детализация/раскраска',         v: 0.25 },
-  error:     { label: '⚠️ Заводская ошибка',              v: 1.00 },
-  unpunched: { label: '📌 Острые углы',                   v: 0.50 },
-  licensed:  { label: '🚗 Реальная марка',                v: 0.30 },
-};
-
-const CONS = {
-  scratches: { label: 'Царапины на машинке',   v: 0.30 },
-  wheels:    { label: 'Потёртые колёса',       v: 0.15 },
-  yellow:    { label: 'Пожелтевшая плёнка',    v: 0.25 },
-  crooked:   { label: 'Погнутая ось',          v: 0.20 },
-};
-
-/* ===== БАЗА МОДЕЛЕЙ ===== */
-const HW_MODELS_DEFAULT = [
-  ["Ford Escort RS2000","2024-2025",1,1,"euro","sth"],
-  ["Nissan Skyline GT-R BNR34","2019",1,1,"jdm","sth"],
-  ["Nissan Skyline GT-R R32","2020",1,1,"jdm","sth"],
-  ["Nissan Skyline 2000GT-R","2018",1,1,"jdm","sth"],
-  ["Nissan 180SX Type X","2024",1,1,"jdm","sth"],
-  ["Nissan 300ZX Twin Turbo","2021",1,1,"jdm","sth"],
-  ["'62 Corvette","2013",1,1,"muscle","sth"],
-  ["'64 Corvette","2014",1,1,"muscle","sth"],
-  ["'69 Corvette","2014",1,1,"muscle","sth"],
-  ["Honda S2000","2012",1,1,"jdm","sth"],
-  ["Honda Civic Type R EK9","2022",1,1,"jdm","sth"],
-  ["Honda Civic EF","2019",1,1,"jdm","sth"],
-  ["'70 Chevy Chevelle SS","2014",1,1,"muscle","sth"],
-  ["'65 Chevy Impala","2014",1,1,"muscle","sth"],
-  ["'55 Chevy Bel Air Gasser","2014",1,1,"muscle","sth"],
-  ["'55 Chevy","2022",1,1,"muscle","sth"],
-  ["'57 Chevy","2020",1,1,"muscle","sth"],
-  ["'68 Chevy Nova","2018",1,1,"muscle","sth"],
-  ["'67 Camaro","2013",1,1,"muscle","sth"],
-  ["'69 Camaro","2008",1,1,"muscle","sth"],
-  ["'67 Chevelle SS 396","2012",1,1,"muscle","sth"],
-  ["'71 Mustang Funny Car","2011",1,1,"muscle","sth"],
-  ["'69 Ford Mustang Boss 302","2015",1,1,"muscle","sth"],
-  ["'71 Mustang Mach 1","2014",1,1,"muscle","sth"],
-  ["'07 Ford Mustang","2014",1,1,"muscle","sth"],
-  ["'65 Mustang 2+2 Fastback","2015",1,1,"muscle","sth"],
-  ["'69 Dodge Charger Daytona","2016",1,1,"muscle","sth"],
-  ["'70 Plymouth Superbird","2015",1,1,"muscle","sth"],
-  ["'70 Plymouth Road Runner","2008",1,1,"muscle","sth"],
-  ["'70 Ford Escort RS1600","2018",1,1,"euro","sth"],
-  ["Mercedes-Benz 300 SL","2023",1,1,"euro","sth"],
-  ["'71 Lamborghini Miura SV","2022",1,1,"euro","sth"],
-  ["Lamborghini Aventador J","2019",1,1,"euro","sth"],
-  ["Ferrari 599XX","2015",1,1,"euro","sth"],
-  ["Ferrari F40 Competizione","2026",1,1,"euro","sth"],
-  ["Porsche 993 GT2","2016",1,1,"euro","sth"],
-  ["Porsche 934.5","2018",1,1,"euro","sth"],
-  ["Porsche 935","2023",1,1,"euro","sth"],
-  ["Porsche 918 Spyder","2020",1,1,"euro","sth"],
-  ["Porsche 911 GT3 RS","2019",1,1,"euro","sth"],
-  ["Audi Sport Quattro","2020",1,1,"euro","sth"],
-  ["Audi R8 Spyder","2021",1,1,"euro","sth"],
-  ["BMW 3.0 CSL Race Car","2022",1,1,"euro","sth"],
-  ["BMW 507","2024",1,1,"euro","sth"],
-  ["Volkswagen T2 Pickup","2019",1,1,"euro","sth"],
-  ["'49 Ford F1","2021",1,1,"truck","sth"],
-  ["'64 Chevy Nova Wagon","2021",1,1,"muscle","sth"],
-  ["'64 Nova Wagon Gasser","2021",1,1,"muscle","sth"],
-  ["'68 Mercury Cougar","2019",1,1,"muscle","sth"],
-  ["'67 Camaro","2017",1,1,"muscle","sth"],
-  ["Corvette C7 Z06","2021",1,1,"muscle","sth"],
-  ["'95 Mazda RX-7","2021",1,1,"jdm","sth"],
-  ["'71 Datsun 510","2021",1,1,"jdm","sth"],
-  ["Mazda REPU","2019",1,1,"truck","sth"],
-  ["'17 Acura NSX","2017",1,1,"jdm","sth"],
-  ["'92 Ford Mustang","2019",1,1,"muscle","sth"],
-  ["'18 Dodge Challenger SRT Demon","2019",1,1,"muscle","sth"],
-  ["'68 COPO Camaro","2023",1,1,"muscle","sth"],
-  ["Toyota Supra","2015",1,1,"jdm","sth"],
-  ["Toyota AE-86 Corolla","2015",1,1,"jdm","sth"],
-  ["Datsun 240Z","2011",1,1,"jdm","sth"],
-  ["Datsun Bluebird Wagon 510","2023",1,1,"jdm","sth"],
-  // База обычных
-  ["Twin Mill","1969-2024",0,1,"legend",null],
-  ["Bone Shaker","2006-2024",0,1,"legend",null],
-  ["Deora II","2000-2024",0,1,"legend",null],
-  ["Batmobile 1989","1989",1,1,"lic",null],
-  ["DeLorean Back to Future","1981",1,1,"lic",null],
-  ["Ford Mustang 1965","1965",1,1,"muscle",null],
-  ["Chevrolet Camaro 1969","1969",1,1,"muscle",null],
-  ["Porsche 911","1963-2024",1,1,"euro",null],
-  ["Ferrari F40","1987-1992",1,1,"euro",null],
-  ["Lamborghini Countach","1974-1990",1,1,"euro",null],
+const HW_MODELS_DEFAULT=[
+  ["Ford Escort RS2000","2024",1,1,"euro","sth"],["Nissan Skyline GT-R BNR34","2019",1,1,"jdm","sth"],["Nissan Skyline R32","2020",1,1,"jdm","sth"],["Nissan Skyline 2000GT-R","2018",1,1,"jdm","sth"],["Honda S2000","2012",1,1,"jdm","sth"],["Honda Civic Type R EK9","2022",1,1,"jdm","sth"],["'62 Corvette","2013",1,1,"muscle","sth"],["'70 Chevy Chevelle SS","2014",1,1,"muscle","sth"],["'55 Chevy Bel Air Gasser","2014",1,1,"muscle","sth"],["'68 Chevy Nova","2018",1,1,"muscle","sth"],["'67 Camaro","2013",1,1,"muscle","sth"],["'69 Camaro","2008",1,1,"muscle","sth"],["'69 Ford Mustang Boss 302","2015",1,1,"muscle","sth"],["'69 Dodge Charger Daytona","2016",1,1,"muscle","sth"],["Mercedes-Benz 300 SL","2023",1,1,"euro","sth"],["'71 Lamborghini Miura SV","2022",1,1,"euro","sth"],["Ferrari 599XX","2015",1,1,"euro","sth"],["Porsche 993 GT2","2016",1,1,"euro","sth"],["Porsche 934.5","2018",1,1,"euro","sth"],["Porsche 918 Spyder","2020",1,1,"euro","sth"],["Audi Sport Quattro","2020",1,1,"euro","sth"],["BMW 3.0 CSL Race Car","2022",1,1,"euro","sth"],["'49 Ford F1","2021",1,1,"truck","sth"],["'68 Mercury Cougar","2019",1,1,"muscle","sth"],["Corvette C7 Z06","2021",1,1,"muscle","sth"],["'95 Mazda RX-7","2021",1,1,"jdm","sth"],["'71 Datsun 510","2021",1,1,"jdm","sth"],["'17 Acura NSX","2017",1,1,"jdm","sth"],["Nissan 300ZX Twin Turbo","2021",1,1,"jdm","sth"],["Toyota Supra","2015",1,1,"jdm","sth"],["Toyota AE-86 Corolla","2015",1,1,"jdm","sth"],["Datsun 240Z","2011",1,1,"jdm","sth"],
+  ["Twin Mill","1969-2024",0,1,"legend",null],["Bone Shaker","2006-2024",0,1,"legend",null],["Deora II","2000-2024",0,1,"legend",null],["Beach Bomb","1969",0,1,"legend",null],["Rodger Dodger","1974-2024",0,1,"legend",null],["Batmobile 1989","1989",1,1,"lic",null],["DeLorean Back to Future","1981",1,1,"lic",null],["Ecto-1 Ghostbusters","1959",1,1,"lic",null],
+  ["Nissan Skyline GT-R R34","1999-2002",1,1,"jdm",null],["Toyota Supra MK4","1993-2002",1,1,"jdm",null],["Mazda RX-7 FD","1992-2002",1,1,"jdm",null],["Honda NSX NA1","1990-2005",1,1,"jdm",null],["Subaru Impreza WRX STI","1994-2014",1,1,"jdm",null],["Mitsubishi Lancer Evolution","1992-2015",1,1,"jdm",null],
+  ["Ford Mustang 1965","1965",1,1,"muscle",null],["Chevrolet Camaro 1969","1969",1,1,"muscle",null],["Chevrolet Corvette C3","1968-1982",1,1,"muscle",null],["Dodge Charger 1969","1969",1,1,"muscle",null],["Dodge Challenger 1970","1970",1,1,"muscle",null],["Shelby Cobra 427","1965-1967",1,1,"muscle",null],
+  ["Porsche 911","1963-2024",1,1,"euro",null],["Ferrari F40","1987-1992",1,1,"euro",null],["Lamborghini Countach","1974-1990",1,1,"euro",null],["BMW M3 E30","1986-1991",1,1,"euro",null],["Mercedes 300SL","1954-1963",1,1,"euro",null],["Audi R8","2006-2024",1,1,"euro",null],
 ];
 
-/* ===== THEMES ===== */
-const THEMES = {
-  onyx:    { accent:'#a855f7', accent2:'#38bdf8', bg:'#02020a', name:'Onyx' },
-  inferno: { accent:'#f97316', accent2:'#ef4444', bg:'#0a0505', name:'Inferno' },
-  nebula:  { accent:'#ec4899', accent2:'#a855f7', bg:'#0a0212', name:'Nebula' },
-  ocean:   { accent:'#0ea5e9', accent2:'#06b6d4', bg:'#020a12', name:'Ocean' },
-  aurora:  { accent:'#22c55e', accent2:'#06b6d4', bg:'#020f0a', name:'Aurora' },
-  solar:   { accent:'#eab308', accent2:'#f97316', bg:'#0a0802', name:'Solar' },
-  sakura:  { accent:'#f472b6', accent2:'#fb7185', bg:'#0f020a', name:'Sakura' },
-  void:    { accent:'#e5e5e5', accent2:'#737373', bg:'#000000', name:'Void' },
-  custom:  { accent:null, accent2:null, bg:null, name:'Своя' },
-};
-
 /* ===== STATE ===== */
-let profiles = [];
-let activeProfileId = null;
-let userModels = [];
-let settings = {
-  mainlineBase: 300,
-  seriesMults: Object.fromEntries(Object.keys(SERIES_DEFAULTS).map(k => [k, SERIES_DEFAULTS[k].mult])),
-  pricingVersion: PRICING_VERSION,
-  theme: 'onyx',
-  accent: '#a855f7', accent2: '#38bdf8', bg: '#02020a',
-  wallpaper: 'stars', customWall: null, blur: 12,
-};
-let addState = { photo:null, series:'mainline', box:'mint', opened:false, pros:[], cons:[] };
+let addState={photo:null,series:'mainline',box:'mint',opened:false,pros:[],cons:[]};
+let collection=[];
+let userModels=[];
+let profile=null;
+let stories=[];
+let settings={mainlineBase:300,seriesMults:Object.fromEntries(Object.keys(SERIES_DEFAULTS).map(k=>[k,SERIES_DEFAULTS[k].mult])),pricingVersion:PRICING_VERSION,theme:'onyx',accent:'#a855f7',accent2:'#38bdf8',bg:'#02020a',wallpaper:'stars',customWall:null,blur:12};
+let authMode='login';
 
-/* ===== INIT PROFILES ===== */
-function initProfiles() {
-  try {
-    const saved = JSON.parse(localStorage.getItem('onyx_profiles_v18') || 'null');
-    if (saved && saved.profiles) {
-      profiles = saved.profiles;
-      activeProfileId = saved.activeProfileId || profiles[0]?.id;
-    }
-  } catch(e) { console.warn(e); }
-  
-  if (profiles.length === 0) {
-    // миграция со старой версии
-    const oldCollection = JSON.parse(localStorage.getItem('hw_collection') || '[]');
-    profiles = [{
-      id: 'p_' + Date.now(),
-      name: 'Я',
-      bio: 'Коллекционер Hot Wheels',
-      avatar: null,
-      banner: null,
-      accent: '#a855f7',
-      collection: oldCollection,
-      createdAt: new Date().toISOString(),
-    }];
-    activeProfileId = profiles[0].id;
-    // чистим старое
-    localStorage.removeItem('hw_collection');
-  }
-  
-  try {
-    userModels = JSON.parse(localStorage.getItem('hw_user_models') || '[]');
-    const savedSettings = JSON.parse(localStorage.getItem('onyx_settings_v17') || 'null');
-    if (savedSettings) settings = { ...settings, ...savedSettings };
-  } catch(e) {}
+/* ===== STORAGE ===== */
+function loadAll(){
+  try{
+    collection=JSON.parse(localStorage.getItem('hw_collection')||'[]');
+    userModels=JSON.parse(localStorage.getItem('hw_user_models')||'[]');
+    profile=JSON.parse(localStorage.getItem('onyx_profile')||'null');
+    stories=JSON.parse(localStorage.getItem('onyx_stories')||'[]');
+    const s=JSON.parse(localStorage.getItem('onyx_settings_v18')||'null');
+    if(s)settings={...settings,...s};
+  }catch(e){console.warn(e);}
+}
+loadAll();
+
+/* ===== AUTH ===== */
+function hashPass(p){let h=0;for(let i=0;i<p.length;i++){h=((h<<5)-h)+p.charCodeAt(i);h|=0;}return 'h'+h.toString(36);}
+
+function toggleAuthMode(){
+  authMode=authMode==='login'?'register':'login';
+  const isReg=authMode==='register';
+  document.getElementById('authBtn').textContent=isReg?'Создать профиль':'Войти';
+  document.getElementById('authToggle').innerHTML=isReg?'Уже есть профиль? <a onclick="toggleAuthMode()">Войти</a>':'Нет профиля? <a onclick="toggleAuthMode()">Создать</a>';
+  document.getElementById('authStatusLbl').style.display=isReg?'block':'none';
+  document.getElementById('authStatus').style.display=isReg?'block':'none';
+  document.getElementById('authSub').textContent=isReg?'создай свой гараж':'твой космический гараж';
 }
 
-function getActiveProfile() { return profiles.find(p => p.id === activeProfileId) || profiles[0]; }
-function getCollection() { const p = getActiveProfile(); return p ? (p.collection || []) : []; }
-function setCollection(arr) { const p = getActiveProfile(); if (p) p.collection = arr; }
+function showAuth(){
+  document.getElementById('authScreen').style.display='flex';
+  if(!profile){authMode='register';toggleAuthMode();}
+  else{authMode='login';toggleAuthMode();}
+}
+
+function hideAuth(){document.getElementById('authScreen').style.display='none';}
+
+document.getElementById('authAvatarInput').onchange=async e=>{
+  const f=e.target.files[0];if(!f)return;
+  const d=await compressImage(f,400);
+  document.getElementById('authAvatar').innerHTML=`<img src="${d}">`;
+  document.getElementById('authAvatar').dataset.img=d;
+};
+
+async function authSubmit(){
+  const user=document.getElementById('authUser').value.trim();
+  const pass=document.getElementById('authPass').value;
+  if(!user){alert('Введи имя');return;}
+  if(!pass||pass.length<3){alert('Пароль минимум 3 символа');return;}
+
+  if(authMode==='register'){
+    if(profile){alert('Профиль уже существует. Войди или удали.');return;}
+    const status=document.getElementById('authStatus').value.trim();
+    const av=document.getElementById('authAvatar').dataset.img||null;
+    profile={username:user,passwordHash:hashPass(pass),avatar:av,banner:null,status:status||'коллекционер Hot Wheels',createdAt:new Date().toISOString()};
+    localStorage.setItem('onyx_profile',JSON.stringify(profile));
+    persistAll();
+    hideAuth();
+    initApp();
+    showToast('🚀 Профиль создан','Добро пожаловать, '+user);
+  }else{
+    if(!profile){alert('Профиля нет. Создай.');return;}
+    if(hashPass(pass)!==profile.passwordHash){alert('Неверный пароль');return;}
+    hideAuth();
+    initApp();
+    showToast('👋 С возвращением',profile.username);
+  }
+}
+
+function logout(){
+  if(!confirm('Выйти из профиля?'))return;
+  hideAuth();
+  document.getElementById('authPass').value='';
+  document.getElementById('authScreen').scrollTop=0;
+}
+
+function deleteAccount(){
+  if(!confirm('УДАЛИТЬ профиль и ВСЕ данные? Это необратимо!'))return;
+  if(!confirm('Точно уверен? Коллекция и истории пропадут.'))return;
+  localStorage.removeItem('onyx_profile');
+  localStorage.removeItem('onyx_stories');
+  localStorage.removeItem('hw_collection');
+  localStorage.removeItem('hw_user_models');
+  localStorage.removeItem('onyx_settings_v18');
+  location.reload();
+}
+
+/* ===== PROFILE ===== */
+function renderProfile(){
+  if(!profile)return;
+  document.getElementById('profileName').textContent=profile.username;
+  document.getElementById('profileStatusEl').textContent=profile.status||'';
+  const av=document.getElementById('profileAvatar');
+  av.innerHTML=profile.avatar?`<img src="${profile.avatar}">`:'<span>👤</span>';
+  const hd=document.getElementById('profileHeader');
+  hd.style.background=profile.banner?`url(${profile.banner}) center/cover`:'linear-gradient(135deg,var(--accent),var(--accent2))';
+  hd.innerHTML='<div class="overlay">📷 изменить баннер</div>';
+  document.getElementById('statCars').textContent=collection.length;
+  document.getElementById('statValue').textContent=fmt(collection.reduce((s,c)=>s+c.price,0));
+  document.getElementById('statStories').textContent=stories.length;
+}
+
+document.getElementById('profileAvatarInput').onchange=async e=>{
+  const f=e.target.files[0];if(!f||!profile)return;
+  profile.avatar=await compressImage(f,400);
+  localStorage.setItem('onyx_profile',JSON.stringify(profile));
+  renderProfile();
+  showToast('✅ Аватар обновлён');
+};
+document.getElementById('profileBannerInput').onchange=async e=>{
+  const f=e.target.files[0];if(!f||!profile)return;
+  profile.banner=await compressImage(f,1200);
+  localStorage.setItem('onyx_profile',JSON.stringify(profile));
+  renderProfile();
+  showToast('✅ Баннер обновлён');
+};
+
+function editProfile(){
+  if(!profile)return;
+  const n=prompt('Новое имя:',profile.username);
+  if(n===null)return;
+  const s=prompt('Статус:',profile.status||'');
+  if(s===null)return;
+  profile.username=n.trim()||profile.username;
+  profile.status=s.trim();
+  localStorage.setItem('onyx_profile',JSON.stringify(profile));
+  renderProfile();
+  showToast('✅ Профиль обновлён');
+}
+
+/* ===== STORIES ===== */
+function renderStories(){
+  if(!profile)return;
+  const strip=document.getElementById('storiesStrip');
+  const feed=document.getElementById('storiesFeed');
+  // Add button
+  strip.innerHTML=`<div class="story-ring story-add" onclick="openStoryEditor()"><div class="ring"><div class="inner">＋</div></div><div class="label">Добавить</div></div>`;
+  // Story rings
+  const sorted=[...stories].sort((a,b)=>new Date(b.date)-new Date(a.date));
+  sorted.forEach(s=>{
+    const div=document.createElement('div');
+    div.className='story-ring';
+    div.onclick=()=>openStory(s.id);
+    div.innerHTML=`<div class="ring"><div class="inner"><img src="${s.photo}"></div></div><div class="label">${s.date.slice(5,10)}</div>`;
+    strip.appendChild(div);
+  });
+  // Feed
+  if(sorted.length===0){
+    feed.innerHTML=`<div class="empty-state" style="padding:40px 0"><div class="e">📸</div><div>Засними свою реакцию по новой машинке😊</div></div>`;
+  }else{
+    feed.innerHTML=sorted.map(s=>`
+      <div class="story-card">
+        <div class="sc-head">
+          <div class="sc-av">${profile.avatar?`<img src="${profile.avatar}">`:'👤'}</div>
+          <div class="sc-info">
+            <div class="sc-name">${escapeHtml(profile.username)}</div>
+            <div class="sc-date">${formatDate(s.date)}</div>
+          </div>
+          <button class="sc-del" onclick="deleteStory(${s.id})">Удалить</button>
+        </div>
+        <img class="sc-photo" src="${s.photo}" onclick="openStory(${s.id})">
+        ${s.text?`<div class="sc-text">${escapeHtml(s.text)}</div>`:''}
+      </div>
+    `).join('');
+  }
+}
+
+function openStoryEditor(){
+  const body=document.getElementById('storyBody');
+  body.innerHTML=`
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+      <h3 style="font-size:18px;font-weight:700">Новая история</h3>
+      <button onclick="closeStory()" class="modal-close">×</button>
+    </div>
+    <div class="text-center text-sm text-neutral-500 mb-4">Засними свою реакцию по новой машинке😊</div>
+    <div id="storyPhotoSlot" class="photo-slot mb-4" onclick="document.getElementById('storyPhotoInput').click()">
+      <div class="emoji-big mb-2">📸</div>
+      <div class="text-sm">Тапни чтобы сфоткать</div>
+    </div>
+    <input type="file" id="storyPhotoInput" accept="image/*" capture="environment" class="hidden">
+    <label class="lbl">Подпись (необязательно)</label>
+    <textarea id="storyText" rows="3" placeholder="Что нового?" maxlength="200"></textarea>
+    <button class="btn mt-4" onclick="saveStory()">💾 Опубликовать</button>
+  `;
+  document.getElementById('storyPhotoInput').onchange=async e=>{
+    const f=e.target.files[0];if(!f)return;
+    const d=await compressImage(f,900);
+    const slot=document.getElementById('storyPhotoSlot');
+    slot.innerHTML=`<img src="${d}">`;
+    slot.dataset.img=d;
+    slot.style.border='none';
+  };
+  document.getElementById('storyModal').classList.add('open');
+}
+
+function saveStory(){
+  const slot=document.getElementById('storyPhotoSlot');
+  const img=slot.dataset.img;
+  if(!img){alert('Добавь фото');return;}
+  const text=document.getElementById('storyText').value.trim();
+  stories.unshift({id:Date.now(),photo:img,text,date:new Date().toISOString()});
+  localStorage.setItem('onyx_stories',JSON.stringify(stories));
+  closeStory();
+  renderStories();
+  renderProfile();
+  showToast('✅ История опубликована');
+}
+
+function openStory(id){
+  const s=stories.find(x=>x.id===id);if(!s)return;
+  const body=document.getElementById('storyBody');
+  body.innerHTML=`
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+      <div style="display:flex;align-items:center;gap:10px">
+        <div class="sc-av">${profile.avatar?`<img src="${profile.avatar}">`:'👤'}</div>
+        <div>
+          <div class="sc-name">${escapeHtml(profile.username)}</div>
+          <div class="sc-date">${formatDate(s.date)}</div>
+        </div>
+      </div>
+      <button onclick="closeStory()" class="modal-close">×</button>
+    </div>
+    <img src="${s.photo}" style="width:100%;border-radius:12px">
+    ${s.text?`<div class="mt-4 text-sm">${escapeHtml(s.text)}</div>`:''}
+    <button class="btn btn-danger mt-4" onclick="deleteStory(${s.id},true)">🗑️ Удалить историю</button>
+  `;
+  document.getElementById('storyModal').classList.add('open');
+}
+
+function deleteStory(id,closeAfter){
+  if(!confirm('Удалить историю?'))return;
+  stories=stories.filter(s=>s.id!==id);
+  localStorage.setItem('onyx_stories',JSON.stringify(stories));
+  if(closeAfter)closeStory();
+  renderStories();
+  renderProfile();
+  showToast('🗑️ Удалено');
+}
+
+function closeStory(){document.getElementById('storyModal').classList.remove('open');}
+
+function formatDate(iso){
+  const d=new Date(iso);
+  const now=new Date();
+  const diff=(now-d)/1000;
+  if(diff<60)return 'только что';
+  if(diff<3600)return Math.floor(diff/60)+' мин назад';
+  if(diff<86400)return Math.floor(diff/3600)+' ч назад';
+  return d.toLocaleDateString('ru-RU')+' '+d.toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'});
+}
 
 /* ===== UTILS ===== */
-const fmt = n => Math.round(n).toLocaleString('ru-RU') + ' ₽';
-
-function calcPrice(base, series, box, opened, pros, cons) {
-  let p = base * (BOX[box]?.m ?? 1);
-  if (opened) p *= (SERIES_DEFAULTS[series]?.openLoss ?? 0.5);
-  const proSum = pros.reduce((s,k)=>s+(PROS[k]?.v||0), 0);
-  const conSum = cons.reduce((s,k)=>s+(CONS[k]?.v||0), 0);
-  p = p * (1 + proSum) * Math.max(0.1, 1 - conSum);
+const fmt=n=>Math.round(n).toLocaleString('ru-RU')+' ₽';
+function calcPrice(base,series,box,opened,pros,cons){
+  let p=base*(BOX[box]?.m??1);
+  if(opened)p*=(SERIES_DEFAULTS[series]?.openLoss??0.5);
+  const proSum=pros.reduce((s,k)=>s+(PROS[k]?.v||0),0);
+  const conSum=cons.reduce((s,k)=>s+(CONS[k]?.v||0),0);
+  p=p*(1+proSum)*Math.max(0.1,1-conSum);
   return Math.round(p);
 }
-
-function compressImage(file, maxSize=900) {
-  return new Promise(resolve => {
-    const r = new FileReader();
-    r.onload = e => {
-      const img = new Image();
-      img.onload = () => {
-        let { width:w, height:h } = img;
-        if (w > h && w > maxSize) { h *= maxSize/w; w = maxSize; }
-        else if (h > maxSize) { w *= maxSize/h; h = maxSize; }
-        const c = document.createElement('canvas');
-        c.width = w; c.height = h;
-        c.getContext('2d').drawImage(img, 0, 0, w, h);
-        resolve(c.toDataURL('image/jpeg', 0.82));
+function compressImage(file,maxSize=900){
+  return new Promise(resolve=>{
+    const r=new FileReader();
+    r.onload=e=>{
+      const img=new Image();
+      img.onload=()=>{
+        let{width:w,height:h}=img;
+        if(w>h&&w>maxSize){h*=maxSize/w;w=maxSize;}
+        else if(h>maxSize){w*=maxSize/h;h=maxSize;}
+        const c=document.createElement('canvas');
+        c.width=w;c.height=h;
+        c.getContext('2d').drawImage(img,0,0,w,h);
+        resolve(c.toDataURL('image/jpeg',0.82));
       };
-      img.src = e.target.result;
+      img.src=e.target.result;
     };
     r.readAsDataURL(file);
   });
 }
-
-function escapeHtml(s) { return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
-
-function showToast(title, subtitle) {
-  const t = document.getElementById('toast');
-  t.innerHTML = `${title}${subtitle ? `<small>${subtitle}</small>` : ''}`;
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 3000);
-}
-
-/* ===== STORAGE ===== */
-function persist() {
-  try {
-    localStorage.setItem('onyx_profiles_v18', JSON.stringify({ profiles, activeProfileId }));
-    localStorage.setItem('onyx_settings_v17', JSON.stringify(settings));
-    localStorage.setItem('hw_user_models', JSON.stringify(userModels));
-  } catch(e) { alert('Не хватило места. Удали старые машинки.'); }
-}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function showToast(t,sub){const el=document.getElementById('toast');el.innerHTML=`${t}${sub?`<small>${sub}</small>`:''}`;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),3500);}
+function hexA(h,a){const r=parseInt(h.slice(1,3),16),g=parseInt(h.slice(3,5),16),b=parseInt(h.slice(5,7),16);return`rgba(${r},${g},${b},${a})`;}
+function hexToRgb(h){const r=parseInt(h.slice(1,3),16),g=parseInt(h.slice(3,5),16),b=parseInt(h.slice(5,7),16);return`${r},${g},${b}`;}
 
 /* ===== THEME ===== */
-function applyTheme() {
-  const root = document.documentElement;
-  root.style.setProperty('--accent', settings.accent);
-  root.style.setProperty('--accent2', settings.accent2);
-  root.style.setProperty('--bg', settings.bg);
-  root.style.setProperty('--card-blur', settings.blur + 'px');
-  root.style.setProperty('--glow', `0 0 20px ${hexA(settings.accent, 0.4)}`);
-  root.style.setProperty('--border', hexA(settings.accent, 0.25));
-  root.style.setProperty('--card-bg', `rgba(${hexToRgb(settings.bg)}, 0.6)`);
-  let wp = 'none';
-  if (settings.wallpaper === 'stars') wp = generateStars();
-  else if (settings.wallpaper === 'nebula') wp = `radial-gradient(circle at 20% 30%, ${hexA(settings.accent, 0.3)} 0%, transparent 50%), radial-gradient(circle at 80% 70%, ${hexA(settings.accent2, 0.3)} 0%, transparent 50%), linear-gradient(180deg, ${settings.bg}, #000)`;
-  else if (settings.wallpaper === 'grid') wp = `linear-gradient(${hexA(settings.accent, 0.1)} 1px, transparent 1px), linear-gradient(90deg, ${hexA(settings.accent, 0.1)} 1px, transparent 1px), linear-gradient(180deg, ${settings.bg}, #000)`;
-  else if (settings.wallpaper === 'custom' && settings.customWall) wp = `url(${settings.customWall})`;
-  root.style.setProperty('--wallpaper', wp);
-  document.querySelector('meta[name="theme-color"]').setAttribute('content', settings.bg);
-  const pv = document.getElementById('wallPreview');
-  if (pv) pv.style.background = wp;
-  document.querySelectorAll('[data-wall]').forEach(el => {
-    el.classList.toggle('on', el.dataset.wall === settings.wallpaper);
-  });
-}
-
-function generateStars() {
-  const stars = [];
-  for (let i = 0; i < 80; i++) {
-    const x = Math.random()*100, y = Math.random()*100;
-    const s = Math.random()*2 + 1;
-    const o = Math.random()*0.7 + 0.3;
+function generateStars(){
+  const stars=[];
+  for(let i=0;i<80;i++){
+    const x=Math.random()*100,y=Math.random()*100,s=Math.random()*2+1,o=Math.random()*0.7+0.3;
     stars.push(`radial-gradient(circle ${s}px at ${x}% ${y}%, rgba(224,231,255,${o}) 0%, transparent 100%)`);
   }
-  return stars.join(',') + `, linear-gradient(180deg, ${settings.bg}, #000)`;
+  return stars.join(',')+`, linear-gradient(180deg, ${settings.bg}, #000)`;
+}
+function applyTheme(){
+  const root=document.documentElement;
+  root.style.setProperty('--accent',settings.accent);
+  root.style.setProperty('--accent2',settings.accent2);
+  root.style.setProperty('--bg',settings.bg);
+  root.style.setProperty('--card-blur',settings.blur+'px');
+  root.style.setProperty('--glow',`0 0 20px ${hexA(settings.accent,0.4)}`);
+  root.style.setProperty('--border',hexA(settings.accent,0.25));
+  root.style.setProperty('--card-bg',`rgba(${hexToRgb(settings.bg)},0.6)`);
+  let wp='none';
+  if(settings.wallpaper==='stars')wp=generateStars();
+  else if(settings.wallpaper==='nebula')wp=`radial-gradient(circle at 20% 30%, ${hexA(settings.accent,0.3)} 0%, transparent 50%), radial-gradient(circle at 80% 70%, ${hexA(settings.accent2,0.3)} 0%, transparent 50%), linear-gradient(180deg, ${settings.bg}, #000)`;
+  else if(settings.wallpaper==='grid')wp=`linear-gradient(${hexA(settings.accent,0.1)} 1px, transparent 1px), linear-gradient(90deg, ${hexA(settings.accent,0.1)} 1px, transparent 1px), linear-gradient(180deg, ${settings.bg}, #000)`;
+  else if(settings.wallpaper==='custom'&&settings.customWall)wp=`url(${settings.customWall})`;
+  root.style.setProperty('--wallpaper',wp);
+  document.querySelector('meta[name="theme-color"]').setAttribute('content',settings.bg);
+  const pv=document.getElementById('wallPreview');
+  if(pv)pv.style.background=wp;
+  document.querySelectorAll('[data-wall]').forEach(el=>el.classList.toggle('on',el.dataset.wall===settings.wallpaper));
 }
 
-function hexA(hex, a) {
-  const r = parseInt(hex.slice(1,3),16), g = parseInt(hex.slice(3,5),16), b = parseInt(hex.slice(5,7),16);
-  return `rgba(${r},${g},${b},${a})`;
-}
-function hexToRgb(hex) {
-  const r = parseInt(hex.slice(1,3),16), g = parseInt(hex.slice(3,5),16), b = parseInt(hex.slice(5,7),16);
-  return `${r},${g},${b}`;
+/* ===== NAV ===== */
+function goTo(page){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  const t=document.getElementById('page-'+page);
+  if(t)t.classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.toggle('active',b.dataset.page===page));
+  window.scrollTo(0,0);
 }
 
 /* ===== SEARCH ===== */
-function getQuery() {
-  const name = document.getElementById('addName').value.trim();
-  if (!name) { alert('Сначала напиши название'); return null; }
-  const state = addState.opened ? 'открытая loose' : 'в блистере MOC';
-  return `hot wheels ${name} цена ${state}`;
+function getQuery(){
+  const n=document.getElementById('addName').value.trim();
+  if(!n){alert('Сначала напиши название');return null;}
+  const st=addState.opened?'открытая loose':'в блистере MOC';
+  return`hot wheels ${n} цена ${st}`;
 }
-function searchYandex() {
-  const q = getQuery();
-  if (!q) return;
-  window.open('https://yandex.ru/search/?text=' + encodeURIComponent(q), '_blank');
-}
-function copyForAlice() {
-  const q = getQuery();
-  if (!q) return;
-  if (navigator.clipboard && navigator.clipboard.writeText) {
-    navigator.clipboard.writeText(q).then(
-      () => alert('✅ Скопировано!'),
-      () => prompt('Скопируй:', q)
-    );
-  } else prompt('Скопируй:', q);
+function searchYandex(){const q=getQuery();if(!q)return;window.open('https://yandex.ru/search/?text='+encodeURIComponent(q),'_blank');}
+function copyForAlice(){
+  const q=getQuery();if(!q)return;
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(q).then(()=>alert('✅ Скопировано!'),()=>prompt('Вручную:',q));
+  }else prompt('Вручную:',q);
 }
 
 /* ===== SUGGESTIONS ===== */
-const nameInput = document.getElementById('addName');
-const suggList = document.getElementById('suggList');
-nameInput.addEventListener('input', () => {
-  const q = nameInput.value.trim().toLowerCase();
-  if (q.length < 2) { suggList.classList.add('hidden'); return; }
-  const all = getAllModels();
-  const matches = all.filter(m => m.name.toLowerCase().includes(q)).slice(0, 8);
-  if (matches.length === 0) { suggList.classList.add('hidden'); return; }
-  suggList.innerHTML = matches.map(m => `
+const nameInput=document.getElementById('addName');
+const suggList=document.getElementById('suggList');
+nameInput.addEventListener('input',()=>{
+  const q=nameInput.value.trim().toLowerCase();
+  if(q.length<2){suggList.classList.add('hidden');return;}
+  const all=getAllModels();
+  const matches=all.filter(m=>m.name.toLowerCase().includes(q)).slice(0,8);
+  if(matches.length===0){suggList.classList.add('hidden');return;}
+  suggList.innerHTML=matches.map(m=>`
     <div class="sugg-item" data-name="${escapeHtml(m.name)}">
       <div>${escapeHtml(m.name)}
-        ${m.rarity==='sth' ? '<span class="badge-mini sth">💎STH</span>' : ''}
-        ${m.rarity==='th' ? '<span class="badge-mini th">🏆TH</span>' : ''}
-        ${m.licensed ? '<span class="badge-mini">LIC</span>' : ''}
-        ${m.user ? '<span class="badge-mini" style="background:#22c55e">МОЯ</span>' : ''}
+        ${m.rarity==='sth'?'<span class="badge-mini sth">💎STH</span>':''}
+        ${m.rarity==='th'?'<span class="badge-mini th">🏆TH</span>':''}
+        ${m.licensed?'<span class="badge-mini">LIC</span>':''}
+        ${m.user?'<span class="badge-mini" style="background:#22c55e">МОЯ</span>':''}
       </div>
-      <div class="m">${m.years || ''}${m.licensed ? ' · реальная' : ''}${m.detail ? ' · детализация' : ''}</div>
+      <div class="m">${m.years||''}${m.detail?' · детализация':''}</div>
     </div>
   `).join('');
   suggList.classList.remove('hidden');
-  suggList.querySelectorAll('.sugg-item').forEach(el => {
-    el.onclick = () => pickModel(el.dataset.name);
-  });
+  suggList.querySelectorAll('.sugg-item').forEach(el=>el.onclick=()=>pickModel(el.dataset.name));
 });
-document.addEventListener('click', e => {
-  if (!e.target.closest('.sugg')) suggList.classList.add('hidden');
-});
+document.addEventListener('click',e=>{if(!e.target.closest('.sugg'))suggList.classList.add('hidden');});
 
-function pickModel(name) {
-  const all = getAllModels();
-  const m = all.find(x => x.name === name);
-  if (!m) return;
-  nameInput.value = m.name;
+function pickModel(name){
+  const m=getAllModels().find(x=>x.name===name);if(!m)return;
+  nameInput.value=m.name;
   suggList.classList.add('hidden');
-  if (m.licensed && !addState.pros.includes('licensed')) addState.pros.push('licensed');
-  if (m.detail && !addState.pros.includes('detail')) addState.pros.push('detail');
-  if (m.rarity === 'sth' && !addState.pros.includes('sth')) addState.pros.push('sth');
-  if (m.rarity === 'th' && !addState.pros.includes('th')) addState.pros.push('th');
-  renderChips(); updatePrice();
-  let sub = m.years || '';
-  if (m.rarity==='sth') sub += ' · 💎 STH';
-  if (m.rarity==='th') sub += ' · 🏆 TH';
-  showToast(`✓ ${m.name}`, sub);
+  if(m.licensed&&!addState.pros.includes('licensed'))addState.pros.push('licensed');
+  if(m.detail&&!addState.pros.includes('detail'))addState.pros.push('detail');
+  if(m.rarity==='sth'&&!addState.pros.includes('sth'))addState.pros.push('sth');
+  if(m.rarity==='th'&&!addState.pros.includes('th'))addState.pros.push('th');
+  renderChips();updatePrice();
+  let sub=m.years||'';
+  if(m.rarity==='sth')sub+=' · 💎 STH';
+  if(m.rarity==='th')sub+=' · 🏆 TH';
+  showToast(`✓ ${m.name}`,sub);
 }
 
-/* ===== RENDER CHIPS ===== */
-function renderChips() {
-  const sc = document.getElementById('seriesChips');
-  sc.innerHTML = '';
-  for (const k in SERIES_DEFAULTS) {
-    const el = document.createElement('div');
-    el.className = 'chip' + (addState.series === k ? ' on series' : '');
-    el.textContent = SERIES_DEFAULTS[k].label;
-    el.onclick = () => { addState.series = k; renderChips(); updatePrice(); };
+function getAllModels(){
+  const def=HW_MODELS_DEFAULT.map(m=>({name:m[0],years:m[1],licensed:!!m[2],detail:!!m[3],category:m[4],rarity:m[5]||null,user:false}));
+  const usr=userModels.map(m=>({name:m[0],years:m[1],licensed:!!m[2],detail:!!m[3],category:m[4]||'user',rarity:m[5]||null,user:true}));
+  return[...def,...usr];
+}
+
+/* ===== CHIPS ===== */
+function renderChips(){
+  const sc=document.getElementById('seriesChips');sc.innerHTML='';
+  for(const k in SERIES_DEFAULTS){
+    const el=document.createElement('div');
+    el.className='chip'+(addState.series===k?' on series':'');
+    el.textContent=SERIES_DEFAULTS[k].label;
+    el.onclick=()=>{addState.series=k;renderChips();updatePrice();};
     sc.appendChild(el);
   }
-  const bl = document.getElementById('boxList');
-  bl.innerHTML = '';
-  for (const k in BOX) {
-    const el = document.createElement('div');
-    el.className = 'boxcard' + (addState.box === k ? ' on' : '');
-    el.innerHTML = `<div class="bt">${BOX[k].label}</div><div class="bd">${BOX[k].desc}</div><div class="bm">×${BOX[k].m} к цене</div>`;
-    el.onclick = () => { addState.box = k; renderChips(); updatePrice(); };
+  const bl=document.getElementById('boxList');bl.innerHTML='';
+  for(const k in BOX){
+    const el=document.createElement('div');
+    el.className='boxcard'+(addState.box===k?' on':'');
+    el.innerHTML=`<div class="bt">${BOX[k].label}</div><div class="bd">${BOX[k].desc}</div><div class="bm">×${BOX[k].m}</div>`;
+    el.onclick=()=>{addState.box=k;renderChips();updatePrice();};
     bl.appendChild(el);
   }
-  const pc = document.getElementById('proChips');
-  pc.innerHTML = '';
-  for (const k in PROS) {
-    const el = document.createElement('div');
-    el.className = 'chip' + (addState.pros.includes(k) ? ' on' : '');
-    el.textContent = PROS[k].label;
-    el.onclick = () => {
-      addState.pros = addState.pros.includes(k) ? addState.pros.filter(x=>x!==k) : [...addState.pros, k];
-      renderChips(); updatePrice();
-    };
+  const pc=document.getElementById('proChips');pc.innerHTML='';
+  for(const k in PROS){
+    const el=document.createElement('div');
+    el.className='chip'+(addState.pros.includes(k)?' on':'');
+    el.textContent=PROS[k].label;
+    el.onclick=()=>{addState.pros=addState.pros.includes(k)?addState.pros.filter(x=>x!==k):[...addState.pros,k];renderChips();updatePrice();};
     pc.appendChild(el);
   }
-  const cc = document.getElementById('conChips');
-  cc.innerHTML = '';
-  for (const k in CONS) {
-    const el = document.createElement('div');
-    el.className = 'chip' + (addState.cons.includes(k) ? ' on con' : '');
-    el.textContent = CONS[k].label;
-    el.onclick = () => {
-      addState.cons = addState.cons.includes(k) ? addState.cons.filter(x=>x!==k) : [...addState.cons, k];
-      renderChips(); updatePrice();
-    };
+  const cc=document.getElementById('conChips');cc.innerHTML='';
+  for(const k in CONS){
+    const el=document.createElement('div');
+    el.className='chip'+(addState.cons.includes(k)?' on con':'');
+    el.textContent=CONS[k].label;
+    el.onclick=()=>{addState.cons=addState.cons.includes(k)?addState.cons.filter(x=>x!==k):[...addState.cons,k];renderChips();updatePrice();};
     cc.appendChild(el);
   }
-  document.querySelectorAll('[data-open]').forEach(el => {
-    const isYes = el.dataset.open === 'yes';
-    el.classList.toggle('on', addState.opened === isYes);
-    el.onclick = () => { addState.opened = isYes; renderChips(); updatePrice(); };
+  document.querySelectorAll('[data-open]').forEach(el=>{
+    const isYes=el.dataset.open==='yes';
+    el.classList.toggle('on',addState.opened===isYes);
+    el.onclick=()=>{addState.opened=isYes;renderChips();updatePrice();};
   });
 }
 
-/* ===== PRICE ===== */
-function updatePrice() {
-  const marketVal = parseFloat(document.getElementById('addMarket').value) || 0;
-  const seriesMult = settings.seriesMults[addState.series] || 1;
-  const seriesBase = settings.mainlineBase * seriesMult;
-  const base = marketVal > 0 ? marketVal : seriesBase;
-  const price = calcPrice(base, addState.series, addState.box, addState.opened, addState.pros, addState.cons);
-  document.getElementById('addPrice').textContent = fmt(price);
-  const parts = [];
-  if (marketVal > 0) parts.push(`рынок ${Math.round(marketVal)} ₽`);
-  else parts.push(`база ${Math.round(seriesBase)} ₽`);
+function updatePrice(){
+  const mv=parseFloat(document.getElementById('addMarket').value)||0;
+  const sm=settings.seriesMults[addState.series]||1;
+  const sb=settings.mainlineBase*sm;
+  const base=mv>0?mv:sb;
+  const price=calcPrice(base,addState.series,addState.box,addState.opened,addState.pros,addState.cons);
+  document.getElementById('addPrice').textContent=fmt(price);
+  const parts=[];
+  if(mv>0)parts.push(`рынок ${Math.round(mv)} ₽`);else parts.push(`база ${Math.round(sb)} ₽`);
   parts.push(`коробка ×${BOX[addState.box].m}`);
-  if (addState.opened) parts.push(`открыта ×${SERIES_DEFAULTS[addState.series].openLoss}`);
-  const proSum = addState.pros.reduce((s,k)=>s+PROS[k].v, 0);
-  if (proSum > 0) parts.push(`плюсы +${Math.round(proSum*100)}%`);
-  const conSum = addState.cons.reduce((s,k)=>s+CONS[k].v, 0);
-  if (conSum > 0) parts.push(`минусы −${Math.round(conSum*100)}%`);
-  document.getElementById('addBreakdown').textContent = parts.join(' · ');
+  if(addState.opened)parts.push(`открыта ×${SERIES_DEFAULTS[addState.series].openLoss}`);
+  const ps=addState.pros.reduce((s,k)=>s+PROS[k].v,0);
+  if(ps>0)parts.push(`плюсы +${Math.round(ps*100)}%`);
+  const cs=addState.cons.reduce((s,k)=>s+CONS[k].v,0);
+  if(cs>0)parts.push(`минусы −${Math.round(cs*100)}%`);
+  document.getElementById('addBreakdown').textContent=parts.join(' · ');
 }
 
 /* ===== PHOTO ===== */
-document.getElementById('addPhotoInput').onchange = async e => {
-  const f = e.target.files[0];
-  if (!f) return;
-  addState.photo = await compressImage(f);
-  const slot = document.getElementById('addPhotoSlot');
-  slot.innerHTML = `<img src="${addState.photo}">`;
-  slot.style.border = 'none';
+document.getElementById('addPhotoInput').onchange=async e=>{
+  const f=e.target.files[0];if(!f)return;
+  addState.photo=await compressImage(f);
+  const s=document.getElementById('addPhotoSlot');
+  s.innerHTML=`<img src="${addState.photo}">`;s.style.border='none';
 };
-document.getElementById('addPhotoSlot').onclick = () => document.getElementById('addPhotoInput').click();
+document.getElementById('addPhotoSlot').onclick=()=>document.getElementById('addPhotoInput').click();
 
-/* ===== SAVE CAR ===== */
-function saveCar() {
-  const name = document.getElementById('addName').value.trim();
-  if (!name) { alert('Напиши название'); return; }
-  if (!addState.photo) { alert('Добавь фото'); return; }
-  const marketVal = parseFloat(document.getElementById('addMarket').value) || 0;
-  const seriesMult = settings.seriesMults[addState.series] || 1;
-  const seriesBase = settings.mainlineBase * seriesMult;
-  const base = marketVal > 0 ? marketVal : seriesBase;
-  const car = {
-    id: Date.now(), name, photo: addState.photo, myPhoto: null,
-    series: addState.series, marketPrice: marketVal,
-    box: addState.box, opened: addState.opened,
-    pros: [...addState.pros], cons: [...addState.cons],
-    baseAtSave: base, seriesBaseAtSave: seriesBase,
-    price: calcPrice(base, addState.series, addState.box, addState.opened, addState.pros, addState.cons),
-    createdAt: new Date().toISOString(), pricingVersion: PRICING_VERSION,
-  };
-  const col = getCollection();
-  col.unshift(car);
-  setCollection(col);
-  persist();
-  addState = { photo:null, series:'mainline', box:'mint', opened:false, pros:[], cons:[] };
-  document.getElementById('addName').value = '';
-  document.getElementById('addMarket').value = '';
-  const slot = document.getElementById('addPhotoSlot');
-  slot.innerHTML = `<div class="emoji-big mb-2">📷</div><div class="text-sm">Тапни чтобы сфоткать</div>`;
-  slot.style.border = '2px dashed var(--border)';
-  document.getElementById('addPhotoInput').value = '';
-  renderChips(); updatePrice(); renderCollection(); goTo('collection');
+/* ===== SAVE ===== */
+function saveCar(){
+  const name=document.getElementById('addName').value.trim();
+  if(!name){alert('Напиши название');return;}
+  if(!addState.photo){alert('Добавь фото');return;}
+  const mv=parseFloat(document.getElementById('addMarket').value)||0;
+  const sm=settings.seriesMults[addState.series]||1;
+  const sb=settings.mainlineBase*sm;
+  const base=mv>0?mv:sb;
+  const car={id:Date.now(),name,photo:addState.photo,myPhoto:null,series:addState.series,marketPrice:mv,box:addState.box,opened:addState.opened,pros:[...addState.pros],cons:[...addState.cons],baseAtSave:base,seriesBaseAtSave:sb,price:calcPrice(base,addState.series,addState.box,addState.opened,addState.pros,addState.cons),createdAt:new Date().toISOString(),pricingVersion:PRICING_VERSION};
+  collection.unshift(car);
+  persistAll();
+  addState={photo:null,series:'mainline',box:'mint',opened:false,pros:[],cons:[]};
+  document.getElementById('addName').value='';
+  document.getElementById('addMarket').value='';
+  const slot=document.getElementById('addPhotoSlot');
+  slot.innerHTML=`<div class="emoji-big mb-2">📷</div><div class="text-sm">Тапни чтобы сфоткать</div>`;
+  slot.style.border='2px dashed var(--border)';
+  document.getElementById('addPhotoInput').value='';
+  renderChips();updatePrice();renderCollection();renderProfile();goTo('collection');
+}
+
+function persistAll(){
+  try{
+    localStorage.setItem('hw_collection',JSON.stringify(collection));
+    localStorage.setItem('onyx_settings_v18',JSON.stringify(settings));
+    localStorage.setItem('hw_user_models',JSON.stringify(userModels));
+    if(profile)localStorage.setItem('onyx_profile',JSON.stringify(profile));
+    localStorage.setItem('onyx_stories',JSON.stringify(stories));
+  }catch(e){alert('Не хватило места.');}
 }
 
 /* ===== COLLECTION ===== */
-function renderCollection() {
-  const grid = document.getElementById('collectionGrid');
-  const empty = document.getElementById('collectionEmpty');
-  const col = getCollection();
-  const total = col.reduce((s,c)=>s+c.price, 0);
-  document.getElementById('headerTotal').textContent = fmt(total);
-  if (col.length === 0) {
-    grid.innerHTML = '';
-    empty.classList.remove('hidden');
-    return;
-  }
+function renderCollection(){
+  const grid=document.getElementById('collectionGrid');
+  const empty=document.getElementById('collectionEmpty');
+  const total=collection.reduce((s,c)=>s+c.price,0);
+  document.getElementById('headerTotal').textContent=fmt(total);
+  if(collection.length===0){grid.innerHTML='';empty.classList.remove('hidden');return;}
   empty.classList.add('hidden');
-  grid.innerHTML = '';
-  col.forEach(car => {
-    const el = document.createElement('div');
-    el.className = 'card overflow-hidden cursor-pointer';
-    el.onclick = () => openDetail(car.id);
-    const sInfo = SERIES_DEFAULTS[car.series] || SERIES_DEFAULTS.custom;
-    el.innerHTML = `
+  grid.innerHTML='';
+  collection.forEach(car=>{
+    const el=document.createElement('div');
+    el.className='card overflow-hidden cursor-pointer';
+    el.onclick=()=>openDetail(car.id);
+    const sInfo=SERIES_DEFAULTS[car.series]||SERIES_DEFAULTS.custom;
+    el.innerHTML=`
       <div class="aspect-square relative" style="background:rgba(0,0,0,.3)">
         <img src="${car.photo}" style="width:100%;height:100%;object-fit:cover">
-        <div class="absolute top-2 left-2 badge" style="background:${sInfo.color}">${(sInfo.label || '').split(' ')[0]}</div>
+        <div class="absolute top-2 left-2 badge" style="background:${sInfo.color}">${(sInfo.label||'').split(' ')[0]}</div>
       </div>
       <div class="p-3">
         <div class="text-sm font-semibold truncate">${escapeHtml(car.name)}</div>
         <div class="text-accent font-bold text-sm mt-1">${fmt(car.price)}</div>
-      </div>
-    `;
+      </div>`;
     grid.appendChild(el);
   });
 }
 
 /* ===== DETAIL ===== */
-function openDetail(id) {
-  const col = getCollection();
-  const car = col.find(c => c.id === id);
-  if (!car) return;
-  const sInfo = SERIES_DEFAULTS[car.series] || SERIES_DEFAULTS.custom;
-  const breakdown = [];
-  if (car.marketPrice > 0) breakdown.push(`🌐 Рынок: ${Math.round(car.marketPrice)} ₽`);
-  else breakdown.push(`База «${sInfo.label}»: ${Math.round(car.seriesBaseAtSave)} ₽`);
-  breakdown.push(`Коробка «${BOX[car.box].label}»: ×${BOX[car.box].m}`);
-  if (car.opened) breakdown.push(`Открыта: ×${sInfo.openLoss}`);
-  car.pros.forEach(k => breakdown.push(`+ ${PROS[k].label}: +${Math.round(PROS[k].v*100)}%`));
-  car.cons.forEach(k => breakdown.push(`− ${CONS[k].label}: −${Math.round(CONS[k].v*100)}%`));
-  const body = document.getElementById('detailBody');
-  body.innerHTML = `
+function openDetail(id){
+  const car=collection.find(c=>c.id===id);if(!car)return;
+  const sInfo=SERIES_DEFAULTS[car.series]||SERIES_DEFAULTS.custom;
+  const bd=[];
+  if(car.marketPrice>0)bd.push(`🌐 Рынок: ${Math.round(car.marketPrice)} ₽`);
+  else bd.push(`База «${sInfo.label}»: ${Math.round(car.seriesBaseAtSave)} ₽`);
+  bd.push(`Коробка «${BOX[car.box].label}»: ×${BOX[car.box].m}`);
+  if(car.opened)bd.push(`Открыта: ×${sInfo.openLoss}`);
+  car.pros.forEach(k=>bd.push(`+ ${PROS[k].label}: +${Math.round(PROS[k].v*100)}%`));
+  car.cons.forEach(k=>bd.push(`− ${CONS[k].label}: −${Math.round(CONS[k].v*100)}%`));
+  const body=document.getElementById('detailBody');
+  body.innerHTML=`
     <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px">
       <div>
         <h3 style="font-size:20px;font-weight:700;padding-right:16px">${escapeHtml(car.name)}</h3>
@@ -870,343 +935,79 @@ function openDetail(id) {
     <div class="grid2 mb-4">
       <div>
         <div class="text-xs text-neutral-500 mb-1">Фото</div>
-        <div class="aspect-square rounded-xl overflow-hidden" style="background:rgba(0,0,0,.3)">
-          <img src="${car.photo}" style="width:100%;height:100%;object-fit:cover">
-        </div>
+        <div class="aspect-square rounded-xl overflow-hidden" style="background:rgba(0,0,0,.3)"><img src="${car.photo}" style="width:100%;height:100%;object-fit:cover"></div>
       </div>
       <div>
         <div class="text-xs text-neutral-500 mb-1">Моё фото</div>
-        <div id="myPhotoSlot" class="aspect-square rounded-xl overflow-hidden cursor-pointer" style="background:rgba(0,0,0,.3);border:2px dashed var(--border);display:flex;align-items:center;justify-content:center;color:var(--text-muted);font-size:30px">
-          ${car.myPhoto ? `<img src="${car.myPhoto}" style="width:100%;height:100%;object-fit:cover">` : '📷'}
-        </div>
+        <div id="myPhotoSlot" class="aspect-square rounded-xl overflow-hidden cursor-pointer" style="background:rgba(0,0,0,.3);border:2px dashed var(--border);display:flex;align-items:center;justify-content:center;color:var(--text-muted);font-size:30px">${car.myPhoto?`<img src="${car.myPhoto}" style="width:100%;height:100%;object-fit:cover">`:'📷'}</div>
         <input type="file" id="myPhotoInput" accept="image/*" capture="environment" class="hidden">
       </div>
     </div>
     <div class="card p-4 mb-3">
-      <div class="text-xs text-neutral-500 uppercase tracking-wide mb-3">Расчёт</div>
-      <div class="text-sm space-y-1">${breakdown.map(b => `<div class="text-neutral-400">${b}</div>`).join('')}</div>
+      <div class="text-xs text-neutral-500 uppercase tracking-wide mb-3">Расчёт цены</div>
+      <div class="text-sm space-y-1">${bd.map(b=>`<div class="text-neutral-400">${b}</div>`).join('')}</div>
       <div style="display:flex;justify-content:space-between;align-items:center;margin-top:16px;padding-top:16px;border-top:1px solid var(--border)">
-        <span class="text-neutral-400">Итого</span><span class="price-total">${fmt(car.price)}</span>
+        <span class="text-neutral-400">Итого</span>
+        <span class="price-total">${fmt(car.price)}</span>
       </div>
     </div>
     <div class="flex-gap">
       <button class="btn btn-blue btn-sm" onclick="recalcCar(${car.id})">🔄 Пересчитать</button>
       <button class="btn btn-ghost btn-sm" onclick="deleteCar(${car.id})">🗑️ Удалить</button>
-    </div>
-  `;
-  document.getElementById('myPhotoSlot').onclick = () => document.getElementById('myPhotoInput').click();
-  document.getElementById('myPhotoInput').onchange = async e => {
-    const f = e.target.files[0];
-    if (!f) return;
-    car.myPhoto = await compressImage(f);
-    persist();
-    document.getElementById('myPhotoSlot').innerHTML = `<img src="${car.myPhoto}" style="width:100%;height:100%;object-fit:cover">`;
+    </div>`;
+  document.getElementById('myPhotoSlot').onclick=()=>document.getElementById('myPhotoInput').click();
+  document.getElementById('myPhotoInput').onchange=async e=>{
+    const f=e.target.files[0];if(!f)return;
+    car.myPhoto=await compressImage(f);persistAll();
+    document.getElementById('myPhotoSlot').innerHTML=`<img src="${car.myPhoto}" style="width:100%;height:100%;object-fit:cover">`;
   };
   document.getElementById('detailModal').classList.add('open');
 }
-
-function closeDetail() { document.getElementById('detailModal').classList.remove('open'); }
-
-function recalcCar(id) {
-  const col = getCollection();
-  const car = col.find(c => c.id === id);
-  if (!car) return;
-  const seriesMult = settings.seriesMults[car.series] || 1;
-  const seriesBase = settings.mainlineBase * seriesMult;
-  car.seriesBaseAtSave = seriesBase;
-  const base = car.marketPrice > 0 ? car.marketPrice : seriesBase;
-  car.baseAtSave = base;
-  car.price = calcPrice(base, car.series, car.box, car.opened, car.pros, car.cons);
-  setCollection(col); persist(); renderCollection(); openDetail(id);
+function closeDetail(){document.getElementById('detailModal').classList.remove('open');}
+function recalcCar(id){
+  const car=collection.find(c=>c.id===id);if(!car)return;
+  const sm=settings.seriesMults[car.series]||1;
+  const sb=settings.mainlineBase*sm;
+  car.seriesBaseAtSave=sb;
+  const base=car.marketPrice>0?car.marketPrice:sb;
+  car.baseAtSave=base;
+  car.price=calcPrice(base,car.series,car.box,car.opened,car.pros,car.cons);
+  persistAll();renderCollection();openDetail(id);
+}
+function deleteCar(id){
+  if(!confirm('Удалить машинку?'))return;
+  collection=collection.filter(c=>c.id!==id);
+  persistAll();closeDetail();renderCollection();renderProfile();
 }
 
-function deleteCar(id) {
-  if (!confirm('Удалить машинку?')) return;
-  const col = getCollection().filter(c => c.id !== id);
-  setCollection(col); persist(); closeDetail(); renderCollection();
-}
-
-/* ===== PROFILES ===== */
-function renderProfiles() {
-  const list = document.getElementById('profilesList');
-  list.innerHTML = '';
-  profiles.forEach(p => {
-    const total = (p.collection || []).reduce((s,c)=>s+c.price, 0);
-    const isActive = p.id === activeProfileId;
-    const el = document.createElement('div');
-    el.className = 'profile-card' + (isActive ? ' active' : '');
-    el.innerHTML = `
-      <div class="profile-banner" style="${p.banner ? '' : `background:linear-gradient(135deg, ${p.accent || '#a855f7'}, #38bdf8)`}">
-        ${p.banner ? `<img src="${p.banner}">` : ''}
-        <div class="profile-avatar" style="background:${p.accent || '#a855f7'}">
-          ${p.avatar ? `<img src="${p.avatar}">` : '👤'}
-        </div>
-      </div>
-      <div class="profile-body">
-        <div class="profile-name">${escapeHtml(p.name)} ${isActive ? '<span style="color:var(--accent);font-size:12px">● активный</span>' : ''}</div>
-        <div class="profile-bio">${escapeHtml(p.bio || 'Без описания')}</div>
-        <div class="profile-stats">
-          <div class="stat"><b>${(p.collection || []).length}</b><span>машинок</span></div>
-          <div class="stat"><b>${fmt(total)}</b><span>стоимость</span></div>
-        </div>
-      </div>
-    `;
-    el.onclick = () => {
-      if (isActive) {
-        openProfileEditor(p.id);
-      } else {
-        activeProfileId = p.id;
-        persist(); renderProfiles(); renderCollection();
-        showToast(`👤 Профиль: ${p.name}`, `Коллекция: ${(p.collection||[]).length} машинок`);
-      }
-    };
-    el.oncontextmenu = (e) => { e.preventDefault(); openProfileEditor(p.id); };
-    list.appendChild(el);
-  });
-}
-
-function openProfileEditor(profileId) {
-  const isNew = !profileId;
-  const p = isNew ? {
-    id: 'p_' + Date.now(), name: '', bio: '', avatar: null, banner: null,
-    accent: settings.accent, collection: [], createdAt: new Date().toISOString()
-  } : profiles.find(x => x.id === profileId);
-  if (!p) return;
-
-  const body = document.getElementById('profileBody');
-  body.innerHTML = `
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
-      <h3 style="font-size:18px;font-weight:700">${isNew ? '➕ Новый профиль' : '✏️ Редактировать'}</h3>
-      <button onclick="closeProfileEditor()" class="modal-close">×</button>
-    </div>
-
-    <div class="avatar-edit" id="avatarEdit">
-      ${p.avatar ? `<img src="${p.avatar}">` : '📷'}
-    </div>
-    <input type="file" id="avatarInput" accept="image/*" class="hidden">
-    <div class="text-center text-xs text-neutral-500 mt-2">Аватар (тапни)</div>
-
-    <div class="banner-edit" id="bannerEdit">
-      ${p.banner ? `<img src="${p.banner}">` : '🖼️ Баннер'}
-    </div>
-    <input type="file" id="bannerInput" accept="image/*" class="hidden">
-    <div class="text-center text-xs text-neutral-500 mt-2">Баннер (тапни)</div>
-
-    <label class="lbl">Имя</label>
-    <input id="profName" maxlength="40" value="${escapeHtml(p.name)}" placeholder="Твоё имя">
-
-    <label class="lbl">Bio</label>
-    <textarea id="profBio" maxlength="200" placeholder="Коллекционирую с 2020...">${escapeHtml(p.bio || '')}</textarea>
-
-    <label class="lbl">Акцентный цвет</label>
-    <div class="profile-color-picker" id="colorPicker">
-      ${['#a855f7','#38bdf8','#f97316','#ef4444','#22c55e','#eab308','#ec4899','#06b6d4'].map(c => 
-        `<div class="color-dot ${p.accent === c ? 'on' : ''}" data-color="${c}" style="background:${c}"></div>`
-      ).join('')}
-    </div>
-
-    <button class="btn mt-6" onclick="saveProfile('${p.id}', ${isNew})">💾 Сохранить</button>
-    ${!isNew && profiles.length > 1 ? `<button class="btn btn-red mt-3" onclick="deleteProfile('${p.id}')">🗑️ Удалить профиль</button>` : ''}
-    ${!isNew ? `<button class="btn btn-ghost mt-3" onclick="makeActive('${p.id}')">👁️ Сделать активным</button>` : ''}
-  `;
-
-  // temp storage for photos
-  window._editProfile = { ...p };
-
-  document.getElementById('avatarEdit').onclick = () => document.getElementById('avatarInput').click();
-  document.getElementById('avatarInput').onchange = async e => {
-    const f = e.target.files[0]; if (!f) return;
-    window._editProfile.avatar = await compressImage(f, 400);
-    document.getElementById('avatarEdit').innerHTML = `<img src="${window._editProfile.avatar}">`;
-  };
-  document.getElementById('bannerEdit').onclick = () => document.getElementById('bannerInput').click();
-  document.getElementById('bannerInput').onchange = async e => {
-    const f = e.target.files[0]; if (!f) return;
-    window._editProfile.banner = await compressImage(f, 1200);
-    document.getElementById('bannerEdit').innerHTML = `<img src="${window._editProfile.banner}">`;
-  };
-  document.querySelectorAll('#colorPicker .color-dot').forEach(dot => {
-    dot.onclick = () => {
-      window._editProfile.accent = dot.dataset.color;
-      document.querySelectorAll('#colorPicker .color-dot').forEach(d => d.classList.toggle('on', d === dot));
-    };
-  });
-
-  document.getElementById('profileModal').classList.add('open');
-}
-
-function closeProfileEditor() { document.getElementById('profileModal').classList.remove('open'); }
-
-function saveProfile(id, isNew) {
-  const name = document.getElementById('profName').value.trim();
-  if (!name) { alert('Введи имя'); return; }
-  const bio = document.getElementById('profBio').value.trim();
-  const tmp = window._editProfile;
-  if (isNew) {
-    profiles.push({
-      id: tmp.id, name, bio,
-      avatar: tmp.avatar, banner: tmp.banner,
-      accent: tmp.accent || settings.accent,
-      collection: [],
-      createdAt: new Date().toISOString(),
-    });
-  } else {
-    const p = profiles.find(x => x.id === id);
-    if (!p) return;
-    p.name = name; p.bio = bio;
-    p.avatar = tmp.avatar; p.banner = tmp.banner;
-    p.accent = tmp.accent || p.accent;
-  }
-  persist(); renderProfiles(); closeProfileEditor();
-  showToast('✅ Профиль сохранён', name);
-}
-
-function deleteProfile(id) {
-  if (profiles.length <= 1) { alert('Нельзя удалить последний профиль'); return; }
-  const p = profiles.find(x => x.id === id);
-  if (!confirm(`Удалить профиль "${p.name}" со всей коллекцией?`)) return;
-  profiles = profiles.filter(x => x.id !== id);
-  if (activeProfileId === id) activeProfileId = profiles[0].id;
-  persist(); renderProfiles(); renderCollection(); closeProfileEditor();
-  showToast('🗑️ Профиль удалён');
-}
-
-function makeActive(id) {
-  activeProfileId = id;
-  persist(); renderProfiles(); renderCollection(); closeProfileEditor();
-  showToast('👁️ Профиль активирован');
-}
-
-/* ===== EXPORT/IMPORT PROFILE ===== */
-function exportCurrentProfile() {
-  const p = getActiveProfile();
-  if (!p) return;
-  const data = JSON.stringify({ type: 'onyx-profile', version: 1, profile: p }, null, 2);
-  const blob = new Blob([data], { type: 'application/json' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = `onyx-profile-${p.name.replace(/\s+/g,'_')}-${new Date().toISOString().slice(0,10)}.json`;
-  a.click(); URL.revokeObjectURL(url);
-  showToast('📤 Профиль экспортирован');
-}
-
-function importProfile() {
-  const inp = document.createElement('input');
-  inp.type = 'file'; inp.accept = 'application/json';
-  inp.onchange = e => {
-    const f = e.target.files[0]; if (!f) return;
-    const r = new FileReader();
-    r.onload = ev => {
-      try {
-        const data = JSON.parse(ev.target.result);
-        if (data.type !== 'onyx-profile' || !data.profile) throw new Error('Неверный формат');
-        const p = data.profile;
-        p.id = 'p_' + Date.now();
-        p.name = p.name + ' (импорт)';
-        profiles.push(p);
-        persist(); renderProfiles();
-        showToast('📥 Профиль импортирован', p.name);
-      } catch(err) { alert('❌ Ошибка: ' + err.message); }
-    };
-    r.readAsText(f);
-  };
-  inp.click();
-}
-
-/* ===== EXPORT/IMPORT ALL ===== */
-function exportAll() {
-  const data = JSON.stringify({ collection: getCollection(), profiles, activeProfileId, settings, userModels, exportedAt: new Date().toISOString() }, null, 2);
-  const blob = new Blob([data], { type: 'application/json' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url; a.download = `onyx-hw-full-${new Date().toISOString().slice(0,10)}.json`;
-  a.click(); URL.revokeObjectURL(url);
-  showToast('📤 Экспортировано');
-}
-
-function importAll() {
-  const inp = document.createElement('input');
-  inp.type = 'file'; inp.accept = 'application/json';
-  inp.onchange = e => {
-    const f = e.target.files[0]; if (!f) return;
-    const r = new FileReader();
-    r.onload = ev => {
-      try {
-        const data = JSON.parse(ev.target.result);
-        if (data.profiles) { profiles = data.profiles; activeProfileId = data.activeProfileId || profiles[0].id; }
-        if (data.settings) settings = { ...settings, ...data.settings };
-        if (data.userModels) userModels = data.userModels;
-        if (data.collection && profiles.length > 0) {
-          // старое — в активный профиль
-          getActiveProfile().collection = data.collection;
-        }
-        persist(); applyTheme(); renderProfiles(); renderCollection(); renderSeriesEditor(); renderThemeGrid(); updateModelCount();
-        document.getElementById('setMainlineBase').value = settings.mainlineBase;
-        alert('✅ Импортировано!');
-      } catch(err) { alert('❌ Ошибка: ' + err.message); }
-    };
-    r.readAsText(f);
-  };
-  inp.click();
-}
-
-/* ===== NAV ===== */
-function goTo(page) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  const target = document.getElementById('page-' + page);
-  if (target) target.classList.add('active');
-  document.querySelectorAll('.nav-btn').forEach(b => {
-    b.classList.toggle('active', b.dataset.page === page);
-  });
-  if (page === 'profiles') renderProfiles();
-  window.scrollTo(0, 0);
-}
-
-/* ===== SERIES EDITOR ===== */
-function renderSeriesEditor() {
-  const el = document.getElementById('seriesEditor');
-  el.innerHTML = '';
-  for (const k in SERIES_DEFAULTS) {
-    const row = document.createElement('div');
-    row.className = 'series-row';
-    row.innerHTML = `
-      <div class="dot" style="background:${SERIES_DEFAULTS[k].color}"></div>
-      <div class="name">${SERIES_DEFAULTS[k].label}</div>
-      <input type="number" min="0" step="0.1" data-series="${k}" value="${settings.seriesMults[k] ?? SERIES_DEFAULTS[k].mult}">
-    `;
+/* ===== SETTINGS ===== */
+function renderSeriesEditor(){
+  const el=document.getElementById('seriesEditor');el.innerHTML='';
+  for(const k in SERIES_DEFAULTS){
+    const row=document.createElement('div');row.className='series-row';
+    row.innerHTML=`<div class="dot" style="background:${SERIES_DEFAULTS[k].color}"></div><div class="name">${SERIES_DEFAULTS[k].label}</div><input type="number" min="0" step="0.1" data-series="${k}" value="${settings.seriesMults[k]??SERIES_DEFAULTS[k].mult}">`;
     el.appendChild(row);
   }
-  el.querySelectorAll('input[data-series]').forEach(inp => {
-    inp.oninput = () => {
-      const k = inp.dataset.series;
-      settings.seriesMults[k] = Math.max(0, parseFloat(inp.value) || 0);
-      persist(); updatePrice(); renderCollection();
+  el.querySelectorAll('input[data-series]').forEach(inp=>{
+    inp.oninput=()=>{
+      const k=inp.dataset.series;
+      settings.seriesMults[k]=Math.max(0,parseFloat(inp.value)||0);
+      persistAll();updatePrice();renderCollection();
     };
   });
 }
-
-function updateModelCount() {
-  const all = getAllModels();
-  document.getElementById('modelCountInfo').textContent = `Всего: ${all.length} моделей (${HW_MODELS_DEFAULT.length} базовых + ${userModels.length} своих)`;
+function updateModelCount(){
+  const all=getAllModels();
+  document.getElementById('modelCountInfo').textContent=`Всего: ${all.length} (${HW_MODELS_DEFAULT.length} базовых + ${userModels.length} своих)`;
 }
-
-/* ===== MODELS ===== */
-function getAllModels() {
-  const def = HW_MODELS_DEFAULT.map(m => ({ name:m[0], years:m[1], licensed:!!m[2], detail:!!m[3], category:m[4], rarity:m[5]||null, user:false }));
-  const usr = userModels.map(m => ({ name:m[0], years:m[1], licensed:!!m[2], detail:!!m[3], category:m[4]||'user', rarity:m[5]||null, user:true }));
-  return [...def, ...usr];
-}
-
-function openModelEditor() { renderModelEditor(); document.getElementById('modelModal').classList.add('open'); }
-function closeModelEditor() { document.getElementById('modelModal').classList.remove('open'); }
-
-function renderModelEditor(filter = '') {
-  const body = document.getElementById('modelBody');
-  const all = getAllModels();
-  const q = filter.toLowerCase().trim();
-  const list = q ? all.filter(m => m.name.toLowerCase().includes(q)) : all;
-  body.innerHTML = `
+function openModelEditor(){renderModelEditor();document.getElementById('modelModal').classList.add('open');}
+function closeModelEditor(){document.getElementById('modelModal').classList.remove('open');}
+function renderModelEditor(filter=''){
+  const body=document.getElementById('modelBody');
+  const all=getAllModels();
+  const q=filter.toLowerCase().trim();
+  const list=q?all.filter(m=>m.name.toLowerCase().includes(q)):all;
+  body.innerHTML=`
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
       <h3 style="font-size:18px;font-weight:700">📚 Справочник</h3>
       <button onclick="closeModelEditor()" class="modal-close">×</button>
@@ -1220,122 +1021,165 @@ function renderModelEditor(filter = '') {
       <div class="text-xs text-neutral-500 mt-2">Найдено: ${list.length} · Всего: ${all.length}</div>
     </div>
     <div style="background:rgba(15,15,30,.5);border-radius:12px;overflow:hidden;margin-top:12px;border:1px solid var(--border)">
-      ${list.length === 0 ? '<div class="text-center text-neutral-600" style="padding:40px 0">Ничего не найдено</div>' : list.map(m => `
+      ${list.length===0?'<div class="text-center text-neutral-600" style="padding:40px 0">Ничего не найдено</div>':list.map(m=>`
         <div class="model-item">
           <div style="flex:1;min-width:0">
             <div class="mi-name truncate">${escapeHtml(m.name)}
-              ${m.rarity==='sth' ? '<span class="badge-mini sth">💎STH</span>' : ''}
-              ${m.rarity==='th' ? '<span class="badge-mini th">🏆TH</span>' : ''}
-              ${m.user ? '<span class="badge-mini" style="background:#22c55e">МОЯ</span>' : ''}
-              ${m.licensed ? '<span class="badge-mini">LIC</span>' : ''}
+              ${m.rarity==='sth'?'<span class="badge-mini sth">💎STH</span>':''}
+              ${m.rarity==='th'?'<span class="badge-mini th">🏆TH</span>':''}
+              ${m.user?'<span class="badge-mini" style="background:#22c55e">МОЯ</span>':''}
+              ${m.licensed?'<span class="badge-mini">LIC</span>':''}
             </div>
-            <div class="mi-meta">${m.years || '—'}${m.detail ? ' · детализация' : ''}</div>
+            <div class="mi-meta">${m.years||'—'}${m.detail?' · детализация':''}</div>
           </div>
-          ${m.user ? `<button class="mi-del" onclick="deleteUserModel('${escapeHtml(m.name).replace(/'/g, "\\'")}')">Удалить</button>` : ''}
+          ${m.user?`<button class="mi-del" onclick="deleteUserModel('${escapeHtml(m.name).replace(/'/g,"\\'")}')">Удалить</button>`:''}
         </div>
       `).join('')}
-    </div>
-  `;
-  document.getElementById('modelSearch').addEventListener('input', e => {
-    const pos = e.target.selectionStart;
+    </div>`;
+  document.getElementById('modelSearch').addEventListener('input',e=>{
+    const pos=e.target.selectionStart;
     renderModelEditor(e.target.value);
-    const inp = document.getElementById('modelSearch');
-    inp.focus(); inp.setSelectionRange(pos, pos);
+    const inp=document.getElementById('modelSearch');
+    inp.focus();inp.setSelectionRange(pos,pos);
   });
 }
-
-function addNewModel() {
-  const name = prompt('Название:');
-  if (!name) return;
-  const years = prompt('Годы:') || '';
-  const licensed = confirm('Реальная марка?');
-  const detail = confirm('Детализация?');
-  const rarity = confirm('STH? (OK=STH, Отмена=обычная)');
-  userModels.push([name.trim(), years.trim(), licensed?1:0, detail?1:0, 'user', rarity?'sth':null]);
-  persist(); updateModelCount(); renderModelEditor();
-  showToast('✅ Модель добавлена', name);
+function addNewModel(){
+  const name=prompt('Название модели:');if(!name)return;
+  const years=prompt('Годы выпуска:')||'';
+  const licensed=confirm('Реальная марка?');
+  const detail=confirm('Детализация?');
+  const rarity=confirm('Это STH?\nOK = STH, Отмена = обычная');
+  userModels.push([name.trim(),years.trim(),licensed?1:0,detail?1:0,'user',rarity?'sth':null]);
+  persistAll();updateModelCount();renderModelEditor();
+  showToast('✅ Модель добавлена',name);
+}
+function deleteUserModel(name){
+  if(!confirm(`Удалить "${name}"?`))return;
+  userModels=userModels.filter(m=>m[0]!==name);
+  persistAll();updateModelCount();renderModelEditor();
+  showToast('🗑️ Удалено');
+}
+function resetUserModels(){
+  if(userModels.length===0){alert('Нет своих моделей');return;}
+  if(!confirm(`Удалить все свои (${userModels.length})?`))return;
+  userModels=[];persistAll();updateModelCount();renderModelEditor();
+  showToast('🗑️ Свои модели удалены');
 }
 
-function deleteUserModel(name) {
-  if (!confirm(`Удалить "${name}"?`)) return;
-  userModels = userModels.filter(m => m[0] !== name);
-  persist(); updateModelCount(); renderModelEditor();
-}
-
-function resetUserModels() {
-  if (userModels.length === 0) { alert('Нет своих моделей'); return; }
-  if (!confirm(`Удалить все свои модели (${userModels.length})?`)) return;
-  userModels = []; persist(); updateModelCount(); renderModelEditor();
-}
-
-/* ===== THEMES ===== */
-function renderThemeGrid() {
-  const el = document.getElementById('themeGrid');
-  el.innerHTML = '';
-  for (const k in THEMES) {
-    const t = THEMES[k];
-    const item = document.createElement('div');
-    item.className = 'theme-item' + (settings.theme === k ? ' on' : '');
-    const bg = k === 'custom' ? `linear-gradient(135deg, ${settings.accent}, ${settings.accent2})` : `linear-gradient(135deg, ${t.accent}, ${t.accent2})`;
-    item.innerHTML = `<div class="swatch" style="background:${bg}"></div><div class="tname">${t.name}</div>`;
-    item.onclick = () => {
-      settings.theme = k;
-      if (k !== 'custom') {
-        settings.accent = t.accent; settings.accent2 = t.accent2; settings.bg = t.bg;
-      }
-      document.getElementById('colAccent').value = settings.accent;
-      document.getElementById('colAccent2').value = settings.accent2;
-      document.getElementById('colBg').value = settings.bg;
-      applyTheme(); persist(); renderThemeGrid();
+/* ===== THEME EDITOR ===== */
+function renderThemeGrid(){
+  const el=document.getElementById('themeGrid');el.innerHTML='';
+  for(const k in THEMES){
+    const t=THEMES[k];
+    const item=document.createElement('div');
+    item.className='theme-item'+(settings.theme===k?' on':'');
+    const swBg=k==='custom'?`linear-gradient(135deg, ${settings.accent}, ${settings.accent2})`:`linear-gradient(135deg, ${t.accent}, ${t.accent2})`;
+    item.innerHTML=`<div class="swatch" style="background:${swBg}"></div><div class="tname">${t.name}</div>`;
+    item.onclick=()=>{
+      settings.theme=k;
+      if(k!=='custom'){settings.accent=t.accent;settings.accent2=t.accent2;settings.bg=t.bg;}
+      document.getElementById('colAccent').value=settings.accent;
+      document.getElementById('colAccent2').value=settings.accent2;
+      document.getElementById('colBg').value=settings.bg;
+      applyTheme();persistAll();renderThemeGrid();
     };
     el.appendChild(item);
   }
 }
-
-function setWallpaper(type) { settings.wallpaper = type; applyTheme(); persist(); }
-function setCustomWallpaper() {
-  const inp = document.createElement('input');
-  inp.type = 'file'; inp.accept = 'image/*';
-  inp.onchange = async e => {
-    const f = e.target.files[0]; if (!f) return;
-    settings.customWall = await compressImage(f, 1200);
-    settings.wallpaper = 'custom';
-    applyTheme(); persist();
+function setWallpaper(t){settings.wallpaper=t;applyTheme();persistAll();}
+function setCustomWallpaper(){
+  const inp=document.createElement('input');inp.type='file';inp.accept='image/*';
+  inp.onchange=async e=>{
+    const f=e.target.files[0];if(!f)return;
+    settings.customWall=await compressImage(f,1200);
+    settings.wallpaper='custom';
+    applyTheme();persistAll();
     showToast('🖼️ Обои установлены');
   };
   inp.click();
 }
 
-/* ===== CLEAR ===== */
-function clearAll() {
-  if (!confirm('Удалить коллекцию активного профиля?')) return;
-  setCollection([]); persist(); renderCollection();
+/* ===== CLEAR / EXPORT / IMPORT ===== */
+function clearAll(){
+  if(!confirm('Удалить ВСЮ коллекцию?'))return;
+  collection=[];persistAll();renderCollection();renderProfile();
+}
+function exportData(){
+  const data=JSON.stringify({profile,stories,collection,settings,userModels,exportedAt:new Date().toISOString()},null,2);
+  const blob=new Blob([data],{type:'application/json'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;a.download=`onyx-hw-${new Date().toISOString().slice(0,10)}.json`;
+  a.click();URL.revokeObjectURL(url);
+}
+function importData(){
+  const inp=document.createElement('input');inp.type='file';inp.accept='application/json';
+  inp.onchange=e=>{
+    const f=e.target.files[0];if(!f)return;
+    const r=new FileReader();
+    r.onload=ev=>{
+      try{
+        const d=JSON.parse(ev.target.result);
+        if(d.collection)collection=d.collection;
+        if(d.settings)settings={...settings,...d.settings};
+        if(d.userModels)userModels=d.userModels;
+        if(d.stories)stories=d.stories;
+        if(d.profile&&!profile)profile=d.profile;
+        persistAll();applyTheme();
+        renderCollection();renderSeriesEditor();renderThemeGrid();updateModelCount();renderProfile();renderStories();
+        document.getElementById('setMainlineBase').value=settings.mainlineBase;
+        alert('✅ Импортировано!');
+      }catch(err){alert('❌ Ошибка: '+err.message);}
+    };
+    r.readAsText(f);
+  };
+  inp.click();
 }
 
 /* ===== LISTENERS ===== */
-document.getElementById('setMainlineBase').addEventListener('input', e => {
-  settings.mainlineBase = Math.max(0, parseInt(e.target.value) || 0);
-  persist(); updatePrice(); renderCollection();
+document.getElementById('setMainlineBase').addEventListener('input',e=>{
+  settings.mainlineBase=Math.max(0,parseInt(e.target.value)||0);
+  persistAll();updatePrice();renderCollection();
 });
-document.getElementById('addMarket').addEventListener('input', updatePrice);
-document.getElementById('colAccent').addEventListener('input', e => { settings.accent = e.target.value; settings.theme = 'custom'; applyTheme(); persist(); renderThemeGrid(); });
-document.getElementById('colAccent2').addEventListener('input', e => { settings.accent2 = e.target.value; settings.theme = 'custom'; applyTheme(); persist(); renderThemeGrid(); });
-document.getElementById('colBg').addEventListener('input', e => { settings.bg = e.target.value; settings.theme = 'custom'; applyTheme(); persist(); renderThemeGrid(); });
-document.getElementById('blurRange').addEventListener('input', e => { settings.blur = parseInt(e.target.value) || 0; applyTheme(); persist(); });
+document.getElementById('addMarket').addEventListener('input',updatePrice);
+document.getElementById('colAccent').addEventListener('input',e=>{settings.accent=e.target.value;settings.theme='custom';applyTheme();persistAll();renderThemeGrid();});
+document.getElementById('colAccent2').addEventListener('input',e=>{settings.accent2=e.target.value;settings.theme='custom';applyTheme();persistAll();renderThemeGrid();});
+document.getElementById('colBg').addEventListener('input',e=>{settings.bg=e.target.value;settings.theme='custom';applyTheme();persistAll();renderThemeGrid();});
+document.getElementById('blurRange').addEventListener('input',e=>{settings.blur=parseInt(e.target.value)||0;applyTheme();persistAll();});
 
 /* ===== INIT ===== */
-document.addEventListener('DOMContentLoaded', () => {
-  initProfiles();
+function initApp(){
+  applyTheme();renderThemeGrid();
+  document.getElementById('setMainlineBase').value=settings.mainlineBase;
+  document.getElementById('colAccent').value=settings.accent;
+  document.getElementById('colAccent2').value=settings.accent2;
+  document.getElementById('colBg').value=settings.bg;
+  document.getElementById('blurRange').value=settings.blur;
+  renderChips();updatePrice();renderCollection();
+  renderSeriesEditor();updateModelCount();
+  renderProfile();renderStories();
+  // migrate old collection prices
+  const needRecalc=settings.pricingVersion!==PRICING_VERSION;
+  if(needRecalc){
+    collection=collection.map(car=>{
+      const sm=settings.seriesMults[car.series]||1;
+      const sb=settings.mainlineBase*sm;
+      const base=car.marketPrice>0?car.marketPrice:sb;
+      car.seriesBaseAtSave=sb;car.baseAtSave=base;
+      car.price=calcPrice(base,car.series,car.box,car.opened,car.pros,car.cons);
+      return car;
+    });
+    settings.pricingVersion=PRICING_VERSION;
+    persistAll();renderCollection();renderProfile();
+  }
+}
+
+document.addEventListener('DOMContentLoaded',()=>{
   applyTheme();
-  renderThemeGrid();
-  document.getElementById('setMainlineBase').value = settings.mainlineBase;
-  document.getElementById('colAccent').value = settings.accent;
-  document.getElementById('colAccent2').value = settings.accent2;
-  document.getElementById('colBg').value = settings.bg;
-  document.getElementById('blurRange').value = settings.blur;
-  renderChips(); updatePrice(); renderCollection();
-  renderSeriesEditor(); updateModelCount(); renderProfiles();
-  showToast('🚀 ONYX HW v1.8', 'Профили · обновлённые проценты');
+  if(profile){showAuth();}
+  else{showAuth();}
+  // предзаполняем имя
+  if(profile)document.getElementById('authUser').value=profile.username;
 });
 </script>
 </body>
