@@ -7,21 +7,17 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta name="apple-mobile-web-app-title" content="ONYX HW">
-<title>ONYX HW</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%2302020a'/%3E%3Ccircle cx='50' cy='50' r='30' fill='none' stroke='%23a855f7' stroke-width='4'/%3E%3Ccircle cx='50' cy='50' r='14' fill='%2338bdf8'/%3E%3Ccircle cx='72' cy='30' r='3' fill='%23e0e7ff'/%3E%3Ccircle cx='25' cy='65' r='2' fill='%23e0e7ff'/%3E%3C/svg%3E">
+<title>ONYX HW v1.8</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%2302020a'/%3E%3Ccircle cx='50' cy='50' r='30' fill='none' stroke='%23a855f7' stroke-width='4'/%3E%3Ccircle cx='50' cy='50' r='14' fill='%2338bdf8'/%3E%3C/svg%3E">
 <style>
   :root {
-    --bg: #02020a;
-    --bg2: #0a0a1f;
-    --accent: #a855f7;
-    --accent2: #38bdf8;
+    --bg: #02020a; --bg2: #0a0a1f;
+    --accent: #a855f7; --accent2: #38bdf8;
     --accent-text: #ffffff;
     --card-bg: rgba(20, 15, 40, 0.6);
-    --text: #e5e5e5;
-    --text-muted: #737373;
+    --text: #e5e5e5; --text-muted: #737373;
     --border: rgba(168, 85, 247, 0.25);
-    --wallpaper: none;
-    --card-blur: 12px;
+    --wallpaper: none; --card-blur: 12px;
     --glow: 0 0 20px rgba(168, 85, 247, 0.4);
   }
   * { -webkit-tap-highlight-color: transparent; box-sizing: border-box; margin: 0; padding: 0; }
@@ -29,9 +25,9 @@
     background: var(--bg); color: var(--text);
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     padding-bottom: 90px; min-height: 100vh;
-    position: relative;
     background-image: var(--wallpaper);
     background-size: cover; background-attachment: fixed; background-position: center;
+    position: relative;
   }
   body::before {
     content: ''; position: fixed; inset: 0;
@@ -39,7 +35,7 @@
     pointer-events: none; z-index: 0;
   }
   .wrap { max-width: 512px; margin: 0 auto; padding: 0 16px; position: relative; z-index: 1; }
-  header { position: sticky; top: 0; z-index: 40; background: rgba(2,2,10,.85); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); }
+  header { position: sticky; top: 0; z-index: 40; background: rgba(2,2,10,.85); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); }
   header .wrap { padding-top: 12px; padding-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
   h1 { font-size: 20px; font-weight: 800; letter-spacing: .15em; background: linear-gradient(90deg, var(--accent), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-transform: uppercase; }
   h2 { font-size: 20px; font-weight: 700; margin-bottom: 16px; }
@@ -50,12 +46,13 @@
     border-radius: 12px; padding: 12px 14px; width: 100%; font-size: 16px; font-family: inherit;
     backdrop-filter: blur(8px);
   }
-  input:focus, select:focus { outline: none; border-color: var(--accent); box-shadow: var(--glow); }
+  input:focus, select:focus, textarea:focus { outline: none; border-color: var(--accent); box-shadow: var(--glow); }
+  textarea { min-height: 80px; resize: vertical; }
   label.lbl { display: block; font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: .08em; margin: 20px 0 8px; }
   .chip { display: inline-block; border: 1px solid var(--border); background: rgba(15,15,30,.5); border-radius: 999px; padding: 8px 14px; font-size: 14px; color: #aaa; transition: .2s; user-select: none; cursor: pointer; backdrop-filter: blur(8px); }
   .chip.on { background: var(--accent); color: var(--accent-text); border-color: var(--accent); font-weight: 600; box-shadow: var(--glow); }
-  .chip.on.con { background: #ef4444; color: #fff; border-color: #ef4444; box-shadow: 0 0 20px rgba(239,68,68,.4); }
-  .chip.on.series { background: var(--accent2); color: #000; border-color: var(--accent2); box-shadow: 0 0 20px rgba(56,189,248,.4); }
+  .chip.on.con { background: #ef4444; color: #fff; border-color: #ef4444; }
+  .chip.on.series { background: var(--accent2); color: #000; border-color: var(--accent2); }
   .boxcard { border: 1px solid var(--border); background: var(--card-bg); border-radius: 14px; padding: 12px; cursor: pointer; transition: .2s; backdrop-filter: blur(var(--card-blur)); }
   .boxcard.on { border-color: var(--accent); background: rgba(168,85,247,.12); box-shadow: var(--glow); }
   .boxcard .bt { font-weight: 600; font-size: 15px; }
@@ -63,16 +60,17 @@
   .boxcard .bm { font-size: 12px; color: var(--accent); font-weight: 600; margin-top: 4px; }
   .nav { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(2,2,10,.92); backdrop-filter: blur(16px); border-top: 1px solid var(--border); z-index: 40; }
   .nav .wrap { display: flex; }
-  .nav-btn { flex: 1; text-align: center; padding: 12px 0; color: #666; font-size: 12px; transition: .15s; cursor: pointer; }
+  .nav-btn { flex: 1; text-align: center; padding: 12px 0; color: #666; font-size: 11px; transition: .15s; cursor: pointer; }
   .nav-btn.active { color: var(--accent); }
   .nav-btn .ico { display: block; font-size: 22px; margin-bottom: 2px; }
-  .card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; backdrop-filter: blur(var(--card-blur)); -webkit-backdrop-filter: blur(var(--card-blur)); }
+  .card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; backdrop-filter: blur(var(--card-blur)); }
   .photo-slot { background: rgba(15,15,30,.6); border: 2px dashed var(--border); border-radius: 16px; display: flex; align-items: center; justify-content: center; flex-direction: column; color: #555; cursor: pointer; overflow: hidden; height: 224px; backdrop-filter: blur(8px); }
   .photo-slot img { width: 100%; height: 100%; object-fit: cover; }
   .btn { background: linear-gradient(135deg, var(--accent), var(--accent2)); color: var(--accent-text); font-weight: 700; border-radius: 14px; padding: 16px; width: 100%; font-size: 16px; border: none; cursor: pointer; font-family: inherit; display: block; box-shadow: var(--glow); }
   .btn:active { transform: scale(.98); }
   .btn-ghost { background: rgba(15,15,30,.7); color: var(--text); border: 1px solid var(--border); box-shadow: none; }
-  .btn-blue { background: linear-gradient(135deg, #38bdf8, #6366f1); color: #fff; box-shadow: 0 0 20px rgba(56,189,248,.4); }
+  .btn-blue { background: linear-gradient(135deg, #38bdf8, #6366f1); color: #fff; }
+  .btn-red { background: linear-gradient(135deg, #ef4444, #dc2626); color: #fff; box-shadow: 0 0 20px rgba(239,68,68,.4); }
   .btn-sm { padding: 10px 14px; font-size: 14px; border-radius: 10px; }
   .modal { position: fixed; inset: 0; background: rgba(0,0,0,.85); z-index: 50; display: none; align-items: flex-end; backdrop-filter: blur(4px); }
   .modal.open { display: flex; }
@@ -90,16 +88,11 @@
   .space-y-1 > * + * { margin-top: 4px; }
   .text-center { text-align: center; }
   .text-right { text-align: right; }
-  .text-xs { font-size: 12px; }
-  .text-sm { font-size: 14px; }
-  .font-bold { font-weight: 700; }
-  .font-semibold { font-weight: 600; }
+  .text-xs { font-size: 12px; } .text-sm { font-size: 14px; }
+  .font-bold { font-weight: 700; } .font-semibold { font-weight: 600; }
   .truncate { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .uppercase { text-transform: uppercase; }
-  .tracking-wide { letter-spacing: .05em; }
-  .text-neutral-400 { color: #a3a3a3; }
-  .text-neutral-500 { color: #737373; }
-  .text-neutral-600 { color: #525252; }
+  .uppercase { text-transform: uppercase; } .tracking-wide { letter-spacing: .05em; }
+  .text-neutral-400 { color: #a3a3a3; } .text-neutral-500 { color: #737373; } .text-neutral-600 { color: #525252; }
   .text-accent { color: var(--accent); }
   .mt-1 { margin-top: 4px; } .mt-2 { margin-top: 8px; } .mt-3 { margin-top: 12px; }
   .mt-4 { margin-top: 16px; } .mt-5 { margin-top: 20px; } .mt-6 { margin-top: 24px; }
@@ -108,13 +101,11 @@
   .p-3 { padding: 12px; } .p-4 { padding: 16px; } .p-5 { padding: 20px; }
   .pt-2 { padding-top: 8px; } .pt-4 { padding-top: 16px; }
   .border-t { border-top: 1px solid var(--border); }
-  .rounded-xl { border-radius: 12px; }
-  .overflow-hidden { overflow: hidden; }
-  .cursor-pointer { cursor: pointer; }
+  .rounded-xl { border-radius: 12px; } .rounded-full { border-radius: 999px; }
+  .overflow-hidden { overflow: hidden; } .cursor-pointer { cursor: pointer; }
   .aspect-square { aspect-ratio: 1 / 1; }
-  .relative { position: relative; }
-  .absolute { position: absolute; }
-  .top-2 { top: 8px; } .left-2 { left: 8px; }
+  .relative { position: relative; } .absolute { position: absolute; }
+  .top-2 { top: 8px; } .left-2 { left: 8px; } .right-2 { right: 8px; }
   .badge { font-size: 10px; padding: 2px 8px; border-radius: 999px; color: #000; font-weight: 600; }
   .price-big { font-size: 36px; font-weight: 800; background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
   .price-total { font-size: 24px; font-weight: 800; color: var(--accent); }
@@ -127,10 +118,9 @@
   .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
   .toast small { display: block; font-weight: 400; font-size: 12px; margin-top: 4px; opacity: .85; }
   .sugg { position: relative; }
-  .sugg-list { position: absolute; top: 100%; left: 0; right: 0; background: rgba(10,10,25,.98); border: 1px solid var(--border); border-top: none; border-radius: 0 0 12px 12px; max-height: 260px; overflow-y: auto; z-index: 30; box-shadow: 0 8px 24px rgba(0,0,0,.7); backdrop-filter: blur(16px); }
-  .sugg-item { padding: 10px 14px; cursor: pointer; border-bottom: 1px solid rgba(168,85,247,.1); font-size: 14px; transition: .1s; }
-  .sugg-item:last-child { border-bottom: none; }
-  .sugg-item:hover, .sugg-item.active { background: rgba(168,85,247,.15); }
+  .sugg-list { position: absolute; top: 100%; left: 0; right: 0; background: rgba(10,10,25,.98); border: 1px solid var(--border); border-top: none; border-radius: 0 0 12px 12px; max-height: 260px; overflow-y: auto; z-index: 30; box-shadow: 0 8px 24px rgba(0,0,0,.7); }
+  .sugg-item { padding: 10px 14px; cursor: pointer; border-bottom: 1px solid rgba(168,85,247,.1); font-size: 14px; }
+  .sugg-item:hover { background: rgba(168,85,247,.15); }
   .sugg-item .m { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
   .badge-mini { display: inline-block; font-size: 9px; padding: 1px 6px; border-radius: 6px; background: var(--accent2); color: #000; margin-left: 6px; font-weight: 700; }
   .badge-mini.sth { background: linear-gradient(135deg, #a855f7, #ec4899); color: #fff; }
@@ -140,10 +130,9 @@
   .model-item .mi-name { font-size: 14px; font-weight: 600; }
   .model-item .mi-meta { font-size: 11px; color: var(--text-muted); }
   .model-item .mi-del { background: #ef4444; color: #fff; border: none; border-radius: 8px; padding: 6px 10px; font-size: 12px; cursor: pointer; font-weight: 600; }
-  .search-box { position: sticky; top: 0; background: rgba(10,10,25,.95); padding-bottom: 12px; z-index: 5; backdrop-filter: blur(16px); }
-  /* Theme presets */
+  .search-box { position: sticky; top: 0; background: rgba(10,10,25,.95); padding-bottom: 12px; z-index: 5; }
   .theme-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
-  .theme-item { border: 2px solid var(--border); border-radius: 14px; padding: 12px 8px; cursor: pointer; text-align: center; transition: .2s; background: rgba(15,15,30,.5); }
+  .theme-item { border: 2px solid var(--border); border-radius: 14px; padding: 12px 8px; cursor: pointer; text-align: center; background: rgba(15,15,30,.5); }
   .theme-item.on { border-color: var(--accent); box-shadow: var(--glow); }
   .theme-item .swatch { width: 100%; height: 32px; border-radius: 8px; margin-bottom: 6px; }
   .theme-item .tname { font-size: 11px; color: #aaa; }
@@ -153,7 +142,28 @@
   .range-row { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
   .range-row .cname { flex: 1; font-size: 14px; }
   .range-row input[type="range"] { flex: 1.5; accent-color: var(--accent); }
-  .wall-preview { width: 100%; height: 100px; border-radius: 12px; background: var(--wallpaper); background-size: cover; background-position: center; border: 1px solid var(--border); margin-top: 8px; display: flex; align-items: center; justify-content: center; color: var(--text-muted); font-size: 12px; }
+  .wall-preview { width: 100%; height: 100px; border-radius: 12px; background: var(--wallpaper); background-size: cover; background-position: center; border: 1px solid var(--border); margin-top: 8px; }
+  /* Profile styles */
+  .profile-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; backdrop-filter: blur(var(--card-blur)); cursor: pointer; transition: .2s; }
+  .profile-card:hover { border-color: var(--accent); }
+  .profile-card.active { border-color: var(--accent); box-shadow: var(--glow); }
+  .profile-banner { width: 100%; height: 90px; background: linear-gradient(135deg, var(--accent), var(--accent2)); position: relative; }
+  .profile-banner img { width: 100%; height: 100%; object-fit: cover; }
+  .profile-avatar { width: 64px; height: 64px; border-radius: 50%; border: 3px solid var(--bg); position: absolute; bottom: -32px; left: 16px; background: var(--bg2); display: flex; align-items: center; justify-content: center; font-size: 28px; overflow: hidden; }
+  .profile-avatar img { width: 100%; height: 100%; object-fit: cover; }
+  .profile-body { padding: 40px 16px 16px; }
+  .profile-name { font-size: 18px; font-weight: 700; }
+  .profile-bio { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
+  .profile-stats { display: flex; gap: 16px; margin-top: 12px; font-size: 12px; color: var(--text-muted); }
+  .profile-stats .stat { display: flex; flex-direction: column; }
+  .profile-stats .stat b { font-size: 14px; color: var(--text); }
+  .avatar-edit { width: 100px; height: 100px; border-radius: 50%; margin: 0 auto; background: rgba(15,15,30,.6); border: 2px dashed var(--border); display: flex; align-items: center; justify-content: center; font-size: 36px; cursor: pointer; overflow: hidden; }
+  .avatar-edit img { width: 100%; height: 100%; object-fit: cover; }
+  .banner-edit { width: 100%; height: 140px; border-radius: 12px; background: rgba(15,15,30,.6); border: 2px dashed var(--border); display: flex; align-items: center; justify-content: center; font-size: 32px; cursor: pointer; overflow: hidden; margin-top: 12px; }
+  .banner-edit img { width: 100%; height: 100%; object-fit: cover; }
+  .profile-color-picker { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+  .color-dot { width: 36px; height: 36px; border-radius: 50%; border: 3px solid transparent; cursor: pointer; }
+  .color-dot.on { border-color: #fff; }
 </style>
 </head>
 <body>
@@ -184,7 +194,7 @@
 
     <label class="lbl">Название</label>
     <div class="sugg">
-      <input id="addName" placeholder="Начни печатать: skyline, mustang..." maxlength="60" autocomplete="off">
+      <input id="addName" placeholder="Начни печатать: skyline..." maxlength="60" autocomplete="off">
       <div id="suggList" class="sugg-list hidden"></div>
     </div>
     <div class="flex-gap mt-2">
@@ -233,31 +243,15 @@
     <div id="collectionGrid" class="card-grid"></div>
   </section>
 
-  <!-- SETTINGS PAGE -->
-  <section id="page-settings" class="page">
-    <h2>Настройки</h2>
-
-    <div class="card p-4 mb-4">
-      <div class="text-sm font-semibold mb-3" style="color:#d4d4d4">База Mainline (₽)</div>
-      <input id="setMainlineBase" type="number" min="0" step="10">
-    </div>
-
-    <div class="card p-4 mb-4">
-      <div class="text-sm font-semibold mb-3" style="color:#d4d4d4">Множители серий (× Mainline)</div>
-      <div id="seriesEditor"></div>
-    </div>
-
-    <div class="card p-4 mb-4">
-      <button class="btn btn-blue btn-sm" onclick="openModelEditor()">📚 Справочник моделей</button>
-      <div class="text-xs text-neutral-500 mt-2" id="modelCountInfo"></div>
-    </div>
-
-    <button class="btn btn-ghost mt-6" onclick="clearAll()">🗑️ Очистить коллекцию</button>
+  <!-- PROFILES PAGE -->
+  <section id="page-profiles" class="page">
+    <h2>👥 Профили</h2>
+    <div id="profilesList" class="space-y-2"></div>
+    <button class="btn btn-ghost mt-4" onclick="openProfileEditor(null)">➕ Добавить профиль</button>
     <div class="flex-gap mt-3">
-      <button class="btn btn-ghost btn-sm" onclick="exportCollection()">📤 Экспорт</button>
-      <button class="btn btn-ghost btn-sm" onclick="importCollection()">📥 Импорт</button>
+      <button class="btn btn-ghost btn-sm" onclick="exportCurrentProfile()">📤 Экспорт профиля</button>
+      <button class="btn btn-ghost btn-sm" onclick="importProfile()">📥 Импорт профиля</button>
     </div>
-    <p class="text-center text-xs text-neutral-600 mt-4 mb-4">ONYX HW v1.7 · космический стиль</p>
   </section>
 
   <!-- APPEARANCE PAGE -->
@@ -269,18 +263,9 @@
 
     <label class="lbl">Свои цвета</label>
     <div class="card p-4 mb-4">
-      <div class="color-row">
-        <span class="cname">Основной акцент</span>
-        <input type="color" id="colAccent" value="#a855f7">
-      </div>
-      <div class="color-row">
-        <span class="cname">Вторичный акцент</span>
-        <input type="color" id="colAccent2" value="#38bdf8">
-      </div>
-      <div class="color-row">
-        <span class="cname">Фон</span>
-        <input type="color" id="colBg" value="#02020a">
-      </div>
+      <div class="color-row"><span class="cname">Акцент 1</span><input type="color" id="colAccent" value="#a855f7"></div>
+      <div class="color-row"><span class="cname">Акцент 2</span><input type="color" id="colAccent2" value="#38bdf8"></div>
+      <div class="color-row"><span class="cname">Фон</span><input type="color" id="colBg" value="#02020a"></div>
     </div>
 
     <label class="lbl">Обои</label>
@@ -303,42 +288,83 @@
       </div>
     </div>
   </section>
+
+  <!-- SETTINGS PAGE -->
+  <section id="page-settings" class="page">
+    <h2>Настройки</h2>
+
+    <div class="card p-4 mb-4">
+      <div class="text-sm font-semibold mb-3" style="color:#d4d4d4">База Mainline (₽)</div>
+      <input id="setMainlineBase" type="number" min="0" step="10">
+    </div>
+
+    <div class="card p-4 mb-4">
+      <div class="text-sm font-semibold mb-3" style="color:#d4d4d4">Множители серий (× Mainline)</div>
+      <div id="seriesEditor"></div>
+    </div>
+
+    <div class="card p-4 mb-4">
+      <button class="btn btn-blue btn-sm" onclick="openModelEditor()">📚 Справочник моделей</button>
+      <div class="text-xs text-neutral-500 mt-2" id="modelCountInfo"></div>
+    </div>
+
+    <div class="card p-4 mb-4">
+      <div class="text-sm text-neutral-400 mb-3">Актуальные проценты</div>
+      <div class="text-xs text-neutral-500 space-y-1">
+        <div style="display:flex;justify-content:space-between"><span>🏆 Treasure Hunt</span><span class="text-accent">+40%</span></div>
+        <div style="display:flex;justify-content:space-between"><span>💎 Super Treasure Hunt</span><span class="text-accent">+200%</span></div>
+        <div style="display:flex;justify-content:space-between"><span>🎨 Редкий цвет</span><span class="text-accent">+50%</span></div>
+        <div style="display:flex;justify-content:space-between"><span>🖌️ Детализация</span><span class="text-accent">+25%</span></div>
+        <div style="display:flex;justify-content:space-between"><span>⚠️ Заводская ошибка</span><span class="text-accent">+100%</span></div>
+        <div style="display:flex;justify-content:space-between"><span>📌 Острые углы</span><span class="text-accent">+50%</span></div>
+        <div style="display:flex;justify-content:space-between"><span>🚗 Реальная марка</span><span class="text-accent">+30%</span></div>
+        <div style="display:flex;justify-content:space-between;padding-top:6px;border-top:1px solid var(--border);margin-top:6px"><span>💥 Царапины</span><span class="text-accent">−30%</span></div>
+        <div style="display:flex;justify-content:space-between"><span>🟡 Плёнка</span><span class="text-accent">−25%</span></div>
+        <div style="display:flex;justify-content:space-between"><span>🛞 Колёса</span><span class="text-accent">−15%</span></div>
+        <div style="display:flex;justify-content:space-between"><span>📏 Ось</span><span class="text-accent">−20%</span></div>
+      </div>
+    </div>
+
+    <button class="btn btn-red mt-6" onclick="clearAll()">🗑️ Очистить коллекцию</button>
+    <div class="flex-gap mt-3">
+      <button class="btn btn-ghost btn-sm" onclick="exportAll()">📤 Экспорт всего</button>
+      <button class="btn btn-ghost btn-sm" onclick="importAll()">📥 Импорт всего</button>
+    </div>
+    <p class="text-center text-xs text-neutral-600 mt-4 mb-4">ONYX HW v1.8 · профили</p>
+  </section>
 </main>
 
 <nav class="nav">
   <div class="wrap">
     <div class="nav-btn active" data-page="add" onclick="goTo('add')"><span class="ico">➕</span>Добавить</div>
     <div class="nav-btn" data-page="collection" onclick="goTo('collection')"><span class="ico">🌌</span>Коллекция</div>
+    <div class="nav-btn" data-page="profiles" onclick="goTo('profiles')"><span class="ico">👥</span>Профили</div>
     <div class="nav-btn" data-page="appearance" onclick="goTo('appearance')"><span class="ico">🎨</span>Вид</div>
     <div class="nav-btn" data-page="settings" onclick="goTo('settings')"><span class="ico">⚙️</span>Ещё</div>
   </div>
 </nav>
 
-<div class="modal" id="detailModal" onclick="if(event.target===this)closeDetail()">
-  <div class="modal-body" id="detailBody"></div>
-</div>
-
-<div class="modal" id="modelModal" onclick="if(event.target===this)closeModelEditor()">
-  <div class="modal-body" id="modelBody"></div>
-</div>
+<div class="modal" id="detailModal" onclick="if(event.target===this)closeDetail()"><div class="modal-body" id="detailBody"></div></div>
+<div class="modal" id="modelModal" onclick="if(event.target===this)closeModelEditor()"><div class="modal-body" id="modelBody"></div></div>
+<div class="modal" id="profileModal" onclick="if(event.target===this)closeProfileEditor()"><div class="modal-body" id="profileBody"></div></div>
 
 <script>
 /* ===== ВЕРСИЯ ===== */
-const PRICING_VERSION = '1.7';
+const PRICING_VERSION = '1.8';
 
 /* ===== СЕРИИ ===== */
 const SERIES_DEFAULTS = {
   mainline:   { label: '🔵 Mainline',           mult: 1.0,  color: '#3b82f6', openLoss: 0.8 },
   silver:     { label: '⚪ Silver Series',      mult: 1.5,  color: '#c0c0c0', openLoss: 0.75 },
-  boulevard:  { label: '🟠 Boulevard',           mult: 2.5,  color: '#f97316', openLoss: 0.7 },
+  boulevard:  { label: '🟠 Boulevard',           mult: 2.5,  color: '#f97316', openLoss: 0.65 },
   collector:  { label: '🟢 Collector Edition',   mult: 1.75, color: '#22c55e', openLoss: 0.75 },
-  fast:       { label: '🚗 Fast & Furious',      mult: 2.75, color: '#ef4444', openLoss: 0.7 },
-  retro:      { label: '🎬 Retro Entertainment', mult: 3.0,  color: '#a855f7', openLoss: 0.6 },
-  premium:    { label: '🟣 Premium',             mult: 3.5,  color: '#a855f7', openLoss: 0.7 },
+  fast:       { label: '🚗 Fast & Furious',      mult: 2.75, color: '#ef4444', openLoss: 0.65 },
+  retro:      { label: '🎬 Retro Entertainment', mult: 3.0,  color: '#a855f7', openLoss: 0.55 },
+  premium:    { label: '🟣 Premium',             mult: 3.5,  color: '#a855f7', openLoss: 0.65 },
   hwid:       { label: '📱 HW id',               mult: 4.0,  color: '#06b6d4', openLoss: 0.75 },
-  carculture: { label: '🔴 Car Culture',         mult: 6.0,  color: '#ef4444', openLoss: 0.6 },
-  transport:  { label: '🟡 Team Transport',      mult: 8.0,  color: '#eab308', openLoss: 0.6 },
-  rlc:        { label: '⚫ RLC / Red Line Club', mult: 12.0, color: '#9ca3af', openLoss: 0.5 },
+  carculture: { label: '🔴 Car Culture',         mult: 6.0,  color: '#ef4444', openLoss: 0.55 },
+  transport:  { label: '🟡 Team Transport',      mult: 8.0,  color: '#eab308', openLoss: 0.55 },
+  rlc:        { label: '⚫ RLC / Red Line Club', mult: 12.0, color: '#9ca3af', openLoss: 0.4 },
   custom:     { label: '⚪ Другое / Custom',     mult: 1.0,  color: '#9ca3af', openLoss: 0.8 },
 };
 
@@ -350,31 +376,30 @@ const BOX = {
 };
 
 const PROS = {
-  th:        { label: '🏆 Treasure Hunt',                 v: 5.00 },
-  sth:       { label: '💎 Super Treasure Hunt',           v: 20.00 },
+  th:        { label: '🏆 Treasure Hunt',                 v: 0.40 },
+  sth:       { label: '💎 Super Treasure Hunt',           v: 2.00 },
   rare:      { label: '🎨 Редкий цвет',                   v: 0.50 },
   detail:    { label: '🖌️ Детализация/раскраска',         v: 0.25 },
-  error:     { label: '⚠️ Заводская ошибка',              v: 3.00 },
-  unpunched: { label: '📌 Острые углы',                   v: 0.25 },
+  error:     { label: '⚠️ Заводская ошибка',              v: 1.00 },
+  unpunched: { label: '📌 Острые углы',                   v: 0.50 },
   licensed:  { label: '🚗 Реальная марка',                v: 0.30 },
 };
 
 const CONS = {
-  scratches: { label: 'Царапины',   v: 0.20 },
-  wheels:    { label: 'Потёртые колёса', v: 0.15 },
-  yellow:    { label: 'Пожелтевшая плёнка', v: 0.15 },
-  crooked:   { label: 'Погнутая ось', v: 0.20 },
+  scratches: { label: 'Царапины на машинке',   v: 0.30 },
+  wheels:    { label: 'Потёртые колёса',       v: 0.15 },
+  yellow:    { label: 'Пожелтевшая плёнка',    v: 0.25 },
+  crooked:   { label: 'Погнутая ось',          v: 0.20 },
 };
 
-/* ===== БАЗА МОДЕЛЕЙ (60 популярных STH) ===== */
-/* Формат: [name, years, licensed, detail, category, rarity] rarity: 'sth'|'th'|null */
+/* ===== БАЗА МОДЕЛЕЙ ===== */
 const HW_MODELS_DEFAULT = [
-  // STH популярные
   ["Ford Escort RS2000","2024-2025",1,1,"euro","sth"],
   ["Nissan Skyline GT-R BNR34","2019",1,1,"jdm","sth"],
   ["Nissan Skyline GT-R R32","2020",1,1,"jdm","sth"],
   ["Nissan Skyline 2000GT-R","2018",1,1,"jdm","sth"],
   ["Nissan 180SX Type X","2024",1,1,"jdm","sth"],
+  ["Nissan 300ZX Twin Turbo","2021",1,1,"jdm","sth"],
   ["'62 Corvette","2013",1,1,"muscle","sth"],
   ["'64 Corvette","2014",1,1,"muscle","sth"],
   ["'69 Corvette","2014",1,1,"muscle","sth"],
@@ -424,7 +449,6 @@ const HW_MODELS_DEFAULT = [
   ["'71 Datsun 510","2021",1,1,"jdm","sth"],
   ["Mazda REPU","2019",1,1,"truck","sth"],
   ["'17 Acura NSX","2017",1,1,"jdm","sth"],
-  ["Nissan 300ZX Twin Turbo","2021",1,1,"jdm","sth"],
   ["'92 Ford Mustang","2019",1,1,"muscle","sth"],
   ["'18 Dodge Challenger SRT Demon","2019",1,1,"muscle","sth"],
   ["'68 COPO Camaro","2023",1,1,"muscle","sth"],
@@ -432,24 +456,18 @@ const HW_MODELS_DEFAULT = [
   ["Toyota AE-86 Corolla","2015",1,1,"jdm","sth"],
   ["Datsun 240Z","2011",1,1,"jdm","sth"],
   ["Datsun Bluebird Wagon 510","2023",1,1,"jdm","sth"],
+  // База обычных
+  ["Twin Mill","1969-2024",0,1,"legend",null],
+  ["Bone Shaker","2006-2024",0,1,"legend",null],
+  ["Deora II","2000-2024",0,1,"legend",null],
+  ["Batmobile 1989","1989",1,1,"lic",null],
+  ["DeLorean Back to Future","1981",1,1,"lic",null],
+  ["Ford Mustang 1965","1965",1,1,"muscle",null],
+  ["Chevrolet Camaro 1969","1969",1,1,"muscle",null],
+  ["Porsche 911","1963-2024",1,1,"euro",null],
+  ["Ferrari F40","1987-1992",1,1,"euro",null],
+  ["Lamborghini Countach","1974-1990",1,1,"euro",null],
 ];
-
-/* ===== STATE ===== */
-let addState = { photo:null, series:'mainline', box:'mint', opened:false, pros:[], cons:[] };
-let collection = [];
-let userModels = [];
-let settings = {
-  mainlineBase: 300,
-  seriesMults: Object.fromEntries(Object.keys(SERIES_DEFAULTS).map(k => [k, SERIES_DEFAULTS[k].mult])),
-  pricingVersion: PRICING_VERSION,
-  theme: 'onyx',
-  accent: '#a855f7',
-  accent2: '#38bdf8',
-  bg: '#02020a',
-  wallpaper: 'stars',
-  customWall: null,
-  blur: 12,
-};
 
 /* ===== THEMES ===== */
 const THEMES = {
@@ -464,60 +482,58 @@ const THEMES = {
   custom:  { accent:null, accent2:null, bg:null, name:'Своя' },
 };
 
-/* ===== STORAGE ===== */
-try {
-  collection = JSON.parse(localStorage.getItem('hw_collection') || '[]');
-  userModels = JSON.parse(localStorage.getItem('hw_user_models') || '[]');
-  const saved = JSON.parse(localStorage.getItem('onyx_settings_v17') || 'null');
-  if (saved) settings = { ...settings, ...saved };
-} catch(e) { console.warn(e); }
+/* ===== STATE ===== */
+let profiles = [];
+let activeProfileId = null;
+let userModels = [];
+let settings = {
+  mainlineBase: 300,
+  seriesMults: Object.fromEntries(Object.keys(SERIES_DEFAULTS).map(k => [k, SERIES_DEFAULTS[k].mult])),
+  pricingVersion: PRICING_VERSION,
+  theme: 'onyx',
+  accent: '#a855f7', accent2: '#38bdf8', bg: '#02020a',
+  wallpaper: 'stars', customWall: null, blur: 12,
+};
+let addState = { photo:null, series:'mainline', box:'mint', opened:false, pros:[], cons:[] };
 
-/* ===== THEME APPLY ===== */
-function applyTheme() {
-  const root = document.documentElement;
-  root.style.setProperty('--accent', settings.accent);
-  root.style.setProperty('--accent2', settings.accent2);
-  root.style.setProperty('--bg', settings.bg);
-  root.style.setProperty('--card-blur', settings.blur + 'px');
-  root.style.setProperty('--glow', `0 0 20px ${hexA(settings.accent, 0.4)}`);
-  root.style.setProperty('--border', hexA(settings.accent, 0.25));
-  root.style.setProperty('--card-bg', `rgba(${hexToRgb(settings.bg)}, 0.6)`);
-  // wallpaper
-  let wp = 'none';
-  if (settings.wallpaper === 'stars') wp = generateStars();
-  else if (settings.wallpaper === 'nebula') wp = `radial-gradient(circle at 20% 30%, ${hexA(settings.accent, 0.3)} 0%, transparent 50%), radial-gradient(circle at 80% 70%, ${hexA(settings.accent2, 0.3)} 0%, transparent 50%), linear-gradient(180deg, ${settings.bg}, #000)`;
-  else if (settings.wallpaper === 'grid') wp = `linear-gradient(${hexA(settings.accent, 0.1)} 1px, transparent 1px), linear-gradient(90deg, ${hexA(settings.accent, 0.1)} 1px, transparent 1px), linear-gradient(180deg, ${settings.bg}, #000)`;
-  else if (settings.wallpaper === 'custom' && settings.customWall) wp = `url(${settings.customWall})`;
-  root.style.setProperty('--wallpaper', wp);
-  document.querySelector('meta[name="theme-color"]').setAttribute('content', settings.bg);
-  // preview
-  const pv = document.getElementById('wallPreview');
-  if (pv) pv.style.background = wp;
-  // active wall chip
-  document.querySelectorAll('[data-wall]').forEach(el => {
-    el.classList.toggle('on', el.dataset.wall === settings.wallpaper);
-  });
-}
-
-function generateStars() {
-  const stars = [];
-  for (let i = 0; i < 80; i++) {
-    const x = Math.random()*100, y = Math.random()*100;
-    const s = Math.random()*2 + 1;
-    const o = Math.random()*0.7 + 0.3;
-    stars.push(`radial-gradient(circle ${s}px at ${x}% ${y}%, rgba(224,231,255,${o}) 0%, transparent 100%)`);
+/* ===== INIT PROFILES ===== */
+function initProfiles() {
+  try {
+    const saved = JSON.parse(localStorage.getItem('onyx_profiles_v18') || 'null');
+    if (saved && saved.profiles) {
+      profiles = saved.profiles;
+      activeProfileId = saved.activeProfileId || profiles[0]?.id;
+    }
+  } catch(e) { console.warn(e); }
+  
+  if (profiles.length === 0) {
+    // миграция со старой версии
+    const oldCollection = JSON.parse(localStorage.getItem('hw_collection') || '[]');
+    profiles = [{
+      id: 'p_' + Date.now(),
+      name: 'Я',
+      bio: 'Коллекционер Hot Wheels',
+      avatar: null,
+      banner: null,
+      accent: '#a855f7',
+      collection: oldCollection,
+      createdAt: new Date().toISOString(),
+    }];
+    activeProfileId = profiles[0].id;
+    // чистим старое
+    localStorage.removeItem('hw_collection');
   }
-  return stars.join(',') + `, linear-gradient(180deg, ${settings.bg}, #000)`;
+  
+  try {
+    userModels = JSON.parse(localStorage.getItem('hw_user_models') || '[]');
+    const savedSettings = JSON.parse(localStorage.getItem('onyx_settings_v17') || 'null');
+    if (savedSettings) settings = { ...settings, ...savedSettings };
+  } catch(e) {}
 }
 
-function hexA(hex, a) {
-  const r = parseInt(hex.slice(1,3),16), g = parseInt(hex.slice(3,5),16), b = parseInt(hex.slice(5,7),16);
-  return `rgba(${r},${g},${b},${a})`;
-}
-function hexToRgb(hex) {
-  const r = parseInt(hex.slice(1,3),16), g = parseInt(hex.slice(3,5),16), b = parseInt(hex.slice(5,7),16);
-  return `${r},${g},${b}`;
-}
+function getActiveProfile() { return profiles.find(p => p.id === activeProfileId) || profiles[0]; }
+function getCollection() { const p = getActiveProfile(); return p ? (p.collection || []) : []; }
+function setCollection(arr) { const p = getActiveProfile(); if (p) p.collection = arr; }
 
 /* ===== UTILS ===== */
 const fmt = n => Math.round(n).toLocaleString('ru-RU') + ' ₽';
@@ -557,7 +573,60 @@ function showToast(title, subtitle) {
   const t = document.getElementById('toast');
   t.innerHTML = `${title}${subtitle ? `<small>${subtitle}</small>` : ''}`;
   t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 4000);
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+/* ===== STORAGE ===== */
+function persist() {
+  try {
+    localStorage.setItem('onyx_profiles_v18', JSON.stringify({ profiles, activeProfileId }));
+    localStorage.setItem('onyx_settings_v17', JSON.stringify(settings));
+    localStorage.setItem('hw_user_models', JSON.stringify(userModels));
+  } catch(e) { alert('Не хватило места. Удали старые машинки.'); }
+}
+
+/* ===== THEME ===== */
+function applyTheme() {
+  const root = document.documentElement;
+  root.style.setProperty('--accent', settings.accent);
+  root.style.setProperty('--accent2', settings.accent2);
+  root.style.setProperty('--bg', settings.bg);
+  root.style.setProperty('--card-blur', settings.blur + 'px');
+  root.style.setProperty('--glow', `0 0 20px ${hexA(settings.accent, 0.4)}`);
+  root.style.setProperty('--border', hexA(settings.accent, 0.25));
+  root.style.setProperty('--card-bg', `rgba(${hexToRgb(settings.bg)}, 0.6)`);
+  let wp = 'none';
+  if (settings.wallpaper === 'stars') wp = generateStars();
+  else if (settings.wallpaper === 'nebula') wp = `radial-gradient(circle at 20% 30%, ${hexA(settings.accent, 0.3)} 0%, transparent 50%), radial-gradient(circle at 80% 70%, ${hexA(settings.accent2, 0.3)} 0%, transparent 50%), linear-gradient(180deg, ${settings.bg}, #000)`;
+  else if (settings.wallpaper === 'grid') wp = `linear-gradient(${hexA(settings.accent, 0.1)} 1px, transparent 1px), linear-gradient(90deg, ${hexA(settings.accent, 0.1)} 1px, transparent 1px), linear-gradient(180deg, ${settings.bg}, #000)`;
+  else if (settings.wallpaper === 'custom' && settings.customWall) wp = `url(${settings.customWall})`;
+  root.style.setProperty('--wallpaper', wp);
+  document.querySelector('meta[name="theme-color"]').setAttribute('content', settings.bg);
+  const pv = document.getElementById('wallPreview');
+  if (pv) pv.style.background = wp;
+  document.querySelectorAll('[data-wall]').forEach(el => {
+    el.classList.toggle('on', el.dataset.wall === settings.wallpaper);
+  });
+}
+
+function generateStars() {
+  const stars = [];
+  for (let i = 0; i < 80; i++) {
+    const x = Math.random()*100, y = Math.random()*100;
+    const s = Math.random()*2 + 1;
+    const o = Math.random()*0.7 + 0.3;
+    stars.push(`radial-gradient(circle ${s}px at ${x}% ${y}%, rgba(224,231,255,${o}) 0%, transparent 100%)`);
+  }
+  return stars.join(',') + `, linear-gradient(180deg, ${settings.bg}, #000)`;
+}
+
+function hexA(hex, a) {
+  const r = parseInt(hex.slice(1,3),16), g = parseInt(hex.slice(3,5),16), b = parseInt(hex.slice(5,7),16);
+  return `rgba(${r},${g},${b},${a})`;
+}
+function hexToRgb(hex) {
+  const r = parseInt(hex.slice(1,3),16), g = parseInt(hex.slice(3,5),16), b = parseInt(hex.slice(5,7),16);
+  return `${r},${g},${b}`;
 }
 
 /* ===== SEARCH ===== */
@@ -577,18 +646,15 @@ function copyForAlice() {
   if (!q) return;
   if (navigator.clipboard && navigator.clipboard.writeText) {
     navigator.clipboard.writeText(q).then(
-      () => alert('✅ Скопировано! Вставь в Алису AI'),
-      () => prompt('Скопируй вручную:', q)
+      () => alert('✅ Скопировано!'),
+      () => prompt('Скопируй:', q)
     );
-  } else {
-    prompt('Скопируй вручную:', q);
-  }
+  } else prompt('Скопируй:', q);
 }
 
 /* ===== SUGGESTIONS ===== */
 const nameInput = document.getElementById('addName');
 const suggList = document.getElementById('suggList');
-
 nameInput.addEventListener('input', () => {
   const q = nameInput.value.trim().toLowerCase();
   if (q.length < 2) { suggList.classList.add('hidden'); return; }
@@ -611,7 +677,6 @@ nameInput.addEventListener('input', () => {
     el.onclick = () => pickModel(el.dataset.name);
   });
 });
-
 document.addEventListener('click', e => {
   if (!e.target.closest('.sugg')) suggList.classList.add('hidden');
 });
@@ -626,11 +691,10 @@ function pickModel(name) {
   if (m.detail && !addState.pros.includes('detail')) addState.pros.push('detail');
   if (m.rarity === 'sth' && !addState.pros.includes('sth')) addState.pros.push('sth');
   if (m.rarity === 'th' && !addState.pros.includes('th')) addState.pros.push('th');
-  renderChips();
-  updatePrice();
+  renderChips(); updatePrice();
   let sub = m.years || '';
-  if (m.rarity==='sth') sub += ' · 💎 Super Treasure Hunt';
-  if (m.rarity==='th') sub += ' · 🏆 Treasure Hunt';
+  if (m.rarity==='sth') sub += ' · 💎 STH';
+  if (m.rarity==='th') sub += ' · 🏆 TH';
   showToast(`✓ ${m.name}`, sub);
 }
 
@@ -645,21 +709,15 @@ function renderChips() {
     el.onclick = () => { addState.series = k; renderChips(); updatePrice(); };
     sc.appendChild(el);
   }
-
   const bl = document.getElementById('boxList');
   bl.innerHTML = '';
   for (const k in BOX) {
     const el = document.createElement('div');
     el.className = 'boxcard' + (addState.box === k ? ' on' : '');
-    el.innerHTML = `
-      <div class="bt">${BOX[k].label}</div>
-      <div class="bd">${BOX[k].desc}</div>
-      <div class="bm">×${BOX[k].m} к цене</div>
-    `;
+    el.innerHTML = `<div class="bt">${BOX[k].label}</div><div class="bd">${BOX[k].desc}</div><div class="bm">×${BOX[k].m} к цене</div>`;
     el.onclick = () => { addState.box = k; renderChips(); updatePrice(); };
     bl.appendChild(el);
   }
-
   const pc = document.getElementById('proChips');
   pc.innerHTML = '';
   for (const k in PROS) {
@@ -672,7 +730,6 @@ function renderChips() {
     };
     pc.appendChild(el);
   }
-
   const cc = document.getElementById('conChips');
   cc.innerHTML = '';
   for (const k in CONS) {
@@ -685,7 +742,6 @@ function renderChips() {
     };
     cc.appendChild(el);
   }
-
   document.querySelectorAll('[data-open]').forEach(el => {
     const isYes = el.dataset.open === 'yes';
     el.classList.toggle('on', addState.opened === isYes);
@@ -701,7 +757,6 @@ function updatePrice() {
   const base = marketVal > 0 ? marketVal : seriesBase;
   const price = calcPrice(base, addState.series, addState.box, addState.opened, addState.pros, addState.cons);
   document.getElementById('addPrice').textContent = fmt(price);
-
   const parts = [];
   if (marketVal > 0) parts.push(`рынок ${Math.round(marketVal)} ₽`);
   else parts.push(`база ${Math.round(seriesBase)} ₽`);
@@ -725,17 +780,15 @@ document.getElementById('addPhotoInput').onchange = async e => {
 };
 document.getElementById('addPhotoSlot').onclick = () => document.getElementById('addPhotoInput').click();
 
-/* ===== SAVE ===== */
+/* ===== SAVE CAR ===== */
 function saveCar() {
   const name = document.getElementById('addName').value.trim();
   if (!name) { alert('Напиши название'); return; }
   if (!addState.photo) { alert('Добавь фото'); return; }
-
   const marketVal = parseFloat(document.getElementById('addMarket').value) || 0;
   const seriesMult = settings.seriesMults[addState.series] || 1;
   const seriesBase = settings.mainlineBase * seriesMult;
   const base = marketVal > 0 ? marketVal : seriesBase;
-
   const car = {
     id: Date.now(), name, photo: addState.photo, myPhoto: null,
     series: addState.series, marketPrice: marketVal,
@@ -745,9 +798,10 @@ function saveCar() {
     price: calcPrice(base, addState.series, addState.box, addState.opened, addState.pros, addState.cons),
     createdAt: new Date().toISOString(), pricingVersion: PRICING_VERSION,
   };
-  collection.unshift(car);
+  const col = getCollection();
+  col.unshift(car);
+  setCollection(col);
   persist();
-
   addState = { photo:null, series:'mainline', box:'mint', opened:false, pros:[], cons:[] };
   document.getElementById('addName').value = '';
   document.getElementById('addMarket').value = '';
@@ -758,29 +812,21 @@ function saveCar() {
   renderChips(); updatePrice(); renderCollection(); goTo('collection');
 }
 
-function persist() {
-  try {
-    localStorage.setItem('hw_collection', JSON.stringify(collection));
-    localStorage.setItem('onyx_settings_v17', JSON.stringify(settings));
-    localStorage.setItem('hw_user_models', JSON.stringify(userModels));
-  } catch(e) { alert('Не хватило места. Удали старые машинки.'); }
-}
-
 /* ===== COLLECTION ===== */
 function renderCollection() {
   const grid = document.getElementById('collectionGrid');
   const empty = document.getElementById('collectionEmpty');
-  const total = collection.reduce((s,c)=>s+c.price, 0);
+  const col = getCollection();
+  const total = col.reduce((s,c)=>s+c.price, 0);
   document.getElementById('headerTotal').textContent = fmt(total);
-
-  if (collection.length === 0) {
+  if (col.length === 0) {
     grid.innerHTML = '';
     empty.classList.remove('hidden');
     return;
   }
   empty.classList.add('hidden');
   grid.innerHTML = '';
-  collection.forEach(car => {
+  col.forEach(car => {
     const el = document.createElement('div');
     el.className = 'card overflow-hidden cursor-pointer';
     el.onclick = () => openDetail(car.id);
@@ -788,9 +834,7 @@ function renderCollection() {
     el.innerHTML = `
       <div class="aspect-square relative" style="background:rgba(0,0,0,.3)">
         <img src="${car.photo}" style="width:100%;height:100%;object-fit:cover">
-        <div class="absolute top-2 left-2 badge" style="background:${sInfo.color}">
-          ${(sInfo.label || '').split(' ')[0]}
-        </div>
+        <div class="absolute top-2 left-2 badge" style="background:${sInfo.color}">${(sInfo.label || '').split(' ')[0]}</div>
       </div>
       <div class="p-3">
         <div class="text-sm font-semibold truncate">${escapeHtml(car.name)}</div>
@@ -803,7 +847,8 @@ function renderCollection() {
 
 /* ===== DETAIL ===== */
 function openDetail(id) {
-  const car = collection.find(c => c.id === id);
+  const col = getCollection();
+  const car = col.find(c => c.id === id);
   if (!car) return;
   const sInfo = SERIES_DEFAULTS[car.series] || SERIES_DEFAULTS.custom;
   const breakdown = [];
@@ -813,7 +858,6 @@ function openDetail(id) {
   if (car.opened) breakdown.push(`Открыта: ×${sInfo.openLoss}`);
   car.pros.forEach(k => breakdown.push(`+ ${PROS[k].label}: +${Math.round(PROS[k].v*100)}%`));
   car.cons.forEach(k => breakdown.push(`− ${CONS[k].label}: −${Math.round(CONS[k].v*100)}%`));
-
   const body = document.getElementById('detailBody');
   body.innerHTML = `
     <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px">
@@ -825,7 +869,7 @@ function openDetail(id) {
     </div>
     <div class="grid2 mb-4">
       <div>
-        <div class="text-xs text-neutral-500 mb-1">Фото машинки</div>
+        <div class="text-xs text-neutral-500 mb-1">Фото</div>
         <div class="aspect-square rounded-xl overflow-hidden" style="background:rgba(0,0,0,.3)">
           <img src="${car.photo}" style="width:100%;height:100%;object-fit:cover">
         </div>
@@ -839,13 +883,10 @@ function openDetail(id) {
       </div>
     </div>
     <div class="card p-4 mb-3">
-      <div class="text-xs text-neutral-500 uppercase tracking-wide mb-3">Расчёт цены</div>
-      <div class="text-sm space-y-1">
-        ${breakdown.map(b => `<div class="text-neutral-400">${b}</div>`).join('')}
-      </div>
+      <div class="text-xs text-neutral-500 uppercase tracking-wide mb-3">Расчёт</div>
+      <div class="text-sm space-y-1">${breakdown.map(b => `<div class="text-neutral-400">${b}</div>`).join('')}</div>
       <div style="display:flex;justify-content:space-between;align-items:center;margin-top:16px;padding-top:16px;border-top:1px solid var(--border)">
-        <span class="text-neutral-400">Итого</span>
-        <span class="price-total">${fmt(car.price)}</span>
+        <span class="text-neutral-400">Итого</span><span class="price-total">${fmt(car.price)}</span>
       </div>
     </div>
     <div class="flex-gap">
@@ -867,7 +908,8 @@ function openDetail(id) {
 function closeDetail() { document.getElementById('detailModal').classList.remove('open'); }
 
 function recalcCar(id) {
-  const car = collection.find(c => c.id === id);
+  const col = getCollection();
+  const car = col.find(c => c.id === id);
   if (!car) return;
   const seriesMult = settings.seriesMults[car.series] || 1;
   const seriesBase = settings.mainlineBase * seriesMult;
@@ -875,17 +917,241 @@ function recalcCar(id) {
   const base = car.marketPrice > 0 ? car.marketPrice : seriesBase;
   car.baseAtSave = base;
   car.price = calcPrice(base, car.series, car.box, car.opened, car.pros, car.cons);
-  car.pricingVersion = PRICING_VERSION;
-  persist(); renderCollection(); openDetail(id);
+  setCollection(col); persist(); renderCollection(); openDetail(id);
 }
 
 function deleteCar(id) {
   if (!confirm('Удалить машинку?')) return;
-  collection = collection.filter(c => c.id !== id);
-  persist(); closeDetail(); renderCollection();
+  const col = getCollection().filter(c => c.id !== id);
+  setCollection(col); persist(); closeDetail(); renderCollection();
 }
 
-/* ===== NAVIGATION ===== */
+/* ===== PROFILES ===== */
+function renderProfiles() {
+  const list = document.getElementById('profilesList');
+  list.innerHTML = '';
+  profiles.forEach(p => {
+    const total = (p.collection || []).reduce((s,c)=>s+c.price, 0);
+    const isActive = p.id === activeProfileId;
+    const el = document.createElement('div');
+    el.className = 'profile-card' + (isActive ? ' active' : '');
+    el.innerHTML = `
+      <div class="profile-banner" style="${p.banner ? '' : `background:linear-gradient(135deg, ${p.accent || '#a855f7'}, #38bdf8)`}">
+        ${p.banner ? `<img src="${p.banner}">` : ''}
+        <div class="profile-avatar" style="background:${p.accent || '#a855f7'}">
+          ${p.avatar ? `<img src="${p.avatar}">` : '👤'}
+        </div>
+      </div>
+      <div class="profile-body">
+        <div class="profile-name">${escapeHtml(p.name)} ${isActive ? '<span style="color:var(--accent);font-size:12px">● активный</span>' : ''}</div>
+        <div class="profile-bio">${escapeHtml(p.bio || 'Без описания')}</div>
+        <div class="profile-stats">
+          <div class="stat"><b>${(p.collection || []).length}</b><span>машинок</span></div>
+          <div class="stat"><b>${fmt(total)}</b><span>стоимость</span></div>
+        </div>
+      </div>
+    `;
+    el.onclick = () => {
+      if (isActive) {
+        openProfileEditor(p.id);
+      } else {
+        activeProfileId = p.id;
+        persist(); renderProfiles(); renderCollection();
+        showToast(`👤 Профиль: ${p.name}`, `Коллекция: ${(p.collection||[]).length} машинок`);
+      }
+    };
+    el.oncontextmenu = (e) => { e.preventDefault(); openProfileEditor(p.id); };
+    list.appendChild(el);
+  });
+}
+
+function openProfileEditor(profileId) {
+  const isNew = !profileId;
+  const p = isNew ? {
+    id: 'p_' + Date.now(), name: '', bio: '', avatar: null, banner: null,
+    accent: settings.accent, collection: [], createdAt: new Date().toISOString()
+  } : profiles.find(x => x.id === profileId);
+  if (!p) return;
+
+  const body = document.getElementById('profileBody');
+  body.innerHTML = `
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+      <h3 style="font-size:18px;font-weight:700">${isNew ? '➕ Новый профиль' : '✏️ Редактировать'}</h3>
+      <button onclick="closeProfileEditor()" class="modal-close">×</button>
+    </div>
+
+    <div class="avatar-edit" id="avatarEdit">
+      ${p.avatar ? `<img src="${p.avatar}">` : '📷'}
+    </div>
+    <input type="file" id="avatarInput" accept="image/*" class="hidden">
+    <div class="text-center text-xs text-neutral-500 mt-2">Аватар (тапни)</div>
+
+    <div class="banner-edit" id="bannerEdit">
+      ${p.banner ? `<img src="${p.banner}">` : '🖼️ Баннер'}
+    </div>
+    <input type="file" id="bannerInput" accept="image/*" class="hidden">
+    <div class="text-center text-xs text-neutral-500 mt-2">Баннер (тапни)</div>
+
+    <label class="lbl">Имя</label>
+    <input id="profName" maxlength="40" value="${escapeHtml(p.name)}" placeholder="Твоё имя">
+
+    <label class="lbl">Bio</label>
+    <textarea id="profBio" maxlength="200" placeholder="Коллекционирую с 2020...">${escapeHtml(p.bio || '')}</textarea>
+
+    <label class="lbl">Акцентный цвет</label>
+    <div class="profile-color-picker" id="colorPicker">
+      ${['#a855f7','#38bdf8','#f97316','#ef4444','#22c55e','#eab308','#ec4899','#06b6d4'].map(c => 
+        `<div class="color-dot ${p.accent === c ? 'on' : ''}" data-color="${c}" style="background:${c}"></div>`
+      ).join('')}
+    </div>
+
+    <button class="btn mt-6" onclick="saveProfile('${p.id}', ${isNew})">💾 Сохранить</button>
+    ${!isNew && profiles.length > 1 ? `<button class="btn btn-red mt-3" onclick="deleteProfile('${p.id}')">🗑️ Удалить профиль</button>` : ''}
+    ${!isNew ? `<button class="btn btn-ghost mt-3" onclick="makeActive('${p.id}')">👁️ Сделать активным</button>` : ''}
+  `;
+
+  // temp storage for photos
+  window._editProfile = { ...p };
+
+  document.getElementById('avatarEdit').onclick = () => document.getElementById('avatarInput').click();
+  document.getElementById('avatarInput').onchange = async e => {
+    const f = e.target.files[0]; if (!f) return;
+    window._editProfile.avatar = await compressImage(f, 400);
+    document.getElementById('avatarEdit').innerHTML = `<img src="${window._editProfile.avatar}">`;
+  };
+  document.getElementById('bannerEdit').onclick = () => document.getElementById('bannerInput').click();
+  document.getElementById('bannerInput').onchange = async e => {
+    const f = e.target.files[0]; if (!f) return;
+    window._editProfile.banner = await compressImage(f, 1200);
+    document.getElementById('bannerEdit').innerHTML = `<img src="${window._editProfile.banner}">`;
+  };
+  document.querySelectorAll('#colorPicker .color-dot').forEach(dot => {
+    dot.onclick = () => {
+      window._editProfile.accent = dot.dataset.color;
+      document.querySelectorAll('#colorPicker .color-dot').forEach(d => d.classList.toggle('on', d === dot));
+    };
+  });
+
+  document.getElementById('profileModal').classList.add('open');
+}
+
+function closeProfileEditor() { document.getElementById('profileModal').classList.remove('open'); }
+
+function saveProfile(id, isNew) {
+  const name = document.getElementById('profName').value.trim();
+  if (!name) { alert('Введи имя'); return; }
+  const bio = document.getElementById('profBio').value.trim();
+  const tmp = window._editProfile;
+  if (isNew) {
+    profiles.push({
+      id: tmp.id, name, bio,
+      avatar: tmp.avatar, banner: tmp.banner,
+      accent: tmp.accent || settings.accent,
+      collection: [],
+      createdAt: new Date().toISOString(),
+    });
+  } else {
+    const p = profiles.find(x => x.id === id);
+    if (!p) return;
+    p.name = name; p.bio = bio;
+    p.avatar = tmp.avatar; p.banner = tmp.banner;
+    p.accent = tmp.accent || p.accent;
+  }
+  persist(); renderProfiles(); closeProfileEditor();
+  showToast('✅ Профиль сохранён', name);
+}
+
+function deleteProfile(id) {
+  if (profiles.length <= 1) { alert('Нельзя удалить последний профиль'); return; }
+  const p = profiles.find(x => x.id === id);
+  if (!confirm(`Удалить профиль "${p.name}" со всей коллекцией?`)) return;
+  profiles = profiles.filter(x => x.id !== id);
+  if (activeProfileId === id) activeProfileId = profiles[0].id;
+  persist(); renderProfiles(); renderCollection(); closeProfileEditor();
+  showToast('🗑️ Профиль удалён');
+}
+
+function makeActive(id) {
+  activeProfileId = id;
+  persist(); renderProfiles(); renderCollection(); closeProfileEditor();
+  showToast('👁️ Профиль активирован');
+}
+
+/* ===== EXPORT/IMPORT PROFILE ===== */
+function exportCurrentProfile() {
+  const p = getActiveProfile();
+  if (!p) return;
+  const data = JSON.stringify({ type: 'onyx-profile', version: 1, profile: p }, null, 2);
+  const blob = new Blob([data], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `onyx-profile-${p.name.replace(/\s+/g,'_')}-${new Date().toISOString().slice(0,10)}.json`;
+  a.click(); URL.revokeObjectURL(url);
+  showToast('📤 Профиль экспортирован');
+}
+
+function importProfile() {
+  const inp = document.createElement('input');
+  inp.type = 'file'; inp.accept = 'application/json';
+  inp.onchange = e => {
+    const f = e.target.files[0]; if (!f) return;
+    const r = new FileReader();
+    r.onload = ev => {
+      try {
+        const data = JSON.parse(ev.target.result);
+        if (data.type !== 'onyx-profile' || !data.profile) throw new Error('Неверный формат');
+        const p = data.profile;
+        p.id = 'p_' + Date.now();
+        p.name = p.name + ' (импорт)';
+        profiles.push(p);
+        persist(); renderProfiles();
+        showToast('📥 Профиль импортирован', p.name);
+      } catch(err) { alert('❌ Ошибка: ' + err.message); }
+    };
+    r.readAsText(f);
+  };
+  inp.click();
+}
+
+/* ===== EXPORT/IMPORT ALL ===== */
+function exportAll() {
+  const data = JSON.stringify({ collection: getCollection(), profiles, activeProfileId, settings, userModels, exportedAt: new Date().toISOString() }, null, 2);
+  const blob = new Blob([data], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = `onyx-hw-full-${new Date().toISOString().slice(0,10)}.json`;
+  a.click(); URL.revokeObjectURL(url);
+  showToast('📤 Экспортировано');
+}
+
+function importAll() {
+  const inp = document.createElement('input');
+  inp.type = 'file'; inp.accept = 'application/json';
+  inp.onchange = e => {
+    const f = e.target.files[0]; if (!f) return;
+    const r = new FileReader();
+    r.onload = ev => {
+      try {
+        const data = JSON.parse(ev.target.result);
+        if (data.profiles) { profiles = data.profiles; activeProfileId = data.activeProfileId || profiles[0].id; }
+        if (data.settings) settings = { ...settings, ...data.settings };
+        if (data.userModels) userModels = data.userModels;
+        if (data.collection && profiles.length > 0) {
+          // старое — в активный профиль
+          getActiveProfile().collection = data.collection;
+        }
+        persist(); applyTheme(); renderProfiles(); renderCollection(); renderSeriesEditor(); renderThemeGrid(); updateModelCount();
+        document.getElementById('setMainlineBase').value = settings.mainlineBase;
+        alert('✅ Импортировано!');
+      } catch(err) { alert('❌ Ошибка: ' + err.message); }
+    };
+    r.readAsText(f);
+  };
+  inp.click();
+}
+
+/* ===== NAV ===== */
 function goTo(page) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   const target = document.getElementById('page-' + page);
@@ -893,10 +1159,11 @@ function goTo(page) {
   document.querySelectorAll('.nav-btn').forEach(b => {
     b.classList.toggle('active', b.dataset.page === page);
   });
+  if (page === 'profiles') renderProfiles();
   window.scrollTo(0, 0);
 }
 
-/* ===== SETTINGS ===== */
+/* ===== SERIES EDITOR ===== */
 function renderSeriesEditor() {
   const el = document.getElementById('seriesEditor');
   el.innerHTML = '';
@@ -939,7 +1206,6 @@ function renderModelEditor(filter = '') {
   const all = getAllModels();
   const q = filter.toLowerCase().trim();
   const list = q ? all.filter(m => m.name.toLowerCase().includes(q)) : all;
-
   body.innerHTML = `
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
       <h3 style="font-size:18px;font-weight:700">📚 Справочник</h3>
@@ -979,12 +1245,12 @@ function renderModelEditor(filter = '') {
 }
 
 function addNewModel() {
-  const name = prompt('Название модели:');
+  const name = prompt('Название:');
   if (!name) return;
-  const years = prompt('Годы выпуска:') || '';
+  const years = prompt('Годы:') || '';
   const licensed = confirm('Реальная марка?');
   const detail = confirm('Детализация?');
-  const rarity = confirm('Это STH (Super Treasure Hunt)?\nOK = STH, Отмена = обычная');
+  const rarity = confirm('STH? (OK=STH, Отмена=обычная)');
   userModels.push([name.trim(), years.trim(), licensed?1:0, detail?1:0, 'user', rarity?'sth':null]);
   persist(); updateModelCount(); renderModelEditor();
   showToast('✅ Модель добавлена', name);
@@ -994,18 +1260,15 @@ function deleteUserModel(name) {
   if (!confirm(`Удалить "${name}"?`)) return;
   userModels = userModels.filter(m => m[0] !== name);
   persist(); updateModelCount(); renderModelEditor();
-  showToast('🗑️ Удалено');
 }
 
 function resetUserModels() {
   if (userModels.length === 0) { alert('Нет своих моделей'); return; }
   if (!confirm(`Удалить все свои модели (${userModels.length})?`)) return;
-  userModels = [];
-  persist(); updateModelCount(); renderModelEditor();
-  showToast('🗑️ Свои модели удалены');
+  userModels = []; persist(); updateModelCount(); renderModelEditor();
 }
 
-/* ===== THEME EDITOR ===== */
+/* ===== THEMES ===== */
 function renderThemeGrid() {
   const el = document.getElementById('themeGrid');
   el.innerHTML = '';
@@ -1013,19 +1276,12 @@ function renderThemeGrid() {
     const t = THEMES[k];
     const item = document.createElement('div');
     item.className = 'theme-item' + (settings.theme === k ? ' on' : '');
-    const swatchBg = k === 'custom'
-      ? `linear-gradient(135deg, ${settings.accent}, ${settings.accent2})`
-      : `linear-gradient(135deg, ${t.accent}, ${t.accent2})`;
-    item.innerHTML = `
-      <div class="swatch" style="background:${swatchBg}"></div>
-      <div class="tname">${t.name}</div>
-    `;
+    const bg = k === 'custom' ? `linear-gradient(135deg, ${settings.accent}, ${settings.accent2})` : `linear-gradient(135deg, ${t.accent}, ${t.accent2})`;
+    item.innerHTML = `<div class="swatch" style="background:${bg}"></div><div class="tname">${t.name}</div>`;
     item.onclick = () => {
       settings.theme = k;
       if (k !== 'custom') {
-        settings.accent = t.accent;
-        settings.accent2 = t.accent2;
-        settings.bg = t.bg;
+        settings.accent = t.accent; settings.accent2 = t.accent2; settings.bg = t.bg;
       }
       document.getElementById('colAccent').value = settings.accent;
       document.getElementById('colAccent2').value = settings.accent2;
@@ -1036,18 +1292,12 @@ function renderThemeGrid() {
   }
 }
 
-/* ===== WALLPAPER ===== */
-function setWallpaper(type) {
-  settings.wallpaper = type;
-  applyTheme(); persist();
-}
+function setWallpaper(type) { settings.wallpaper = type; applyTheme(); persist(); }
 function setCustomWallpaper() {
   const inp = document.createElement('input');
-  inp.type = 'file';
-  inp.accept = 'image/*';
+  inp.type = 'file'; inp.accept = 'image/*';
   inp.onchange = async e => {
-    const f = e.target.files[0];
-    if (!f) return;
+    const f = e.target.files[0]; if (!f) return;
     settings.customWall = await compressImage(f, 1200);
     settings.wallpaper = 'custom';
     applyTheme(); persist();
@@ -1056,51 +1306,10 @@ function setCustomWallpaper() {
   inp.click();
 }
 
-/* ===== CLEAR/EXPORT/IMPORT ===== */
+/* ===== CLEAR ===== */
 function clearAll() {
-  if (!confirm('Удалить ВСЮ коллекцию?')) return;
-  collection = [];
-  persist(); renderCollection();
-}
-
-function exportCollection() {
-  const data = JSON.stringify({ collection, settings, userModels, exportedAt: new Date().toISOString() }, null, 2);
-  const blob = new Blob([data], { type: 'application/json' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = `onyx-hw-${new Date().toISOString().slice(0,10)}.json`;
-  a.click();
-  URL.revokeObjectURL(url);
-}
-
-function importCollection() {
-  const inp = document.createElement('input');
-  inp.type = 'file';
-  inp.accept = 'application/json';
-  inp.onchange = e => {
-    const f = e.target.files[0];
-    if (!f) return;
-    const r = new FileReader();
-    r.onload = ev => {
-      try {
-        const data = JSON.parse(ev.target.result);
-        if (data.collection) collection = data.collection;
-        if (data.settings) settings = { ...settings, ...data.settings };
-        if (data.userModels) userModels = data.userModels;
-        persist();
-        applyTheme();
-        renderCollection(); renderSeriesEditor(); renderThemeGrid(); updateModelCount();
-        document.getElementById('setMainlineBase').value = settings.mainlineBase;
-        document.getElementById('colAccent').value = settings.accent;
-        document.getElementById('colAccent2').value = settings.accent2;
-        document.getElementById('colBg').value = settings.bg;
-        alert('✅ Импортировано!');
-      } catch(err) { alert('❌ Ошибка: ' + err.message); }
-    };
-    r.readAsText(f);
-  };
-  inp.click();
+  if (!confirm('Удалить коллекцию активного профиля?')) return;
+  setCollection([]); persist(); renderCollection();
 }
 
 /* ===== LISTENERS ===== */
@@ -1109,26 +1318,14 @@ document.getElementById('setMainlineBase').addEventListener('input', e => {
   persist(); updatePrice(); renderCollection();
 });
 document.getElementById('addMarket').addEventListener('input', updatePrice);
-
-document.getElementById('colAccent').addEventListener('input', e => {
-  settings.accent = e.target.value; settings.theme = 'custom';
-  applyTheme(); persist(); renderThemeGrid();
-});
-document.getElementById('colAccent2').addEventListener('input', e => {
-  settings.accent2 = e.target.value; settings.theme = 'custom';
-  applyTheme(); persist(); renderThemeGrid();
-});
-document.getElementById('colBg').addEventListener('input', e => {
-  settings.bg = e.target.value; settings.theme = 'custom';
-  applyTheme(); persist(); renderThemeGrid();
-});
-document.getElementById('blurRange').addEventListener('input', e => {
-  settings.blur = parseInt(e.target.value) || 0;
-  applyTheme(); persist();
-});
+document.getElementById('colAccent').addEventListener('input', e => { settings.accent = e.target.value; settings.theme = 'custom'; applyTheme(); persist(); renderThemeGrid(); });
+document.getElementById('colAccent2').addEventListener('input', e => { settings.accent2 = e.target.value; settings.theme = 'custom'; applyTheme(); persist(); renderThemeGrid(); });
+document.getElementById('colBg').addEventListener('input', e => { settings.bg = e.target.value; settings.theme = 'custom'; applyTheme(); persist(); renderThemeGrid(); });
+document.getElementById('blurRange').addEventListener('input', e => { settings.blur = parseInt(e.target.value) || 0; applyTheme(); persist(); });
 
 /* ===== INIT ===== */
 document.addEventListener('DOMContentLoaded', () => {
+  initProfiles();
   applyTheme();
   renderThemeGrid();
   document.getElementById('setMainlineBase').value = settings.mainlineBase;
@@ -1137,8 +1334,8 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('colBg').value = settings.bg;
   document.getElementById('blurRange').value = settings.blur;
   renderChips(); updatePrice(); renderCollection();
-  renderSeriesEditor(); updateModelCount();
-  showToast('🚀 ONYX HW v1.7', 'Космический стиль · 9 тем · свои обои');
+  renderSeriesEditor(); updateModelCount(); renderProfiles();
+  showToast('🚀 ONYX HW v1.8', 'Профили · обновлённые проценты');
 });
 </script>
 </body>
