@@ -9,55 +9,55 @@
 <title>ONYX HW</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23000'/%3E%3Ccircle cx='50' cy='50' r='30' fill='none' stroke='%23a855f7' stroke-width='4'/%3E%3Ccircle cx='50' cy='50' r='14' fill='%2338bdf8'/%3E%3C/svg%3E">
 <style>
-  :root{--bg:#000;--accent:#a855f7;--accent2:#38bdf8;--card-bg:rgba(15,15,25,.7);--text:#e5e5e5;--text-muted:#737373;--border:rgba(168,85,247,.25);--wallpaper:none;--card-blur:14px;--glow:0 0 24px rgba(168,85,247,.45)}
+  :root{--bg:#000;--accent:#a855f7;--accent2:#38bdf8;--card-bg:rgba(15,15,20,.85);--text:#e5e5e5;--text-muted:#737373;--border:rgba(168,85,247,.2);--wallpaper:none;--card-blur:14px;--glow:0 0 24px rgba(168,85,247,.45)}
   *{-webkit-tap-highlight-color:transparent;box-sizing:border-box;margin:0;padding:0}
   html,body{overscroll-behavior:none}
   body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;padding-bottom:90px;min-height:100vh;background-image:var(--wallpaper);background-size:cover;background-attachment:fixed;background-position:center;position:relative}
-  body::before{content:'';position:fixed;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.2),rgba(0,0,0,.7));pointer-events:none;z-index:0}
+  body::before{content:'';position:fixed;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.3),rgba(0,0,0,.75));pointer-events:none;z-index:0}
   .wrap{max-width:512px;margin:0 auto;padding:0 16px;position:relative;z-index:1}
-  header{position:sticky;top:0;z-index:40;background:rgba(0,0,0,.75);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.05)}
-  header .wrap{padding:14px 16px;display:flex;justify-content:space-between;align-items:center}
-  h1{font-size:22px;font-weight:900;letter-spacing:.25em;color:#fff;text-transform:uppercase;text-shadow:0 0 20px var(--accent)}
-  h2{font-size:20px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+  header{position:sticky;top:0;z-index:40;background:rgba(0,0,0,.7);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.05)}
+  header .wrap{padding:16px;display:flex;justify-content:space-between;align-items:center}
+  h1{font-size:22px;font-weight:900;letter-spacing:.3em;color:#fff;text-transform:uppercase;text-shadow:0 0 20px var(--accent)}
+  h2{font-size:20px;font-weight:800;margin-bottom:16px;display:flex;align-items:center;gap:8px;letter-spacing:.05em}
   .page{display:none;padding-top:16px}.page.active{display:block;animation:fadeIn .3s ease}
   @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-  input,select,textarea{background:rgba(15,15,25,.7);border:1px solid var(--border);color:#fff;border-radius:12px;padding:12px 14px;width:100%;font-size:16px;font-family:inherit;transition:.2s}
+  input,select,textarea{background:rgba(20,20,30,.75);border:1px solid var(--border);color:#fff;border-radius:12px;padding:13px 15px;width:100%;font-size:16px;font-family:inherit;transition:.2s}
   input:focus,select:focus,textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(168,85,247,.15)}
-  label.lbl{display:block;font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.1em;margin:20px 0 8px;font-weight:600}
-  .chip{display:inline-block;border:1px solid var(--border);background:rgba(15,15,25,.6);border-radius:999px;padding:8px 14px;font-size:14px;color:#aaa;transition:.2s;user-select:none;cursor:pointer}
+  label.lbl{display:block;font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.1em;margin:20px 0 8px;font-weight:700}
+  .chip{display:inline-block;border:1px solid var(--border);background:rgba(20,20,30,.6);border-radius:999px;padding:9px 15px;font-size:14px;color:#aaa;transition:.2s;user-select:none;cursor:pointer}
   .chip:active{transform:scale(.95)}
-  .chip.on{background:var(--accent);color:#fff;border-color:var(--accent);font-weight:600;box-shadow:var(--glow)}
+  .chip.on{background:var(--accent);color:#fff;border-color:var(--accent);font-weight:700;box-shadow:var(--glow)}
   .chip.on.con{background:#ef4444;border-color:#ef4444;box-shadow:0 0 20px rgba(239,68,68,.5)}
   .chip.on.series{background:var(--accent2);color:#000;border-color:var(--accent2)}
   .boxcard{border:1px solid var(--border);background:var(--card-bg);border-radius:14px;padding:12px;cursor:pointer;transition:.2s;backdrop-filter:blur(var(--card-blur))}
   .boxcard.on{border-color:var(--accent);background:rgba(168,85,247,.12);box-shadow:var(--glow)}
-  .boxcard .bt{font-weight:600;font-size:15px}.boxcard .bd{font-size:12px;color:#888;margin-top:2px}.boxcard .bm{font-size:12px;color:var(--accent);font-weight:600;margin-top:4px}
+  .boxcard .bt{font-weight:700;font-size:15px}.boxcard .bd{font-size:12px;color:#888;margin-top:2px}.boxcard .bm{font-size:12px;color:var(--accent);font-weight:700;margin-top:4px}
   .nav{position:fixed;bottom:0;left:0;right:0;background:rgba(0,0,0,.92);backdrop-filter:blur(24px);border-top:1px solid rgba(255,255,255,.06);z-index:40;padding-bottom:env(safe-area-inset-bottom)}
   .nav .wrap{display:flex;padding:0}
-  .nav-btn{flex:1;text-align:center;padding:10px 0 12px;color:#666;font-size:11px;font-weight:500;transition:.15s;cursor:pointer}
+  .nav-btn{flex:1;text-align:center;padding:10px 0 12px;color:#666;font-size:11px;font-weight:600;transition:.15s;cursor:pointer}
   .nav-btn.active{color:var(--accent);text-shadow:0 0 12px var(--accent)}
   .nav-btn .ico{display:block;font-size:24px;margin-bottom:2px;transition:.2s}
   .nav-btn.active .ico{transform:scale(1.1)}
-  .card{background:var(--card-bg);border:1px solid var(--border);border-radius:16px;backdrop-filter:blur(var(--card-blur));-webkit-backdrop-filter:blur(var(--card-blur));box-shadow:0 4px 24px rgba(0,0,0,.4)}
-  .photo-slot{background:rgba(15,15,25,.6);border:2px dashed var(--border);border-radius:16px;display:flex;align-items:center;justify-content:center;flex-direction:column;color:#555;cursor:pointer;overflow:hidden;height:224px;transition:.2s}
+  .card{background:var(--card-bg);border:1px solid var(--border);border-radius:16px;backdrop-filter:blur(var(--card-blur));box-shadow:0 4px 24px rgba(0,0,0,.4)}
+  .photo-slot{background:rgba(20,20,30,.6);border:2px dashed var(--border);border-radius:16px;display:flex;align-items:center;justify-content:center;flex-direction:column;color:#555;cursor:pointer;overflow:hidden;height:224px;transition:.2s}
   .photo-slot:active{transform:scale(.99)}
   .photo-slot img{width:100%;height:100%;object-fit:cover}
-  .btn{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-weight:700;border-radius:14px;padding:16px;width:100%;font-size:16px;border:none;cursor:pointer;font-family:inherit;display:block;box-shadow:0 4px 20px rgba(168,85,247,.4);transition:.15s;letter-spacing:.02em}
-  .btn:active{transform:scale(.97);box-shadow:0 2px 10px rgba(168,85,247,.5)}
+  .btn{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-weight:800;border-radius:14px;padding:16px;width:100%;font-size:16px;border:none;cursor:pointer;font-family:inherit;display:block;box-shadow:0 4px 20px rgba(168,85,247,.4);transition:.15s;letter-spacing:.02em}
+  .btn:active{transform:scale(.97)}
   .btn-ghost{background:rgba(20,20,30,.8);color:var(--text);border:1px solid var(--border);box-shadow:none}
   .btn-blue{background:linear-gradient(135deg,#38bdf8,#6366f1);box-shadow:0 4px 20px rgba(56,189,248,.4)}
   .btn-sm{padding:11px 14px;font-size:14px;border-radius:10px}
   .btn-danger{background:linear-gradient(135deg,#ef4444,#b91c1c);box-shadow:0 4px 20px rgba(239,68,68,.4)}
   .modal{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:50;display:none;align-items:flex-end;backdrop-filter:blur(6px)}
   .modal.open{display:flex;animation:fadeIn .2s}
-  .modal-body{background:linear-gradient(180deg,#0f0f1a,#000);width:100%;max-height:92vh;overflow-y:auto;border-radius:24px 24px 0 0;padding:20px;border-top:1px solid var(--border);animation:slideUp .3s cubic-bezier(.2,.9,.3,1)}
+  .modal-body{background:linear-gradient(180deg,#0f0f18,#000);width:100%;max-height:92vh;overflow-y:auto;border-radius:24px 24px 0 0;padding:20px;border-top:1px solid var(--border);animation:slideUp .3s cubic-bezier(.2,.9,.3,1)}
   @keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
   .hidden{display:none!important}
   .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
   .flex-gap{display:flex;gap:8px}.flex-gap>*{flex:1}
   .series-row{display:flex;align-items:center;gap:10px;margin-bottom:10px}
   .series-row .dot{width:14px;height:14px;border-radius:50%;flex-shrink:0;box-shadow:0 0 8px currentColor}
-  .series-row .name{flex:1;font-size:14px}
+  .series-row .name{flex:1;font-size:14px;font-weight:500}
   .series-row input{width:90px;padding:8px 10px;font-size:14px}
   .market-hint{font-size:11px;color:var(--accent);margin-top:6px}
   .space-y-2>*+*{margin-top:8px}.space-y-1>*+*{margin-top:4px}
@@ -77,82 +77,82 @@
   .aspect-square{aspect-ratio:1/1}
   .relative{position:relative}.absolute{position:absolute}
   .top-2{top:8px}.left-2{left:8px}.right-2{right:8px}
-  .badge{font-size:10px;padding:2px 8px;border-radius:999px;color:#000;font-weight:600}
-  .price-big{font-size:36px;font-weight:800;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-  .price-total{font-size:24px;font-weight:800;color:var(--accent)}
+  .badge{font-size:10px;padding:2px 8px;border-radius:999px;color:#000;font-weight:700}
+  .price-big{font-size:36px;font-weight:900;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+  .price-total{font-size:24px;font-weight:900;color:var(--accent)}
   .modal-close{font-size:28px;line-height:1;background:transparent;border:none;color:var(--text-muted);cursor:pointer;padding:0 8px}
   .emoji-big{font-size:40px}
   .empty-state{text-align:center;color:var(--text-muted);padding:60px 0}
   .empty-state .e{font-size:48px;margin-bottom:12px;opacity:.6}
   .card-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-  .toast{position:fixed;top:70px;left:50%;transform:translateX(-50%) translateY(-20px);background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;padding:12px 20px;border-radius:12px;font-weight:600;font-size:14px;z-index:100;opacity:0;transition:opacity .3s,transform .3s;max-width:90%;text-align:center;box-shadow:var(--glow)}
+  .toast{position:fixed;top:70px;left:50%;transform:translateX(-50%) translateY(-20px);background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;padding:12px 20px;border-radius:12px;font-weight:700;font-size:14px;z-index:100;opacity:0;transition:opacity .3s,transform .3s;max-width:90%;text-align:center;box-shadow:var(--glow)}
   .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
   .toast small{display:block;font-weight:400;font-size:12px;margin-top:4px;opacity:.85}
-  /* Auth */
+  /* AUTH */
   #authScreen{position:fixed;inset:0;background:#000;z-index:200;display:flex;align-items:center;justify-content:center;padding:20px;overflow-y:auto}
   #authScreen::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 20% 30%,rgba(168,85,247,.35),transparent 50%),radial-gradient(circle at 80% 70%,rgba(56,189,248,.35),transparent 50%);pointer-events:none}
   .auth-box{width:100%;max-width:400px;background:var(--card-bg);border:1px solid var(--border);border-radius:24px;padding:32px 24px;backdrop-filter:blur(24px);position:relative;z-index:1;box-shadow:0 20px 60px rgba(0,0,0,.7)}
   .auth-title{font-size:36px;font-weight:900;text-align:center;letter-spacing:.3em;color:#fff;text-shadow:0 0 30px var(--accent);margin-bottom:6px}
   .auth-sub{text-align:center;font-size:11px;color:var(--text-muted);margin-bottom:24px;letter-spacing:.15em;text-transform:uppercase}
-  .auth-avatar{width:104px;height:104px;border-radius:50%;margin:0 auto 16px;background:rgba(15,15,25,.7);border:2px dashed var(--border);display:flex;align-items:center;justify-content:center;color:#555;font-size:36px;cursor:pointer;overflow:hidden;transition:.2s}
+  .auth-avatar{width:104px;height:104px;border-radius:50%;margin:0 auto 16px;background:rgba(20,20,30,.7);border:2px dashed var(--border);display:flex;align-items:center;justify-content:center;color:#555;font-size:36px;cursor:pointer;overflow:hidden;transition:.2s}
   .auth-avatar:active{transform:scale(.97);border-color:var(--accent)}
   .auth-avatar img{width:100%;height:100%;object-fit:cover}
   .auth-toggle{text-align:center;font-size:13px;color:var(--text-muted);margin-top:16px}
-  .auth-toggle a{color:var(--accent);cursor:pointer;text-decoration:none;font-weight:600}
-  /* Profile */
-  .profile-hero{position:relative;border-radius:20px;padding:20px;background:var(--card-bg);border:1px solid var(--border);backdrop-filter:blur(var(--card-blur));overflow:hidden}
-  .profile-hero::before{content:'';position:absolute;top:-50%;right:-50%;width:200%;height:200%;background:radial-gradient(circle,rgba(168,85,247,.15),transparent 60%);pointer-events:none}
-  .profile-top{display:flex;align-items:center;gap:16px;position:relative;z-index:1}
-  .profile-avatar-lg{width:88px;height:88px;border-radius:50%;border:3px solid var(--accent);background:rgba(15,15,25,.9);display:flex;align-items:center;justify-content:center;color:#555;font-size:36px;cursor:pointer;overflow:hidden;flex-shrink:0;box-shadow:0 0 24px rgba(168,85,247,.5);transition:.2s}
-  .profile-avatar-lg:active{transform:scale(.96)}
-  .profile-avatar-lg img{width:100%;height:100%;object-fit:cover}
-  .profile-info{flex:1;min-width:0}
-  .profile-name-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-  .profile-name{font-size:22px;font-weight:900;letter-spacing:.05em;text-transform:uppercase}
-  .online-dot{display:inline-flex;align-items:center;gap:4px;font-size:10px;color:#22c55e;font-weight:600}
+  .auth-toggle a{color:var(--accent);cursor:pointer;text-decoration:none;font-weight:700}
+  /* PROFILE CARD - как на скрине */
+  .profile-card{background:#000;border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:20px;box-shadow:0 8px 32px rgba(0,0,0,.6);position:relative;overflow:hidden}
+  .profile-card::before{content:'';position:absolute;top:-40%;right:-40%;width:180%;height:180%;background:radial-gradient(circle,rgba(168,85,247,.12),transparent 55%);pointer-events:none}
+  .pc-top{display:flex;align-items:center;gap:16px;position:relative;z-index:1}
+  .pc-avatar{width:84px;height:84px;border-radius:50%;border:2px solid rgba(168,85,247,.5);background:rgba(20,20,30,.9);display:flex;align-items:center;justify-content:center;color:#555;font-size:34px;cursor:pointer;overflow:hidden;flex-shrink:0;box-shadow:0 0 20px rgba(168,85,247,.35)}
+  .pc-avatar img{width:100%;height:100%;object-fit:cover}
+  .pc-info{flex:1;min-width:0}
+  .pc-name-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .pc-name{font-size:20px;font-weight:900;letter-spacing:.05em;color:#fff;text-transform:uppercase}
+  .online-dot{display:inline-flex;align-items:center;gap:5px;font-size:10px;color:#22c55e;font-weight:700}
   .online-dot::before{content:'';width:6px;height:6px;border-radius:50%;background:#22c55e;box-shadow:0 0 8px #22c55e;animation:pulse 2s infinite}
   @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
-  .profile-status{font-size:13px;color:var(--text-muted);margin-top:4px}
-  .profile-stats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px;position:relative;z-index:1}
-  .stat-box{background:rgba(0,0,0,.4);border:1px solid var(--border);border-radius:12px;padding:12px;text-align:center}
-  .stat-box .v{font-size:22px;font-weight:900;color:var(--accent);text-shadow:0 0 12px var(--accent)}
-  .stat-box .l{font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.1em;margin-top:4px;font-weight:600}
-  .profile-banner{width:100%;height:120px;border-radius:16px;background:linear-gradient(135deg,var(--accent),var(--accent2));margin-bottom:12px;cursor:pointer;overflow:hidden;position:relative;border:1px solid var(--border)}
-  .profile-banner img{width:100%;height:100%;object-fit:cover}
-  .profile-banner .overlay{position:absolute;bottom:0;left:0;right:0;padding:6px 12px;background:linear-gradient(0deg,rgba(0,0,0,.85),transparent);font-size:11px;color:#fff;text-align:right}
-  /* Stories */
-  .stories-strip{display:flex;gap:12px;overflow-x:auto;padding:4px 0;scrollbar-width:none;margin-top:20px}
+  .pc-status{font-size:13px;color:#888;margin-top:5px}
+  .pc-stats{display:grid;grid-template-columns:1fr 1fr;gap:0;margin-top:20px;padding-top:16px;border-top:1px solid rgba(255,255,255,.08);position:relative;z-index:1}
+  .pc-stat{text-align:center;padding:4px 0}
+  .pc-stat:first-child{border-right:1px solid rgba(255,255,255,.08)}
+  .pc-stat .v{font-size:22px;font-weight:900;color:#fff}
+  .pc-stat .l{font-size:10px;color:#666;text-transform:uppercase;letter-spacing:.1em;margin-top:4px;font-weight:700}
+  /* STORIES */
+  .stories-strip{display:flex;gap:14px;overflow-x:auto;padding:4px 0;scrollbar-width:none;margin-top:20px}
   .stories-strip::-webkit-scrollbar{display:none}
   .story-ring{flex-shrink:0;width:78px;text-align:center;cursor:pointer}
   .story-ring:active{transform:scale(.96)}
   .story-ring .ring{width:72px;height:72px;border-radius:50%;padding:3px;background:linear-gradient(135deg,var(--accent),var(--accent2));margin:0 auto;transition:.2s;box-shadow:0 0 16px rgba(168,85,247,.4)}
-  .story-ring .ring.seen{background:rgba(115,115,115,.4);box-shadow:none}
-  .story-ring .inner{width:100%;height:100%;border-radius:50%;overflow:hidden;background:#0f0f1f;border:2px solid var(--bg);display:flex;align-items:center;justify-content:center;color:#555;font-size:24px}
+  .story-ring .inner{width:100%;height:100%;border-radius:50%;overflow:hidden;background:#0f0f1f;border:2px solid #000;display:flex;align-items:center;justify-content:center;color:#555;font-size:24px}
   .story-ring .inner img{width:100%;height:100%;object-fit:cover}
-  .story-ring .label{font-size:10px;color:var(--text-muted);margin-top:6px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:500}
-  .story-add .ring{background:rgba(15,15,25,.7);border:2px dashed var(--accent);padding:0;display:flex;align-items:center;justify-content:center;font-size:32px;color:var(--accent);box-shadow:0 0 16px rgba(168,85,247,.3)}
+  .story-ring .label{font-size:10px;color:var(--text-muted);margin-top:6px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:600}
+  .story-add .ring{background:rgba(20,20,30,.7);border:2px dashed var(--accent);padding:0;display:flex;align-items:center;justify-content:center;font-size:32px;color:var(--accent);box-shadow:0 0 16px rgba(168,85,247,.3)}
   .story-add .inner{background:transparent;border:none;font-size:32px;color:var(--accent)}
   .story-card{background:var(--card-bg);border:1px solid var(--border);border-radius:18px;overflow:hidden;margin-bottom:14px;backdrop-filter:blur(var(--card-blur));box-shadow:0 4px 24px rgba(0,0,0,.4);animation:fadeIn .3s}
   .story-card .sc-head{display:flex;align-items:center;gap:10px;padding:12px}
-  .story-card .sc-av{width:40px;height:40px;border-radius:50%;overflow:hidden;background:rgba(15,15,25,.7);border:2px solid var(--accent);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+  .story-card .sc-av{width:40px;height:40px;border-radius:50%;overflow:hidden;background:rgba(20,20,30,.7);border:2px solid var(--accent);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
   .story-card .sc-av img{width:100%;height:100%;object-fit:cover}
   .story-card .sc-info{flex:1;min-width:0}
-  .story-card .sc-name{font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:.05em}
+  .story-card .sc-name{font-size:14px;font-weight:800;text-transform:uppercase;letter-spacing:.05em}
   .story-card .sc-date{font-size:11px;color:var(--text-muted);margin-top:2px}
   .story-card .sc-photo{width:100%;aspect-ratio:1;object-fit:cover;background:rgba(0,0,0,.4);cursor:pointer}
-  .story-card .sc-text{padding:14px;font-size:14px;line-height:1.4}
+  .story-card .sc-text{padding:14px;font-size:14px;line-height:1.5}
   .story-card .sc-del{padding:8px 12px;background:transparent;border:none;color:#ef4444;font-size:12px;cursor:pointer;font-weight:700}
-  .story-card .sc-del:active{opacity:.6}
   .stories-empty{text-align:center;padding:40px 20px;color:var(--text-muted)}
   .stories-empty .e{font-size:56px;margin-bottom:12px;opacity:.5}
-  .stories-empty .t{font-size:14px;line-height:1.5;font-style:italic}
-  /* Theme */
+  .stories-empty .t{font-size:14px;line-height:1.6;font-style:italic}
+  /* Story editor photo choice */
+  .photo-choice{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+  .photo-choice-btn{background:rgba(20,20,30,.6);border:1px solid var(--border);border-radius:14px;padding:20px 12px;text-align:center;cursor:pointer;transition:.2s}
+  .photo-choice-btn:active{transform:scale(.97);border-color:var(--accent)}
+  .photo-choice-btn .ic{font-size:32px;margin-bottom:8px}
+  .photo-choice-btn .tx{font-size:13px;color:#aaa;font-weight:600}
+  /* THEME */
   .theme-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-  .theme-item{border:2px solid var(--border);border-radius:14px;padding:12px 8px;cursor:pointer;text-align:center;background:rgba(15,15,25,.5);transition:.2s}
-  .theme-item:active{transform:scale(.96)}
+  .theme-item{border:2px solid var(--border);border-radius:14px;padding:12px 8px;cursor:pointer;text-align:center;background:rgba(20,20,30,.5);transition:.2s}
   .theme-item.on{border-color:var(--accent);box-shadow:var(--glow)}
   .theme-item .swatch{width:100%;height:36px;border-radius:10px;margin-bottom:8px}
-  .theme-item .tname{font-size:11px;color:#aaa;font-weight:600}
+  .theme-item .tname{font-size:11px;color:#aaa;font-weight:700}
   .color-row{display:flex;align-items:center;gap:12px;margin-bottom:12px}
   .color-row .cname{flex:1;font-size:14px;font-weight:500}
   .color-row input[type="color"]{width:56px;height:44px;padding:2px;border-radius:10px;border:1px solid var(--border);background:transparent;cursor:pointer}
@@ -160,24 +160,24 @@
   .range-row .cname{flex:1;font-size:14px;font-weight:500}
   .range-row input[type="range"]{flex:1.5;accent-color:var(--accent)}
   .wall-preview{width:100%;height:120px;border-radius:12px;background:var(--wallpaper);background-size:cover;background-position:center;border:1px solid var(--border);margin-top:12px;display:flex;align-items:center;justify-content:center;color:var(--text-muted);font-size:12px}
-  /* Suggestions */
+  /* SUGGESTIONS */
   .sugg{position:relative}
-  .sugg-list{position:absolute;top:100%;left:0;right:0;background:rgba(10,10,20,.98);border:1px solid var(--border);border-top:none;border-radius:0 0 12px 12px;max-height:280px;overflow-y:auto;z-index:30;box-shadow:0 12px 32px rgba(0,0,0,.8);backdrop-filter:blur(20px)}
+  .sugg-list{position:absolute;top:100%;left:0;right:0;background:rgba(10,10,15,.98);border:1px solid var(--border);border-top:none;border-radius:0 0 12px 12px;max-height:280px;overflow-y:auto;z-index:30;box-shadow:0 12px 32px rgba(0,0,0,.8);backdrop-filter:blur(20px)}
   .sugg-item{padding:12px 14px;cursor:pointer;border-bottom:1px solid rgba(168,85,247,.1);font-size:14px;transition:.15s}
-  .sugg-item:last-child{border-bottom:none}
   .sugg-item:active{background:rgba(168,85,247,.2)}
   .sugg-item .m{font-size:11px;color:var(--text-muted);margin-top:3px}
   .badge-mini{display:inline-block;font-size:9px;padding:2px 6px;border-radius:6px;background:var(--accent2);color:#000;margin-left:6px;font-weight:800;vertical-align:middle}
   .badge-mini.sth{background:linear-gradient(135deg,#a855f7,#ec4899);color:#fff}
   .badge-mini.th{background:linear-gradient(135deg,#f97316,#ef4444);color:#fff}
   .badge-mini.user{background:#22c55e;color:#fff}
-  /* Model Editor */
+  /* MODEL EDITOR */
   .model-item{padding:12px;border-bottom:1px solid rgba(168,85,247,.1);display:flex;align-items:center;justify-content:space-between;gap:8px}
   .model-item:last-child{border-bottom:none}
   .model-item .mi-name{font-size:14px;font-weight:600}
   .model-item .mi-meta{font-size:11px;color:var(--text-muted);margin-top:2px}
   .model-item .mi-del{background:#ef4444;color:#fff;border:none;border-radius:8px;padding:6px 10px;font-size:12px;cursor:pointer;font-weight:700}
-  .search-box{position:sticky;top:0;background:rgba(10,10,20,.95);padding-bottom:12px;z-index:5;backdrop-filter:blur(20px)}
+  .search-box{position:sticky;top:0;background:rgba(10,10,15,.95);padding-bottom:12px;z-index:5;backdrop-filter:blur(20px)}
+  .empty-profiles{text-align:center;padding:40px 20px;color:var(--text-muted)}
 </style>
 </head>
 <body>
@@ -218,7 +218,7 @@
 
   <!-- ADD -->
   <section id="page-add" class="page active">
-    <h2>Новая машинка</h2>
+    <h2>➕ Новая машинка</h2>
     <div id="addPhotoSlot" class="photo-slot mb-4">
       <div class="emoji-big mb-2">📷</div>
       <div class="text-sm">Тапни чтобы сфоткать</div>
@@ -266,38 +266,35 @@
     <div id="collectionGrid" class="card-grid"></div>
   </section>
 
-  <!-- PROFILE -->
+  <!-- PROFILES (как на скрине) -->
   <section id="page-profile" class="page">
-    <h2>👤 Профиль</h2>
-    <div class="profile-banner" id="profileBanner" onclick="document.getElementById('profileBannerInput').click()">
-      <div class="overlay">📷 изменить баннер</div>
-    </div>
-    <input type="file" id="profileBannerInput" accept="image/*" class="hidden">
+    <h2>👥 Профили</h2>
 
-    <div class="profile-hero">
-      <div class="profile-top">
-        <div class="profile-avatar-lg" id="profileAvatar" onclick="document.getElementById('profileAvatarInput').click()">
-          <span>👤</span>
+    <div class="profile-card" id="profileCard">
+      <div class="pc-top">
+        <div class="pc-avatar" id="profileAvatar" onclick="document.getElementById('profileAvatarInput').click()">
+          <span id="pcAvatarIcon">👤</span>
         </div>
         <input type="file" id="profileAvatarInput" accept="image/*" class="hidden">
-        <div class="profile-info">
-          <div class="profile-name-row">
-            <div class="profile-name" id="profileName">—</div>
+        <div class="pc-info">
+          <div class="pc-name-row">
+            <div class="pc-name" id="profileName">—</div>
             <span class="online-dot">активный</span>
           </div>
-          <div class="profile-status" id="profileStatusEl">—</div>
+          <div class="pc-status" id="profileStatusEl">Коллекционер Hot Wheels</div>
         </div>
       </div>
-      <div class="profile-stats">
-        <div class="stat-box"><div class="v" id="statCars">0</div><div class="l">машинок</div></div>
-        <div class="stat-box"><div class="v" id="statValue">0</div><div class="l">стоимость</div></div>
+      <div class="pc-stats">
+        <div class="pc-stat"><div class="v" id="statCars">0</div><div class="l">машинок</div></div>
+        <div class="pc-stat"><div class="v" id="statValue">0</div><div class="l">стоимость</div></div>
       </div>
     </div>
 
     <div style="display:flex;gap:8px;margin-top:12px">
       <button class="btn btn-ghost btn-sm" onclick="editProfile()">✏️ Редактировать</button>
-      <button class="btn btn-ghost btn-sm" onclick="goTo('settings')">⚙️ Настройки</button>
+      <button class="btn btn-ghost btn-sm" onclick="document.getElementById('profileBannerInput').click()">🖼️ Баннер</button>
     </div>
+    <input type="file" id="profileBannerInput" accept="image/*" class="hidden">
 
     <h2 class="mt-6" style="font-size:16px">📸 Истории</h2>
     <div class="stories-strip" id="storiesStrip"></div>
@@ -356,7 +353,7 @@
     <button class="btn btn-ghost mb-3" onclick="logout()">🚪 Выйти</button>
     <button class="btn btn-ghost mb-3" onclick="clearAll()">🗑️ Очистить коллекцию</button>
     <button class="btn btn-danger mb-4" onclick="deleteAccount()">⚠️ Удалить профиль</button>
-    <p class="text-center text-xs text-neutral-600 mb-4">ONYX HW v1.9</p>
+    <p class="text-center text-xs text-neutral-600 mb-4">ONYX HW v2.0</p>
   </section>
 </main>
 
@@ -364,7 +361,7 @@
   <div class="wrap">
     <div class="nav-btn active" data-page="add" onclick="goTo('add')"><span class="ico">➕</span>Добавить</div>
     <div class="nav-btn" data-page="collection" onclick="goTo('collection')"><span class="ico">🌌</span>Коллекция</div>
-    <div class="nav-btn" data-page="profile" onclick="goTo('profile')"><span class="ico">👤</span>Профиль</div>
+    <div class="nav-btn" data-page="profile" onclick="goTo('profile')"><span class="ico">👥</span>Профили</div>
     <div class="nav-btn" data-page="appearance" onclick="goTo('appearance')"><span class="ico">🎨</span>Вид</div>
     <div class="nav-btn" data-page="settings" onclick="goTo('settings')"><span class="ico">⚙️</span>Ещё</div>
   </div>
@@ -377,7 +374,7 @@
 <!-- PART 2 SCRIPT GOES HERE -->
   <script>
 /* ===== CONSTANTS ===== */
-const PRICING_VERSION='1.9';
+const PRICING_VERSION='2.0';
 const SERIES_DEFAULTS={
   mainline:{label:'🔵 Mainline',mult:1.0,color:'#3b82f6',openLoss:0.8},
   silver:{label:'⚪ Silver Series',mult:1.5,color:'#c0c0c0',openLoss:0.75},
@@ -451,6 +448,7 @@ let settings={
   customWall:null,
   blur:14,
 };
+let authMode='login';
 
 /* ===== STORAGE ===== */
 function loadAll(){
@@ -459,7 +457,7 @@ function loadAll(){
     userModels=JSON.parse(localStorage.getItem('hw_user_models')||'[]');
     profile=JSON.parse(localStorage.getItem('onyx_profile')||'null');
     stories=JSON.parse(localStorage.getItem('onyx_stories')||'[]');
-    const s=JSON.parse(localStorage.getItem('onyx_settings_v19')||'null');
+    const s=JSON.parse(localStorage.getItem('onyx_settings_v20')||'null');
     if(s)settings={...settings,...s};
   }catch(e){console.warn(e);}
 }
@@ -483,7 +481,6 @@ function showAuth(){
   if(!profile){authMode='register';toggleAuthMode();}
   else{authMode='login';toggleAuthMode();}
 }
-
 function hideAuth(){document.getElementById('authScreen').style.display='none';}
 
 document.getElementById('authAvatarInput').onchange=async e=>{
@@ -500,20 +497,18 @@ async function authSubmit(){
   if(!pass||pass.length<3){alert('Пароль минимум 3 символа');return;}
 
   if(authMode==='register'){
-    if(profile){alert('Профиль уже существует. Войди или удали.');return;}
+    if(profile){alert('Профиль уже существует.');return;}
     const status=document.getElementById('authStatus').value.trim();
     const av=document.getElementById('authAvatar').dataset.img||null;
-    profile={username:user,passwordHash:hashPass(pass),avatar:av,banner:null,status:status||'коллекционер Hot Wheels',createdAt:new Date().toISOString()};
+    profile={username:user,passwordHash:hashPass(pass),avatar:av,status:status||'Коллекционер Hot Wheels',createdAt:new Date().toISOString()};
     localStorage.setItem('onyx_profile',JSON.stringify(profile));
     persistAll();
-    hideAuth();
-    initApp();
+    hideAuth();initApp();
     showToast('🚀 Профиль создан','Добро пожаловать, '+user);
   }else{
     if(!profile){alert('Профиля нет. Создай.');return;}
     if(hashPass(pass)!==profile.passwordHash){alert('Неверный пароль');return;}
-    hideAuth();
-    initApp();
+    hideAuth();initApp();
     showToast('👋 С возвращением',profile.username);
   }
 }
@@ -525,13 +520,9 @@ function logout(){
 }
 
 function deleteAccount(){
-  if(!confirm('УДАЛИТЬ профиль и ВСЕ данные? Это необратимо!'))return;
+  if(!confirm('УДАЛИТЬ профиль и ВСЕ данные?'))return;
   if(!confirm('Точно уверен? Коллекция и истории пропадут.'))return;
-  localStorage.removeItem('onyx_profile');
-  localStorage.removeItem('onyx_stories');
-  localStorage.removeItem('hw_collection');
-  localStorage.removeItem('hw_user_models');
-  localStorage.removeItem('onyx_settings_v19');
+  ['onyx_profile','onyx_stories','hw_collection','hw_user_models','onyx_settings_v20'].forEach(k=>localStorage.removeItem(k));
   location.reload();
 }
 
@@ -539,15 +530,9 @@ function deleteAccount(){
 function renderProfile(){
   if(!profile)return;
   document.getElementById('profileName').textContent=profile.username;
-  document.getElementById('profileStatusEl').textContent=profile.status||'';
+  document.getElementById('profileStatusEl').textContent=profile.status||'Коллекционер Hot Wheels';
   const av=document.getElementById('profileAvatar');
   av.innerHTML=profile.avatar?`<img src="${profile.avatar}">`:'<span>👤</span>';
-  const bn=document.getElementById('profileBanner');
-  if(profile.banner){
-    bn.innerHTML=`<img src="${profile.banner}"><div class="overlay">📷 изменить баннер</div>`;
-  }else{
-    bn.innerHTML=`<div class="overlay">📷 изменить баннер</div>`;
-  }
   document.getElementById('statCars').textContent=collection.length;
   document.getElementById('statValue').textContent=fmt(collection.reduce((s,c)=>s+c.price,0));
 }
@@ -556,16 +541,15 @@ document.getElementById('profileAvatarInput').onchange=async e=>{
   const f=e.target.files[0];if(!f||!profile)return;
   profile.avatar=await compressImage(f,400);
   localStorage.setItem('onyx_profile',JSON.stringify(profile));
-  renderProfile();
-  renderStories();
+  renderProfile();renderStories();
   showToast('✅ Аватар обновлён');
 };
 document.getElementById('profileBannerInput').onchange=async e=>{
   const f=e.target.files[0];if(!f||!profile)return;
-  profile.banner=await compressImage(f,1200);
-  localStorage.setItem('onyx_profile',JSON.stringify(profile));
-  renderProfile();
-  showToast('✅ Баннер обновлён');
+  settings.customWall=await compressImage(f,1200);
+  settings.wallpaper='custom';
+  persistAll();applyTheme();
+  showToast('✅ Обои установлены');
 };
 
 function editProfile(){
@@ -575,10 +559,9 @@ function editProfile(){
   const s=prompt('Статус:',profile.status||'');
   if(s===null)return;
   profile.username=n.trim()||profile.username;
-  profile.status=s.trim();
+  profile.status=s.trim()||'Коллекционер Hot Wheels';
   localStorage.setItem('onyx_profile',JSON.stringify(profile));
-  renderProfile();
-  renderStories();
+  renderProfile();renderStories();
   showToast('✅ Профиль обновлён');
 }
 
@@ -620,37 +603,61 @@ function openStoryEditor(){
   const body=document.getElementById('storyBody');
   body.innerHTML=`
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
-      <h3 style="font-size:18px;font-weight:700">📸 Новая история</h3>
+      <h3 style="font-size:18px;font-weight:800">📸 Новая история</h3>
       <button onclick="closeStory()" class="modal-close">×</button>
     </div>
     <div class="text-center text-sm mb-4" style="color:var(--accent);font-style:italic">Засними свою реакцию по новой машинке😊</div>
-    <div id="storyPhotoSlot" class="photo-slot mb-4" onclick="document.getElementById('storyPhotoInput').click()">
-      <div class="emoji-big mb-2">📸</div>
-      <div class="text-sm">Тапни чтобы сфоткать</div>
+    <div class="photo-choice">
+      <div class="photo-choice-btn" onclick="pickStoryPhoto('camera')">
+        <div class="ic">📷</div>
+        <div class="tx">Снять фото</div>
+      </div>
+      <div class="photo-choice-btn" onclick="pickStoryPhoto('gallery')">
+        <div class="ic">🖼️</div>
+        <div class="tx">Из галереи</div>
+      </div>
     </div>
-    <input type="file" id="storyPhotoInput" accept="image/*" capture="environment" class="hidden">
+    <input type="file" id="storyCamInput" accept="image/*" capture="environment" class="hidden">
+    <input type="file" id="storyGalInput" accept="image/*" class="hidden">
+    <div id="storyPreview" class="hidden mb-4">
+      <img id="storyPreviewImg" style="width:100%;border-radius:14px">
+    </div>
     <label class="lbl">Подпись (необязательно)</label>
     <textarea id="storyText" rows="3" placeholder="Что нового в коллекции?" maxlength="200"></textarea>
     <button class="btn mt-4" onclick="saveStory()">💾 Опубликовать</button>
   `;
-  document.getElementById('storyPhotoInput').onchange=async e=>{
+  document.getElementById('storyCamInput').onchange=async e=>{
     const f=e.target.files[0];if(!f)return;
-    const d=await compressImage(f,900);
-    const slot=document.getElementById('storyPhotoSlot');
-    slot.innerHTML=`<img src="${d}">`;
-    slot.dataset.img=d;
-    slot.style.border='none';
+    await setStoryPhoto(f);
+  };
+  document.getElementById('storyGalInput').onchange=async e=>{
+    const f=e.target.files[0];if(!f)return;
+    await setStoryPhoto(f);
   };
   document.getElementById('storyModal').classList.add('open');
 }
 
+function pickStoryPhoto(mode){
+  if(mode==='camera')document.getElementById('storyCamInput').click();
+  else document.getElementById('storyGalInput').click();
+}
+
+async function setStoryPhoto(file){
+  const d=await compressImage(file,1200);
+  window._storyPhoto=d;
+  const prev=document.getElementById('storyPreview');
+  const img=document.getElementById('storyPreviewImg');
+  img.src=d;
+  prev.classList.remove('hidden');
+}
+
 function saveStory(){
-  const slot=document.getElementById('storyPhotoSlot');
-  const img=slot.dataset.img;
+  const img=window._storyPhoto;
   if(!img){alert('Добавь фото');return;}
   const text=document.getElementById('storyText').value.trim();
   stories.unshift({id:Date.now(),photo:img,text,date:new Date().toISOString()});
   localStorage.setItem('onyx_stories',JSON.stringify(stories));
+  window._storyPhoto=null;
   closeStory();
   renderStories();
   showToast('✅ История опубликована');
@@ -662,10 +669,10 @@ function openStory(id){
   body.innerHTML=`
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
       <div style="display:flex;align-items:center;gap:10px">
-        <div class="sc-av">${profile.avatar?`<img src="${profile.avatar}">`:'👤'}</div>
+        <div class="sc-av" style="width:40px;height:40px;border-radius:50%;overflow:hidden;border:2px solid var(--accent);display:flex;align-items:center;justify-content:center">${profile.avatar?`<img src="${profile.avatar}" style="width:100%;height:100%;object-fit:cover">`:'👤'}</div>
         <div>
-          <div class="sc-name">${escapeHtml(profile.username)}</div>
-          <div class="sc-date">${formatDate(s.date)}</div>
+          <div style="font-size:14px;font-weight:800;text-transform:uppercase">${escapeHtml(profile.username)}</div>
+          <div style="font-size:11px;color:var(--text-muted);margin-top:2px">${formatDate(s.date)}</div>
         </div>
       </div>
       <button onclick="closeStory()" class="modal-close">×</button>
@@ -685,7 +692,6 @@ function deleteStory(id,closeAfter){
   renderStories();
   showToast('🗑️ Удалено');
 }
-
 function closeStory(){document.getElementById('storyModal').classList.remove('open');}
 
 function formatDate(iso){
@@ -737,7 +743,7 @@ function hexToRgb(h){const r=parseInt(h.slice(1,3),16),g=parseInt(h.slice(3,5),1
 /* ===== THEME ===== */
 function generateStars(){
   const stars=[];
-  for(let i=0;i<100;i++){
+  for(let i=0;i<110;i++){
     const x=Math.random()*100,y=Math.random()*100,s=Math.random()*2+0.5,o=Math.random()*0.8+0.2;
     stars.push(`radial-gradient(circle ${s}px at ${x}% ${y}%, rgba(255,255,255,${o}) 0%, transparent 100%)`);
   }
@@ -901,7 +907,7 @@ document.getElementById('addPhotoInput').onchange=async e=>{
 };
 document.getElementById('addPhotoSlot').onclick=()=>document.getElementById('addPhotoInput').click();
 
-/* ===== SAVE ===== */
+/* ===== SAVE CAR ===== */
 function saveCar(){
   const name=document.getElementById('addName').value.trim();
   if(!name){alert('Напиши название');return;}
@@ -926,7 +932,7 @@ function saveCar(){
 function persistAll(){
   try{
     localStorage.setItem('hw_collection',JSON.stringify(collection));
-    localStorage.setItem('onyx_settings_v19',JSON.stringify(settings));
+    localStorage.setItem('onyx_settings_v20',JSON.stringify(settings));
     localStorage.setItem('hw_user_models',JSON.stringify(userModels));
     if(profile)localStorage.setItem('onyx_profile',JSON.stringify(profile));
     localStorage.setItem('onyx_stories',JSON.stringify(stories));
@@ -975,7 +981,7 @@ function openDetail(id){
   body.innerHTML=`
     <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px">
       <div>
-        <h3 style="font-size:20px;font-weight:700;padding-right:16px">${escapeHtml(car.name)}</h3>
+        <h3 style="font-size:20px;font-weight:800;padding-right:16px">${escapeHtml(car.name)}</h3>
         <div class="text-xs mt-1" style="color:${sInfo.color}">${sInfo.label}</div>
       </div>
       <button onclick="closeDetail()" class="modal-close">×</button>
@@ -1057,7 +1063,7 @@ function renderModelEditor(filter=''){
   const list=q?all.filter(m=>m.name.toLowerCase().includes(q)):all;
   body.innerHTML=`
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
-      <h3 style="font-size:18px;font-weight:700">📚 Справочник</h3>
+      <h3 style="font-size:18px;font-weight:800">📚 Справочник</h3>
       <button onclick="closeModelEditor()" class="modal-close">×</button>
     </div>
     <div class="search-box">
@@ -1068,7 +1074,7 @@ function renderModelEditor(filter=''){
       </div>
       <div class="text-xs text-neutral-500 mt-2">Найдено: ${list.length} · Всего: ${all.length}</div>
     </div>
-    <div style="background:rgba(15,15,25,.5);border-radius:12px;overflow:hidden;margin-top:12px;border:1px solid var(--border)">
+    <div style="background:rgba(20,20,30,.5);border-radius:12px;overflow:hidden;margin-top:12px;border:1px solid var(--border)">
       ${list.length===0?'<div class="text-center text-neutral-600" style="padding:40px 0">Ничего не найдено</div>':list.map(m=>`
         <div class="model-item">
           <div style="flex:1;min-width:0">
@@ -1220,9 +1226,6 @@ function initApp(){
     persistAll();renderCollection();renderProfile();
   }
 }
-
-/* ===== AUTH MODE ===== */
-let authMode='login';
 
 document.addEventListener('DOMContentLoaded',()=>{
   applyTheme();
