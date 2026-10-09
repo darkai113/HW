@@ -7,90 +7,46 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta name="apple-mobile-web-app-title" content="HW Коллекция">
-<title>HW Коллекция v1.5</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23f97316'/%3E%3Cpath d='M20 62 L28 48 Q30 44 35 44 L62 44 Q68 44 72 48 L80 58 L82 62 Q83 66 79 66 L21 66 Q17 66 20 62 Z' fill='%230a0a0a'/%3E%3Ccircle cx='33' cy='66' r='7' fill='%230a0a0a' stroke='%23f97316' stroke-width='3'/%3E%3Ccircle cx='67' cy='66' r='7' fill='%230a0a0a' stroke='%23f97316' stroke-width='3'/%3E%3Cpath d='M32 48 L40 48 L38 54 L30 54 Z' fill='%23f97316'/%3E%3Crect x='44' y='30' width='14' height='4' rx='1' fill='%230a0a0a'/%3E%3C/svg%3E">
+<title>HW Коллекция v1.6</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23f97316'/%3E%3Cpath d='M20 62 L28 48 Q30 44 35 44 L62 44 Q68 44 72 48 L80 58 L82 62 Q83 66 79 66 L21 66 Q17 66 20 62 Z' fill='%230a0a0a'/%3E%3Ccircle cx='33' cy='66' r='7' fill='%230a0a0a' stroke='%23f97316' stroke-width='3'/%3E%3Ccircle cx='67' cy='66' r='7' fill='%230a0a0a' stroke='%23f97316' stroke-width='3'/%3E%3C/svg%3E">
 <style>
   * { -webkit-tap-highlight-color: transparent; box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    background: #0a0a0a; color: #e5e5e5;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    padding-bottom: 90px; min-height: 100vh;
-  }
+  body { background: #0a0a0a; color: #e5e5e5; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; padding-bottom: 90px; min-height: 100vh; }
   .wrap { max-width: 512px; margin: 0 auto; padding: 0 16px; }
-  header {
-    position: sticky; top: 0; z-index: 40;
-    background: rgba(10,10,10,.92); backdrop-filter: blur(8px);
-    border-bottom: 1px solid #1a1a1a;
-  }
+  header { position: sticky; top: 0; z-index: 40; background: rgba(10,10,10,.92); backdrop-filter: blur(8px); border-bottom: 1px solid #1a1a1a; }
   header .wrap { padding-top: 12px; padding-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
   h1 { font-size: 18px; font-weight: 700; }
   h2 { font-size: 20px; font-weight: 700; margin-bottom: 16px; }
   .page { display: none; padding-top: 16px; }
   .page.active { display: block; }
-  input, select {
-    background: #151515; border: 1px solid #2a2a2a; color: #fff;
-    border-radius: 12px; padding: 12px 14px; width: 100%; font-size: 16px;
-    font-family: inherit;
-  }
+  input, select { background: #151515; border: 1px solid #2a2a2a; color: #fff; border-radius: 12px; padding: 12px 14px; width: 100%; font-size: 16px; font-family: inherit; }
   input:focus, select:focus { outline: none; border-color: #f97316; }
-  label.lbl {
-    display: block; font-size: 11px; color: #737373;
-    text-transform: uppercase; letter-spacing: .05em; margin: 20px 0 8px;
-  }
-  .chip {
-    display: inline-block; border: 1px solid #2a2a2a; background: #151515;
-    border-radius: 999px; padding: 8px 14px; font-size: 14px; color: #aaa;
-    transition: .15s; user-select: none; cursor: pointer;
-  }
+  label.lbl { display: block; font-size: 11px; color: #737373; text-transform: uppercase; letter-spacing: .05em; margin: 20px 0 8px; }
+  .chip { display: inline-block; border: 1px solid #2a2a2a; background: #151515; border-radius: 999px; padding: 8px 14px; font-size: 14px; color: #aaa; transition: .15s; user-select: none; cursor: pointer; }
   .chip.on { background: #f97316; color: #000; border-color: #f97316; font-weight: 600; }
   .chip.on.con { background: #ef4444; color: #fff; border-color: #ef4444; }
   .chip.on.series { background: #3b82f6; color: #fff; border-color: #3b82f6; }
-  .boxcard {
-    border: 1px solid #2a2a2a; background: #151515; border-radius: 14px;
-    padding: 12px; cursor: pointer; transition: .15s;
-  }
+  .boxcard { border: 1px solid #2a2a2a; background: #151515; border-radius: 14px; padding: 12px; cursor: pointer; transition: .15s; }
   .boxcard.on { border-color: #f97316; background: #1f1410; }
   .boxcard .bt { font-weight: 600; font-size: 15px; }
   .boxcard .bd { font-size: 12px; color: #888; margin-top: 2px; line-height: 1.35; }
   .boxcard .bm { font-size: 12px; color: #f97316; font-weight: 600; margin-top: 4px; }
-  .nav {
-    position: fixed; bottom: 0; left: 0; right: 0;
-    background: rgba(15,15,15,.95); backdrop-filter: blur(8px);
-    border-top: 1px solid #1a1a1a; z-index: 40;
-  }
+  .nav { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(15,15,15,.95); backdrop-filter: blur(8px); border-top: 1px solid #1a1a1a; z-index: 40; }
   .nav .wrap { display: flex; }
-  .nav-btn {
-    flex: 1; text-align: center; padding: 12px 0; color: #666;
-    font-size: 12px; transition: .15s; cursor: pointer;
-  }
+  .nav-btn { flex: 1; text-align: center; padding: 12px 0; color: #666; font-size: 12px; transition: .15s; cursor: pointer; }
   .nav-btn.active { color: #f97316; }
   .nav-btn .ico { display: block; font-size: 22px; margin-bottom: 2px; }
   .card { background: #121212; border: 1px solid #1f1f1f; border-radius: 16px; }
-  .photo-slot {
-    background: #151515; border: 2px dashed #2a2a2a; border-radius: 16px;
-    display: flex; align-items: center; justify-content: center;
-    flex-direction: column; color: #555; cursor: pointer; overflow: hidden;
-    height: 224px;
-  }
+  .photo-slot { background: #151515; border: 2px dashed #2a2a2a; border-radius: 16px; display: flex; align-items: center; justify-content: center; flex-direction: column; color: #555; cursor: pointer; overflow: hidden; height: 224px; }
   .photo-slot img { width: 100%; height: 100%; object-fit: cover; }
-  .btn {
-    background: #f97316; color: #000; font-weight: 700; border-radius: 14px;
-    padding: 16px; width: 100%; font-size: 16px; border: none; cursor: pointer;
-    font-family: inherit; display: block;
-  }
+  .btn { background: #f97316; color: #000; font-weight: 700; border-radius: 14px; padding: 16px; width: 100%; font-size: 16px; border: none; cursor: pointer; font-family: inherit; display: block; }
   .btn:active { transform: scale(.98); }
   .btn-ghost { background: #1a1a1a; color: #e5e5e5; border: 1px solid #2a2a2a; }
   .btn-blue { background: #3b82f6; color: #fff; }
   .btn-sm { padding: 10px 14px; font-size: 14px; border-radius: 10px; }
-  .modal {
-    position: fixed; inset: 0; background: rgba(0,0,0,.85); z-index: 50;
-    display: none; align-items: flex-end;
-  }
+  .modal { position: fixed; inset: 0; background: rgba(0,0,0,.85); z-index: 50; display: none; align-items: flex-end; }
   .modal.open { display: flex; }
-  .modal-body {
-    background: #0f0f0f; width: 100%; max-height: 92vh; overflow-y: auto;
-    border-radius: 24px 24px 0 0; padding: 20px;
-  }
+  .modal-body { background: #0f0f0f; width: 100%; max-height: 92vh; overflow-y: auto; border-radius: 24px 24px 0 0; padding: 20px; }
   .hidden { display: none !important; }
   .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
   .flex-gap { display: flex; gap: 8px; }
@@ -130,28 +86,32 @@
   .relative { position: relative; }
   .absolute { position: absolute; }
   .top-2 { top: 8px; } .left-2 { left: 8px; }
-  .badge {
-    font-size: 10px; padding: 2px 8px; border-radius: 999px;
-    color: #000; font-weight: 600;
-  }
+  .badge { font-size: 10px; padding: 2px 8px; border-radius: 999px; color: #000; font-weight: 600; }
   .price-big { font-size: 36px; font-weight: 700; color: #f97316; }
   .price-total { font-size: 24px; font-weight: 700; color: #f97316; }
   .modal-close { font-size: 24px; line-height: 1; background: transparent; border: none; color: #737373; cursor: pointer; }
   .emoji-big { font-size: 40px; }
-  .py-20 { padding-top: 80px; padding-bottom: 80px; }
   .empty-state { text-align: center; color: #525252; padding: 80px 0; }
   .empty-state .e { font-size: 48px; margin-bottom: 12px; }
   .card-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-  /* Toast */
-  .toast {
-    position: fixed; top: 70px; left: 50%; transform: translateX(-50%) translateY(-20px);
-    background: #f97316; color: #000; padding: 12px 20px; border-radius: 12px;
-    font-weight: 600; font-size: 14px; z-index: 100;
-    opacity: 0; transition: opacity .3s, transform .3s;
-    max-width: 90%; text-align: center; box-shadow: 0 8px 24px rgba(249,115,22,.4);
-  }
+  .toast { position: fixed; top: 70px; left: 50%; transform: translateX(-50%) translateY(-20px); background: #f97316; color: #000; padding: 12px 20px; border-radius: 12px; font-weight: 600; font-size: 14px; z-index: 100; opacity: 0; transition: opacity .3s, transform .3s; max-width: 90%; text-align: center; box-shadow: 0 8px 24px rgba(249,115,22,.4); }
   .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
   .toast small { display: block; font-weight: 400; font-size: 12px; margin-top: 4px; opacity: .85; }
+  /* Suggestions */
+  .sugg { position: relative; }
+  .sugg-list { position: absolute; top: 100%; left: 0; right: 0; background: #151515; border: 1px solid #2a2a2a; border-top: none; border-radius: 0 0 12px 12px; max-height: 260px; overflow-y: auto; z-index: 30; box-shadow: 0 8px 16px rgba(0,0,0,.5); }
+  .sugg-item { padding: 10px 14px; cursor: pointer; border-bottom: 1px solid #1f1f1f; font-size: 14px; transition: .1s; }
+  .sugg-item:last-child { border-bottom: none; }
+  .sugg-item:hover, .sugg-item.active { background: #1f1f1f; }
+  .sugg-item .m { font-size: 11px; color: #737373; margin-top: 2px; }
+  .sugg-item .badge-mini { display: inline-block; font-size: 9px; padding: 1px 6px; border-radius: 6px; background: #3b82f6; color: #fff; margin-left: 6px; font-weight: 600; }
+  /* Model editor */
+  .model-item { padding: 10px 12px; border-bottom: 1px solid #1f1f1f; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+  .model-item:last-child { border-bottom: none; }
+  .model-item .mi-name { font-size: 14px; font-weight: 600; }
+  .model-item .mi-meta { font-size: 11px; color: #737373; }
+  .model-item .mi-del { background: #ef4444; color: #fff; border: none; border-radius: 8px; padding: 6px 10px; font-size: 12px; cursor: pointer; font-weight: 600; }
+  .search-box { position: sticky; top: 0; background: #0f0f0f; padding-bottom: 12px; z-index: 5; }
 </style>
 </head>
 <body>
@@ -181,7 +141,10 @@
     <input type="file" id="addPhotoInput" accept="image/*" capture="environment" class="hidden">
 
     <label class="lbl">Название</label>
-    <input id="addName" placeholder="Например: Twin Mill" maxlength="60">
+    <div class="sugg">
+      <input id="addName" placeholder="Начни печатать: twin, skyline..." maxlength="60" autocomplete="off">
+      <div id="suggList" class="sugg-list hidden"></div>
+    </div>
     <div class="flex-gap mt-2">
       <button type="button" class="btn btn-blue btn-sm" onclick="searchYandex()">🔍 Найти в Яндексе</button>
       <button type="button" class="btn btn-ghost btn-sm" onclick="copyForAlice()">📋 Для Алисы</button>
@@ -235,7 +198,6 @@
     <div class="card p-4 mb-4">
       <div class="text-sm font-semibold mb-3" style="color:#d4d4d4">База Mainline (₽)</div>
       <input id="setMainlineBase" type="number" min="0" step="10">
-      <div class="market-hint">От этой цены считаются все серии</div>
     </div>
 
     <div class="card p-4 mb-4">
@@ -244,34 +206,20 @@
     </div>
 
     <div class="card p-4 mb-4">
-      <div class="text-sm text-neutral-400 mb-3">Плюсы (актуальные надбавки)</div>
+      <div class="flex-gap">
+        <button class="btn btn-blue btn-sm" onclick="openModelEditor()">📚 Справочник моделей</button>
+      </div>
+      <div class="text-xs text-neutral-500 mt-2" id="modelCountInfo"></div>
+    </div>
+
+    <div class="card p-4 mb-4">
+      <div class="text-sm text-neutral-400 mb-3">Плюсы (актуальные)</div>
       <div class="text-xs text-neutral-500 space-y-1" id="prosInfo"></div>
     </div>
 
     <div class="card p-4 mb-4">
-      <div class="text-sm text-neutral-400 mb-3">Минусы (актуальные скидки)</div>
+      <div class="text-sm text-neutral-400 mb-3">Минусы (актуальные)</div>
       <div class="text-xs text-neutral-500 space-y-1" id="consInfo"></div>
-    </div>
-
-    <div class="card p-4 mb-4">
-      <div class="text-sm text-neutral-400 mb-3">Потеря при открытии</div>
-      <div class="text-xs text-neutral-500 space-y-1">
-        <div style="display:flex;justify-content:space-between"><span>Mainline / Custom</span><span class="text-orange-500">×0.8</span></div>
-        <div style="display:flex;justify-content:space-between"><span>Silver / Collector / HW id</span><span class="text-orange-500">×0.75</span></div>
-        <div style="display:flex;justify-content:space-between"><span>Premium / Boulevard / Fast</span><span class="text-orange-500">×0.7</span></div>
-        <div style="display:flex;justify-content:space-between"><span>Retro / Car Culture / Transport</span><span class="text-orange-500">×0.6</span></div>
-        <div style="display:flex;justify-content:space-between"><span>RLC</span><span class="text-orange-500">×0.5</span></div>
-      </div>
-    </div>
-
-    <div class="card p-4 mb-4">
-      <div class="text-sm text-neutral-400 mb-3">Множители коробки</div>
-      <div class="text-xs text-neutral-500 space-y-1">
-        <div style="display:flex;justify-content:space-between"><span>Идеальная</span><span class="text-orange-500">×1.3</span></div>
-        <div style="display:flex;justify-content:space-between"><span>Хорошая</span><span class="text-orange-500">×1.1</span></div>
-        <div style="display:flex;justify-content:space-between"><span>Средняя</span><span class="text-orange-500">×0.7</span></div>
-        <div style="display:flex;justify-content:space-between"><span>Убитая</span><span class="text-orange-500">×0.4</span></div>
-      </div>
     </div>
 
     <button class="btn btn-ghost mt-6" onclick="clearAll()">🗑️ Очистить всю коллекцию</button>
@@ -279,7 +227,7 @@
       <button class="btn btn-ghost btn-sm" onclick="exportCollection()">📤 Экспорт</button>
       <button class="btn btn-ghost btn-sm" onclick="importCollection()">📥 Импорт</button>
     </div>
-    <p class="text-center text-xs text-neutral-600 mt-4 mb-4">v1.5 · правила оценки от 2026</p>
+    <p class="text-center text-xs text-neutral-600 mt-4 mb-4">v1.6 · база моделей + автоподсказки</p>
   </section>
 </main>
 
@@ -295,11 +243,15 @@
   <div class="modal-body" id="detailBody"></div>
 </div>
 
-<script>
-/* ===== ВЕРСИЯ ПРАВИЛ ОЦЕНКИ ===== */
-const PRICING_VERSION = '1.5';
+<div class="modal" id="modelModal" onclick="if(event.target===this)closeModelEditor()">
+  <div class="modal-body" id="modelBody"></div>
+</div>
 
-/* ===== КОНСТАНТЫ ===== */
+<script>
+/* ===== ВЕРСИЯ ===== */
+const PRICING_VERSION = '1.6';
+
+/* ===== СЕРИИ ===== */
 const SERIES_DEFAULTS = {
   mainline:   { label: '🔵 Mainline',           mult: 1.0,  color: '#3b82f6', openLoss: 0.8 },
   silver:     { label: '⚪ Silver Series',      mult: 1.5,  color: '#c0c0c0', openLoss: 0.75 },
@@ -322,14 +274,13 @@ const BOX = {
   poor:      { label: 'Убитая',    desc: 'Смята, порвана, трещины, оторван блистер',           m: 0.4 },
 };
 
-/* ===== ПЛЮСЫ v1.5 (обновлённые проценты) ===== */
 const PROS = {
-  th:        { label: '🏆 Treasure Hunt',                 v: 5.00 },   // было 2.00 → +500%
-  sth:       { label: '💎 Super Treasure Hunt',           v: 20.00 },  // было 8.00 → +2000%
+  th:        { label: '🏆 Treasure Hunt',                 v: 5.00 },
+  sth:       { label: '💎 Super Treasure Hunt',           v: 20.00 },
   rare:      { label: '🎨 Редкий цвет',                   v: 0.50 },
   detail:    { label: '🖌️ Хорошая детализация/раскраска', v: 0.25 },
   error:     { label: '⚠️ Заводская ошибка',              v: 3.00 },
-  unpunched: { label: '📌 Острые углы карточки',          v: 0.25 },   // было 0.10 → +25%
+  unpunched: { label: '📌 Острые углы карточки',          v: 0.25 },
   licensed:  { label: '🚗 Реальная марка',                v: 0.30 },
 };
 
@@ -340,9 +291,202 @@ const CONS = {
   crooked:   { label: 'Погнутая ось / кривая', v: 0.20 },
 };
 
+/* ===== БАЗА МОДЕЛЕЙ ===== */
+/* Формат: [name, years, licensed, detail, category] */
+const HW_MODELS_DEFAULT = [
+  // JDM (30)
+  ["Nissan Skyline GT-R R32","1989-1994",1,1,"jdm"],
+  ["Nissan Skyline GT-R R33","1995-1998",1,1,"jdm"],
+  ["Nissan Skyline GT-R R34","1999-2002",1,1,"jdm"],
+  ["Nissan Skyline GT-R R35","2007-2024",1,1,"jdm"],
+  ["Nissan Silvia S15","1999-2002",1,1,"jdm"],
+  ["Nissan 350Z","2002-2009",1,1,"jdm"],
+  ["Nissan 370Z","2009-2020",1,1,"jdm"],
+  ["Nissan Fairlady Z","1969-1978",1,1,"jdm"],
+  ["Toyota Supra MK4","1993-2002",1,1,"jdm"],
+  ["Toyota Supra MK5","2019-2024",1,1,"jdm"],
+  ["Toyota AE86","1983-1987",1,1,"jdm"],
+  ["Toyota MR2","1984-2007",1,1,"jdm"],
+  ["Toyota Celica","1970-2006",1,1,"jdm"],
+  ["Mazda RX-7 FC","1985-1992",1,1,"jdm"],
+  ["Mazda RX-7 FD","1992-2002",1,1,"jdm"],
+  ["Mazda RX-8","2003-2012",1,1,"jdm"],
+  ["Mazda MX-5","1989-2024",1,1,"jdm"],
+  ["Honda NSX NA1","1990-2005",1,1,"jdm"],
+  ["Honda NSX NC1","2016-2022",1,1,"jdm"],
+  ["Honda Civic EK9","1997-2000",1,1,"jdm"],
+  ["Honda Civic Type R FK8","2017-2021",1,1,"jdm"],
+  ["Honda S2000","1999-2009",1,1,"jdm"],
+  ["Subaru Impreza WRX STI","1994-2014",1,1,"jdm"],
+  ["Subaru BRZ","2012-2024",1,1,"jdm"],
+  ["Mitsubishi Lancer Evolution","1992-2015",1,1,"jdm"],
+  ["Mitsubishi Eclipse","1989-2011",1,1,"jdm"],
+  ["Datsun 510","1968-1973",1,1,"jdm"],
+  ["Datsun 240Z","1969-1978",1,1,"jdm"],
+  ["Datsun 620","1972-1979",1,1,"jdm"],
+  ["Acura NSX","1990-2005",1,1,"jdm"],
+
+  // Muscle (25)
+  ["Ford Mustang 1965","1965",1,1,"muscle"],
+  ["Ford Mustang Boss 302","1969",1,1,"muscle"],
+  ["Ford Mustang Shelby GT500","1967",1,1,"muscle"],
+  ["Ford Mustang Mach 1","1969",1,1,"muscle"],
+  ["Chevrolet Camaro 1967","1967",1,1,"muscle"],
+  ["Chevrolet Camaro 1969","1969",1,1,"muscle"],
+  ["Chevrolet Camaro SS","2010-2024",1,1,"muscle"],
+  ["Chevrolet Corvette C1","1953-1962",1,1,"muscle"],
+  ["Chevrolet Corvette C2","1963-1967",1,1,"muscle"],
+  ["Chevrolet Corvette C3","1968-1982",1,1,"muscle"],
+  ["Chevrolet Corvette C7","2014-2019",1,1,"muscle"],
+  ["Chevrolet Corvette C8","2020-2024",1,1,"muscle"],
+  ["Dodge Charger 1969","1969",1,1,"muscle"],
+  ["Dodge Charger SRT","2006-2024",1,1,"muscle"],
+  ["Dodge Challenger 1970","1970",1,1,"muscle"],
+  ["Dodge Challenger Hellcat","2015-2024",1,1,"muscle"],
+  ["Dodge Viper","1992-2017",1,1,"muscle"],
+  ["Pontiac Firebird","1967-2002",1,1,"muscle"],
+  ["Pontiac GTO","1964-1974",1,1,"muscle"],
+  ["Plymouth Barracuda","1964-1974",1,1,"muscle"],
+  ["Plymouth Road Runner","1968-1980",1,1,"muscle"],
+  ["Shelby Cobra 427","1965-1967",1,1,"muscle"],
+  ["Ford GT","2005-2022",1,1,"muscle"],
+  ["Ford GT40","1964-1969",1,1,"muscle"],
+  ["Chevrolet Bel Air","1950-1975",1,1,"muscle"],
+
+  // Европейские (30)
+  ["Porsche 911","1963-2024",1,1,"euro"],
+  ["Porsche 918 Spyder","2013-2015",1,1,"euro"],
+  ["Porsche 959","1986-1993",1,1,"euro"],
+  ["Porsche 917","1969-1971",1,1,"euro"],
+  ["Ferrari 250 GTO","1962-1964",1,1,"euro"],
+  ["Ferrari F40","1987-1992",1,1,"euro"],
+  ["Ferrari 458","2009-2015",1,1,"euro"],
+  ["Ferrari LaFerrari","2013-2018",1,1,"euro"],
+  ["Ferrari Testarossa","1984-1996",1,1,"euro"],
+  ["Lamborghini Countach","1974-1990",1,1,"euro"],
+  ["Lamborghini Miura","1966-1973",1,1,"euro"],
+  ["Lamborghini Aventador","2011-2022",1,1,"euro"],
+  ["Lamborghini Huracan","2014-2024",1,1,"euro"],
+  ["Lamborghini Gallardo","2003-2013",1,1,"euro"],
+  ["BMW M3 E30","1986-1991",1,1,"euro"],
+  ["BMW M3 E46","2000-2006",1,1,"euro"],
+  ["BMW M4","2014-2024",1,1,"euro"],
+  ["BMW M5","1984-2024",1,1,"euro"],
+  ["Mercedes 300SL","1954-1963",1,1,"euro"],
+  ["Mercedes AMG GT","2014-2024",1,1,"euro"],
+  ["Mercedes G-Class","1979-2024",1,1,"euro"],
+  ["Audi R8","2006-2024",1,1,"euro"],
+  ["Audi RS6","2002-2024",1,1,"euro"],
+  ["Audi Quattro","1980-1991",1,1,"euro"],
+  ["McLaren P1","2013-2015",1,1,"euro"],
+  ["McLaren F1","1992-1998",1,1,"euro"],
+  ["McLaren 720S","2017-2023",1,1,"euro"],
+  ["Aston Martin DB5","1963-1965",1,1,"euro"],
+  ["Aston Martin Vantage","1972-2024",1,1,"euro"],
+  ["Jaguar E-Type","1961-1975",1,1,"euro"],
+
+  // Суперкары/гиперкары (10)
+  ["Bugatti Veyron","2005-2015",1,1,"super"],
+  ["Bugatti Chiron","2016-2024",1,1,"super"],
+  ["Koenigsegg Jesko","2020-2024",1,1,"super"],
+  ["Pagani Huayra","2011-2024",1,1,"super"],
+  ["Rimac Nevera","2021-2024",1,1,"super"],
+  ["Tesla Roadster","2008-2012",1,1,"super"],
+  ["Tesla Model S","2012-2024",1,1,"super"],
+  ["Tesla Cybertruck","2023-2024",1,1,"super"],
+  ["Lotus Esprit","1976-2004",1,1,"euro"],
+  ["Lancia Stratos","1973-1978",1,1,"euro"],
+
+  // Легенды/фэнтези (30)
+  ["Twin Mill","1969-2024",0,1,"legend"],
+  ["Twin Mill II","1993",0,1,"legend"],
+  ["Twin Mill III","2003",0,1,"legend"],
+  ["Twin Mill Gen-E","2022-2024",0,1,"legend"],
+  ["Bone Shaker","2006-2024",0,1,"legend"],
+  ["Deora","1968-2000",0,1,"legend"],
+  ["Deora II","2000-2024",0,1,"legend"],
+  ["Deora III","2020-2024",0,1,"legend"],
+  ["Beach Bomb","1969",0,1,"legend"],
+  ["Hot Heap","1968",0,1,"legend"],
+  ["Custom Camaro","1968",1,1,"legend"],
+  ["Custom Corvette","1968",1,1,"legend"],
+  ["Custom Mustang","1968",1,1,"legend"],
+  ["Custom Firebird","1968",1,1,"legend"],
+  ["Silhouette","1968",0,1,"legend"],
+  ["Beatnik Bandit","1968",0,1,"legend"],
+  ["Splittin' Image","1968",0,1,"legend"],
+  ["Rodger Dodger","1974-2024",0,1,"legend"],
+  ["Rat Bomb","2003-2024",0,1,"legend"],
+  ["Surf Crate","2005-2024",0,1,"legend"],
+  ["Mod Rod","2004-2024",0,1,"legend"],
+  ["Sharkruiser","1984-2024",0,1,"legend"],
+  ["Buzz Bomb","1997-2024",0,1,"legend"],
+  ["Carbonator","2010-2024",0,1,"legend"],
+  ["Roller Toaster","2010",0,1,"legend"],
+  ["Cool-One","2008",0,1,"legend"],
+  ["Baja Bug","1970-2024",1,1,"legend"],
+  ["VW Drag Bus","1996-2024",1,1,"legend"],
+  ["Dairy Delivery","1998-2024",0,1,"legend"],
+  ["Tooligan","2011-2024",0,1,"legend"],
+
+  // Лицензии/кино (10)
+  ["Batmobile 1966","1966",1,1,"lic"],
+  ["Batmobile 1989","1989",1,1,"lic"],
+  ["Batmobile Tumbler","2005",1,1,"lic"],
+  ["DeLorean Back to Future","1981",1,1,"lic"],
+  ["Ecto-1 Ghostbusters","1959",1,1,"lic"],
+  ["KITT Knight Rider","1982",1,1,"lic"],
+  ["A-Team Van","1983",1,1,"lic"],
+  ["Jurassic Park Jeep","1992",1,1,"lic"],
+  ["Mystery Machine Scooby Doo","1960",1,1,"lic"],
+  ["Homer Simpson Car","1990",0,1,"lic"],
+
+  // Грузовики (10)
+  ["Ford F-150 Raptor","2010-2024",1,1,"truck"],
+  ["Ford Bronco","1966-2024",1,1,"truck"],
+  ["Toyota Land Cruiser","1951-2024",1,1,"truck"],
+  ["Land Rover Defender","1983-2024",1,1,"truck"],
+  ["International Scout","1960-1980",1,1,"truck"],
+  ["Chevy Blazer","1969-2005",1,1,"truck"],
+  ["Dodge Power Wagon","1945-1980",1,1,"truck"],
+  ["GMC Syclone","1991",1,1,"truck"],
+  ["Chevy C10","1960-1987",1,1,"truck"],
+  ["Custom 53 Cadillac","1953",1,1,"truck"],
+
+  // Хот-роды/кастомы (10)
+  ["Pass'n Gasser","2009-2024",0,1,"hotrod"],
+  ["55 Chevy Bel Air Gasser","1955",1,1,"hotrod"],
+  ["Blown Delivery","2010-2024",0,1,"hotrod"],
+  ["Mighty Maverick","1969-2024",1,1,"hotrod"],
+  ["Texas Drive 'Em","2007-2024",0,1,"hotrod"],
+  ["Poison Pinto","1970-2024",1,1,"hotrod"],
+  ["Sand Drifter","2011-2024",0,1,"hotrod"],
+  ["8 Crate","2011-2024",0,1,"hotrod"],
+  ["Blvd. Bruiser","2006-2024",0,1,"hotrod"],
+  ["Nitro Doorslammer","2000-2024",0,1,"hotrod"],
+
+  // Разное (15)
+  ["Volkswagen T1 Bus","1950-1967",1,1,"misc"],
+  ["Volkswagen Beetle","1938-2003",1,1,"misc"],
+  ["Mini Cooper","1959-2000",1,1,"misc"],
+  ["Fiat 500","1957-1975",1,1,"misc"],
+  ["Citroën 2CV","1948-1990",1,1,"misc"],
+  ["Renault 5 Turbo","1980-1986",1,1,"misc"],
+  ["Peugeot 205 GTI","1984-1994",1,1,"misc"],
+  ["Alpine A110","1961-1977",1,1,"misc"],
+  ["BMW Isetta","1955-1962",1,1,"misc"],
+  ["VW Golf GTI","1974-2024",1,1,"misc"],
+  ["Volvo 240","1974-1993",1,1,"misc"],
+  ["Jeep Wrangler","1986-2024",1,1,"misc"],
+  ["Hummer H1","1992-2006",1,1,"misc"],
+  ["Dodge Ram","1981-2024",1,1,"misc"],
+  ["Ford Raptor","2010-2024",1,1,"misc"],
+];
+
 /* ===== STATE ===== */
 let addState = { photo:null, series:'mainline', box:'mint', opened:false, pros:[], cons:[] };
 let collection = [];
+let userModels = [];
 let settings = {
   mainlineBase: 300,
   seriesMults: Object.fromEntries(Object.keys(SERIES_DEFAULTS).map(k => [k, SERIES_DEFAULTS[k].mult])),
@@ -352,7 +496,8 @@ let settings = {
 /* ===== STORAGE ===== */
 try {
   collection = JSON.parse(localStorage.getItem('hw_collection') || '[]');
-  const saved = JSON.parse(localStorage.getItem('hw_settings_v15') || 'null');
+  userModels = JSON.parse(localStorage.getItem('hw_user_models') || '[]');
+  const saved = JSON.parse(localStorage.getItem('hw_settings_v16') || localStorage.getItem('hw_settings_v15') || 'null');
   if (saved) {
     if (saved.mainlineBase) settings.mainlineBase = saved.mainlineBase;
     if (saved.seriesMults) settings.seriesMults = { ...settings.seriesMults, ...saved.seriesMults };
@@ -360,32 +505,32 @@ try {
   }
 } catch(e) { console.warn(e); }
 
-/* ===== АВТОМИГРАЦИЯ И ПЕРЕСЧЁТ ===== */
+/* ===== ОБЪЕДИНЁННАЯ БАЗА ===== */
+function getAllModels() {
+  const def = HW_MODELS_DEFAULT.map(m => ({ name:m[0], years:m[1], licensed:!!m[2], detail:!!m[3], category:m[4], user:false }));
+  const usr = userModels.map(m => ({ name:m[0], years:m[1], licensed:!!m[2], detail:!!m[3], category:m[4] || 'user', user:true }));
+  return [...def, ...usr];
+}
+
+/* ===== АВТОМИГРАЦИЯ ===== */
 let recalcCount = 0;
 const needRecalc = settings.pricingVersion !== PRICING_VERSION;
 
 collection = collection.map(car => {
   if (!car.series || !SERIES_DEFAULTS[car.series]) car.series = 'mainline';
   if (car.marketPrice === undefined) car.marketPrice = 0;
-
   const seriesMult = settings.seriesMults[car.series] || 1;
   const seriesBase = settings.mainlineBase * seriesMult;
   const base = car.marketPrice > 0 ? car.marketPrice : seriesBase;
-
   const newPrice = calcPrice(base, car.series, car.box, car.opened, car.pros, car.cons);
-
   if (needRecalc && car.price !== newPrice) recalcCount++;
-
   car.baseAtSave = base;
   car.seriesBaseAtSave = seriesBase;
   car.price = newPrice;
   return car;
 });
 
-if (needRecalc) {
-  settings.pricingVersion = PRICING_VERSION;
-  // сохраним после DOMContentLoaded (localStorage доступен)
-}
+if (needRecalc) settings.pricingVersion = PRICING_VERSION;
 
 /* ===== UTILS ===== */
 const fmt = n => Math.round(n).toLocaleString('ru-RU') + ' ₽';
@@ -419,7 +564,7 @@ function compressImage(file, maxSize=900) {
   });
 }
 
-function escapeHtml(s) { return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function escapeHtml(s) { return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 
 function showToast(title, subtitle) {
   const t = document.getElementById('toast');
@@ -451,6 +596,46 @@ function copyForAlice() {
   } else {
     prompt('Скопируй вручную:', q);
   }
+}
+
+/* ===== SUGGESTIONS ===== */
+const nameInput = document.getElementById('addName');
+const suggList = document.getElementById('suggList');
+
+nameInput.addEventListener('input', () => {
+  const q = nameInput.value.trim().toLowerCase();
+  if (q.length < 2) { suggList.classList.add('hidden'); return; }
+  const all = getAllModels();
+  const matches = all.filter(m => m.name.toLowerCase().includes(q)).slice(0, 8);
+  if (matches.length === 0) { suggList.classList.add('hidden'); return; }
+  suggList.innerHTML = matches.map(m => `
+    <div class="sugg-item" data-name="${escapeHtml(m.name)}">
+      <div>${escapeHtml(m.name)}${m.licensed ? '<span class="badge-mini">LIC</span>' : ''}${m.user ? '<span class="badge-mini" style="background:#22c55e">МОЯ</span>' : ''}</div>
+      <div class="m">${m.years || ''}${m.licensed ? ' · реальная марка' : ''}${m.detail ? ' · детализация' : ''}</div>
+    </div>
+  `).join('');
+  suggList.classList.remove('hidden');
+  suggList.querySelectorAll('.sugg-item').forEach(el => {
+    el.onclick = () => pickModel(el.dataset.name);
+  });
+});
+
+document.addEventListener('click', e => {
+  if (!e.target.closest('.sugg')) suggList.classList.add('hidden');
+});
+
+function pickModel(name) {
+  const all = getAllModels();
+  const m = all.find(x => x.name === name);
+  if (!m) return;
+  nameInput.value = m.name;
+  suggList.classList.add('hidden');
+  // автоплюсы
+  if (m.licensed && !addState.pros.includes('licensed')) addState.pros.push('licensed');
+  if (m.detail && !addState.pros.includes('detail')) addState.pros.push('detail');
+  renderChips();
+  updatePrice();
+  showToast(`✓ ${m.name}`, m.years + (m.licensed ? ' · реальная марка' : ''));
 }
 
 /* ===== RENDER CHIPS ===== */
@@ -523,7 +708,7 @@ function updatePrice() {
 
   const parts = [];
   if (marketVal > 0) parts.push(`рынок ${Math.round(marketVal)} ₽`);
-  else parts.push(`база ${Math.round(seriesBase)} ₽ (${SERIES_DEFAULTS[addState.series].label.split(' ')[0]} ×${seriesMult})`);
+  else parts.push(`база ${Math.round(seriesBase)} ₽`);
   parts.push(`коробка ×${BOX[addState.box].m}`);
   if (addState.opened) parts.push(`открыта ×${SERIES_DEFAULTS[addState.series].openLoss}`);
   const proSum = addState.pros.reduce((s,k)=>s+PROS[k].v, 0);
@@ -591,7 +776,8 @@ function saveCar() {
 function persist() {
   try {
     localStorage.setItem('hw_collection', JSON.stringify(collection));
-    localStorage.setItem('hw_settings_v15', JSON.stringify(settings));
+    localStorage.setItem('hw_settings_v16', JSON.stringify(settings));
+    localStorage.setItem('hw_user_models', JSON.stringify(userModels));
   } catch(e) {
     alert('Не хватило места в хранилище. Удали старые машинки.');
   }
@@ -636,7 +822,6 @@ function renderCollection() {
 function openDetail(id) {
   const car = collection.find(c => c.id === id);
   if (!car) return;
-
   const sInfo = SERIES_DEFAULTS[car.series] || SERIES_DEFAULTS.custom;
   const breakdown = [];
   if (car.marketPrice > 0) breakdown.push(`🌐 Рынок: ${Math.round(car.marketPrice)} ₽`);
@@ -655,7 +840,6 @@ function openDetail(id) {
       </div>
       <button onclick="closeDetail()" class="modal-close">×</button>
     </div>
-
     <div class="grid2 mb-4">
       <div>
         <div class="text-xs text-neutral-500 mb-1">Фото машинки</div>
@@ -671,7 +855,6 @@ function openDetail(id) {
         <input type="file" id="myPhotoInput" accept="image/*" capture="environment" class="hidden">
       </div>
     </div>
-
     <div class="card p-4 mb-3">
       <div class="text-xs text-neutral-500 uppercase tracking-wide mb-3">Расчёт цены</div>
       <div class="text-sm space-y-1">
@@ -682,13 +865,11 @@ function openDetail(id) {
         <span class="price-total">${fmt(car.price)}</span>
       </div>
     </div>
-
     <div class="flex-gap">
       <button class="btn btn-blue btn-sm" onclick="recalcCar(${car.id})">🔄 Пересчитать</button>
       <button class="btn btn-ghost btn-sm" onclick="deleteCar(${car.id})">🗑️ Удалить</button>
     </div>
   `;
-
   document.getElementById('myPhotoSlot').onclick = () => document.getElementById('myPhotoInput').click();
   document.getElementById('myPhotoInput').onchange = async e => {
     const f = e.target.files[0];
@@ -697,7 +878,6 @@ function openDetail(id) {
     persist();
     document.getElementById('myPhotoSlot').innerHTML = `<img src="${car.myPhoto}" style="width:100%;height:100%;object-fit:cover">`;
   };
-
   document.getElementById('detailModal').classList.add('open');
 }
 
@@ -783,6 +963,93 @@ function renderProsConsInfo() {
   }
 }
 
+function updateModelCount() {
+  const all = getAllModels();
+  document.getElementById('modelCountInfo').textContent = `Всего: ${all.length} моделей (${HW_MODELS_DEFAULT.length} базовых + ${userModels.length} ваших)`;
+}
+
+/* ===== MODEL EDITOR ===== */
+function openModelEditor() {
+  renderModelEditor();
+  document.getElementById('modelModal').classList.add('open');
+}
+function closeModelEditor() {
+  document.getElementById('modelModal').classList.remove('open');
+}
+
+function renderModelEditor(filter = '') {
+  const body = document.getElementById('modelBody');
+  const all = getAllModels();
+  const q = filter.toLowerCase().trim();
+  const list = q ? all.filter(m => m.name.toLowerCase().includes(q)) : all;
+
+  body.innerHTML = `
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+      <h3 style="font-size:18px;font-weight:700">📚 Справочник моделей</h3>
+      <button onclick="closeModelEditor()" class="modal-close">×</button>
+    </div>
+    <div class="search-box">
+      <input id="modelSearch" placeholder="🔍 Поиск модели..." value="${escapeHtml(filter)}">
+      <div class="flex-gap mt-2">
+        <button class="btn btn-blue btn-sm" onclick="addNewModel()">➕ Добавить свою</button>
+        <button class="btn btn-ghost btn-sm" onclick="resetUserModels()">🗑️ Сбросить мои</button>
+      </div>
+      <div class="text-xs text-neutral-500 mt-2">Найдено: ${list.length} · Всего: ${all.length}</div>
+    </div>
+    <div style="background:#151515;border-radius:12px;overflow:hidden;margin-top:12px">
+      ${list.length === 0 ? '<div class="text-center text-neutral-600 py-20" style="padding:40px 0">Ничего не найдено</div>' : list.map(m => `
+        <div class="model-item">
+          <div style="flex:1;min-width:0">
+            <div class="mi-name truncate">${escapeHtml(m.name)} ${m.user ? '<span class="badge-mini" style="background:#22c55e">МОЯ</span>' : ''} ${m.licensed ? '<span class="badge-mini">LIC</span>' : ''}</div>
+            <div class="mi-meta">${m.years || '—'}${m.detail ? ' · детализация' : ''}</div>
+          </div>
+          ${m.user ? `<button class="mi-del" onclick="deleteUserModel('${escapeHtml(m.name).replace(/'/g, "\\'")}')">Удалить</button>` : ''}
+        </div>
+      `).join('')}
+    </div>
+  `;
+  document.getElementById('modelSearch').addEventListener('input', e => {
+    const pos = e.target.selectionStart;
+    renderModelEditor(e.target.value);
+    const inp = document.getElementById('modelSearch');
+    inp.focus();
+    inp.setSelectionRange(pos, pos);
+  });
+}
+
+function addNewModel() {
+  const name = prompt('Название модели:');
+  if (!name) return;
+  const years = prompt('Годы выпуска (например: 2010-2024):') || '';
+  const licensed = confirm('Реальная марка (лицензия)?\nOK = да, Отмена = нет');
+  const detail = confirm('Хорошая детализация/раскраска?\nOK = да, Отмена = нет');
+  userModels.push([name.trim(), years.trim(), licensed ? 1 : 0, detail ? 1 : 0, 'user']);
+  persist();
+  updateModelCount();
+  renderModelEditor();
+  showToast('✅ Модель добавлена', name);
+}
+
+function deleteUserModel(name) {
+  if (!confirm(`Удалить "${name}"?`)) return;
+  userModels = userModels.filter(m => m[0] !== name);
+  persist();
+  updateModelCount();
+  renderModelEditor();
+  showToast('🗑️ Удалено');
+}
+
+function resetUserModels() {
+  if (userModels.length === 0) { alert('У вас нет своих моделей'); return; }
+  if (!confirm(`Удалить все ваши модели (${userModels.length})?`)) return;
+  userModels = [];
+  persist();
+  updateModelCount();
+  renderModelEditor();
+  showToast('🗑️ Ваши модели удалены');
+}
+
+/* ===== CLEAR ALL ===== */
 function clearAll() {
   if (!confirm('Удалить ВСЮ коллекцию?')) return;
   collection = [];
@@ -792,7 +1059,7 @@ function clearAll() {
 
 /* ===== EXPORT / IMPORT ===== */
 function exportCollection() {
-  const data = JSON.stringify({ collection, settings, exportedAt: new Date().toISOString() }, null, 2);
+  const data = JSON.stringify({ collection, settings, userModels, exportedAt: new Date().toISOString() }, null, 2);
   const blob = new Blob([data], { type: 'application/json' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
@@ -814,7 +1081,7 @@ function importCollection() {
         const data = JSON.parse(ev.target.result);
         if (data.collection) collection = data.collection;
         if (data.settings) settings = { ...settings, ...data.settings };
-        // пересчёт после импорта
+        if (data.userModels) userModels = data.userModels;
         collection = collection.map(car => {
           if (!car.series || !SERIES_DEFAULTS[car.series]) car.series = 'mainline';
           if (car.marketPrice === undefined) car.marketPrice = 0;
@@ -830,9 +1097,10 @@ function importCollection() {
         persist();
         renderCollection();
         renderSeriesEditor();
+        updateModelCount();
         document.getElementById('setMainlineBase').value = settings.mainlineBase;
         alert('✅ Коллекция импортирована и пересчитана!');
-      } catch(err) { alert('❌ Ошибка импорта: ' + err.message); }
+      } catch(err) { alert('❌ Ошибка: ' + err.message); }
     };
     r.readAsText(f);
   };
@@ -857,17 +1125,14 @@ document.addEventListener('DOMContentLoaded', () => {
   renderCollection();
   renderSeriesEditor();
   renderProsConsInfo();
+  updateModelCount();
 
-  // Если была миграция — сохраняем и показываем уведомление
   if (needRecalc) {
     persist();
     if (recalcCount > 0) {
-      showToast(
-        `✨ Цены обновлены по правилам v${PRICING_VERSION}`,
-        `Пересчитано машинок: ${recalcCount} · TH +500% · STH +2000% · Unpunched +25%`
-      );
+      showToast(`✨ Обновление v1.6 · ${recalcCount} машинок пересчитано`, `База моделей: ${HW_MODELS_DEFAULT.length} шт · автоподсказки включены`);
     } else {
-      showToast(`✨ Правила оценки обновлены до v${PRICING_VERSION}`);
+      showToast(`✨ v1.6 · База моделей`, `${HW_MODELS_DEFAULT.length} моделей для автоподсказок`);
     }
   }
 });
